@@ -100,6 +100,7 @@ end
 		xix=true,
 		
 	}	-- super special, IE us
+	data.god_bff=data.god_bff or {}
 	
 	data.bot_names=
 	{
@@ -285,6 +286,7 @@ end
 	data.alt_names["jeffpwnsyou"]=1
 
 	data.alt_names["zombunny"]=1
+	data.alt_names["eiko"]=1
 
 
 -- cache the ips here, do not save these ips

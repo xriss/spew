@@ -1745,7 +1745,14 @@ end
 function user_bff(user)
 
 	if not user.bff then return nil end
+--[[	
+	local gbff
+	if data.god_bff then gbff=data.god_bff[user.bff] end
 	
+	if gbff and gbff==user.name then
+		return true
+	end
+]]
 	local bff=get_user(user.bff)
 	
 	if not bff then return nil end
@@ -1756,6 +1763,19 @@ function user_bff(user)
 		
 	end
 	
+	return nil
+end
+-- are they a friend of the gods?
+function user_god_bff(user)
+	if not user.bff then return nil end
+	
+	local gbff
+	if data.god_bff then gbff=data.god_bff[user.bff] end
+	
+	if gbff and gbff:lower()==user.name:lower() then
+		return true
+	end
+
 	return nil
 end
 
@@ -3903,6 +3923,9 @@ log(user.name,dothis,vic_str)
 				rdiff=rdiff_bff
 				roomqueue(user.room,{cmd="act",frm=bff.name,txt="protects their BFF "..vic.name})
 			end
+		elseif user_god_bff(vic) then
+			rdiff=-19 --the fix is in
+			roomqueue(user.room,{cmd="act",frm=vic.bff,txt="protects their BFF "..vic.name})
 		end
 		
 		
