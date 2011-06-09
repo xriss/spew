@@ -1,0 +1,4 @@
+config.lua
+nix/bin/lua
+.so
+src/cmake
