@@ -1427,26 +1427,36 @@ local who=aa[3] or ""
 
 	if who and who~="" then -- requesting a bff change
 	
-		bff=get_user(who)
+		if is_god(user.name) then
 		
-		if bff==user then -- cant be bff with self
-		
-			noir_say(brain,"You cannot be BFFs with yourself." ,user)
-			user.bff="their left hand" -- remove bff if you try and bff yourself
+			data.god_bff[user.name]=who
+			user.bff=who
 			user_save_data(user)
-			return
 			
-		elseif bff then
-		
-			user.bff=bff.name
-			user_save_data(user)
-		
 		else
-		
-			noir_say(brain,"Sorry but "..who.." is not logged in." ,user)
-			return
-		end
+			
+			bff=get_user(who)
+			
+			if bff==user then -- cant be bff with self
+			
+				noir_say(brain,"You cannot be BFFs with yourself." ,user)
+				user.bff="their left hand" -- remove bff if you try and bff yourself
+				user_save_data(user)
+				return
+				
+			elseif bff then
+			
+				user.bff=bff.name
+				user_save_data(user)
+			
+			else
+			
+				noir_say(brain,"Sorry but "..who.." is not logged in." ,user)
+				return
+			end
 	
+		end
+		
 	else
 	
 		bff=get_user(user.bff)
