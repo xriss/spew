@@ -1,4 +1,10 @@
 config.lua
+config.data.lua
 nix/bin/lua
+.a
 .so
 src/cmake
+save/logs
+spew.dbg
+spewd.dbg
+spewd.dat
