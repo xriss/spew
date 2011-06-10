@@ -1769,11 +1769,12 @@ end
 function user_god_bff(user)
 	if not user.bff then return nil end
 	
-	local gbff
-	if data.god_bff then gbff=data.god_bff[user.bff] end
-	
-	if gbff and gbff:lower()==user.name:lower() then
-		return true
+	if data.god_bff then
+		for g,u in pairs(data.god_bff) do
+			if u and u:lower()==user.name:lower() then
+				return g
+			end
+		end
 	end
 
 	return nil
@@ -3917,15 +3918,16 @@ log(user.name,dothis,vic_str)
 		if vic.room~=user.room then return nil end -- victim must also be in same room
 		local rdiff=user_rank_diff(user,vic)
 		local bff=user_bff(vic)
-		if bff then
+		local bff_god=user_god_bff(vic)
+		if bff_god then
+			rdiff=-19 --the fix is in
+			roomqueue(user.room,{cmd="act",frm=bff_god,txt="protects their BFF "..vic.name})		
+		elseif bff then
 			local rdiff_bff=user_rank_diff(user,bff)
 			if rdiff_bff < rdiff then -- bff steps in
 				rdiff=rdiff_bff
 				roomqueue(user.room,{cmd="act",frm=bff.name,txt="protects their BFF "..vic.name})
 			end
-		elseif user_god_bff(vic) then
-			rdiff=-19 --the fix is in
-			roomqueue(user.room,{cmd="act",frm=vic.bff,txt="protects their BFF "..vic.name})
 		end
 		
 		
