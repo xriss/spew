@@ -1433,6 +1433,10 @@ local who=aa[3] or ""
 			user.bff=who
 			user_save_data(user)
 			
+			noir_say(brain, user.name.." will auto protect "..who.." from abuse." ,user)
+			
+			return
+			
 		else
 			
 			bff=get_user(who)
