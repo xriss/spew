@@ -239,12 +239,13 @@ end
 		data.crowns_special[name]=data.crowns_special[name] or {}
 		data.crowns_special[name]["miss_wetgenes"]=num
 	end
+	addmiss("desu_boku",6)
 	addmiss("kohaku",5)
 	addmiss("qata",4)
-	addmiss("desu_boku",3)
-	addmiss("traces",2)
-	addmiss("bees",1)
-	addmiss("tosi",1)
+	addmiss("traces",3)
+	addmiss("bees",2)
+	addmiss("tosi",2)
+	addmiss("erik_revolution",1)
 	
 --	data.crowns_special["lunboks"]={"pity",1}
 --	data.crowns_special["cock_waffle"]={"shaved_furry",1}
