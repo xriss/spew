@@ -3950,7 +3950,7 @@ log(user.name,dothis,vic_str)
 		if cost<0 then cost=0 end -- thats 5 less cookies needed for ever level the user is over the victim
 		local banlen=5*60 + rdiff*5*60 -- higher levels also ban the lower levels for longer
 		
-		if is_dum(user.name) or is_admin(vic_str) or ( cost>user.cookies ) then
+		if is_dum(user.name) or is_admin(vic_str) or is_bot(vic_str) or ( cost>user.cookies ) then
 		
 			conjure_failure(user)
 			
