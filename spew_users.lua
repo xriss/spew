@@ -3899,7 +3899,7 @@ local protected
 
 				local vic_id=get_idstring(vic_str)
 
-				if vic_id~="*" and vic_id~=vic_str then -- no ip if we get back what we put in
+				if vic_id~="*" and vic_id~=vic_str and ( not (is_bot(vic_str) or is_admin(vic_str)) ) then -- no ip if we get back what we put in
 
 log(user.name,dothis,vic_str)
 
