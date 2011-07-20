@@ -1,7 +1,2 @@
 hg push
-ssh web
-su wet
-cd hg/spew
-hg up
-exit
-
+ssh web "hg up --cwd hg/spew"
