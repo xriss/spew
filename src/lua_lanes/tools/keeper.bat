@@ -1,0 +1,1 @@
+..\..\..\nix\bin\lua bin2c.lua ..\src\keeper.lua -o ..\src\keeper.lch
