@@ -1457,6 +1457,8 @@ local given=0
 		return {cmd="note",note="act",
 		arg1="For playing "..game.basename.." "..user.name.." has been given a daily reward of "..award.." cookies!! "},award
 		
+log(user.name,"award",game.basename,award)
+
 	end
 	
 	return nil
@@ -1496,6 +1498,8 @@ local given=0
 		return {cmd="note",note="act",
 		arg1="For playing "..game_name.." "..user.name.." has been given a daily reward of "..award.." cookies!! "},award
 		
+log(user.name,"award",game_name,award)
+
 	end
 	
 	return nil
