@@ -1826,6 +1826,8 @@ local function do_award()
 			
 			user.cookies= user.cookies + award -- give the award
 			
+log(user.name,"award",nil,awards.game_name,award)
+
 			roomcast(user.room,{cmd="note",note="act",
 			arg1="For playing "..awards.game_name.." "..user.name.." has been given a daily reward of "..award.." cookies!! "},user)
 			
