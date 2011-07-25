@@ -1,2 +1,2 @@
 hg push
-ssh web "hg up --cwd hg/spew"
+ssh web "su wet -c hg up --cwd hg/spew"

@@ -1395,6 +1395,7 @@ local t=data.arena_activity
 if not t[game] then t[game]={} end
 
 
+
 local tg=t[game]
 
 	table.insert(tg,user)
@@ -1454,10 +1455,11 @@ local given=0
 		
 		game_award_pet_owner(user,award)
 		
+log(user.name,"award",game.basename,award)
+
 		return {cmd="note",note="act",
 		arg1="For playing "..game.basename.." "..user.name.." has been given a daily reward of "..award.." cookies!! "},award
 		
-log(user.name,"award",game.basename,award)
 
 	end
 	
@@ -1495,10 +1497,11 @@ local given=0
 		
 		game_award_pet_owner(user,award)
 		
+log(user.name,"award",game_name,award)
+
 		return {cmd="note",note="act",
 		arg1="For playing "..game_name.." "..user.name.." has been given a daily reward of "..award.." cookies!! "},award
 		
-log(user.name,"award",game_name,award)
 
 	end
 	
