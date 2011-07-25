@@ -1455,7 +1455,7 @@ local given=0
 		
 		game_award_pet_owner(user,award)
 		
-log(user.name,"award",game.basename,award)
+log(user.name,"award",nil,game.basename,award)
 
 		return {cmd="note",note="act",
 		arg1="For playing "..game.basename.." "..user.name.." has been given a daily reward of "..award.." cookies!! "},award
@@ -1497,7 +1497,7 @@ local given=0
 		
 		game_award_pet_owner(user,award)
 		
-log(user.name,"award",game_name,award)
+log(user.name,"award",nil,game_name,award)
 
 		return {cmd="note",note="act",
 		arg1="For playing "..game_name.." "..user.name.." has been given a daily reward of "..award.." cookies!! "},award
