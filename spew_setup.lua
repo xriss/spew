@@ -235,20 +235,21 @@ end
 --award special crowns
 
 	data.crowns_special={}
-	local function addmiss(name,num)
+	local function addacrown(crown,name,num)
 		data.crowns_special[name]=data.crowns_special[name] or {}
-		data.crowns_special[name]["miss_wetgenes"]=num
+		data.crowns_special[name][crown]=num
 	end
-	addmiss("desu_boku",6)
-	addmiss("kohaku",5)
-	addmiss("qata",4)
-	addmiss("traces",3)
-	addmiss("bees",2)
-	addmiss("tosi",2)
-	addmiss("erik_revolution",1)
+	addacrown("miss_wetgenes","desu_boku",6)
+	addacrown("miss_wetgenes","kohaku",5)
+	addacrown("miss_wetgenes","qata",4)
+	addacrown("miss_wetgenes","traces",3)
+	addacrown("miss_wetgenes","bees",2)
+	addacrown("miss_wetgenes","tosi",2)
+	addacrown("miss_wetgenes","erik_revolution",1)
+
+	addacrown("poet","riceguy",1)
+	addacrown("putty","lunboks",1)
 	
---	data.crowns_special["lunboks"]={"pity",1}
---	data.crowns_special["cock_waffle"]={"shaved_furry",1}
 	
 	
 -- the ips these people login from are allowed multiple extra logins
