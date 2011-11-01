@@ -454,9 +454,9 @@ dbg("Client atempting to irc connect\n")
 						
 						websock_version=tonumber(websock_version or 0) or 0
 						
-						if websock_version==13 then -- the all new codes
-						
 --dbg("sending websock13\n"..part)
+						if websock_version >= 8 then -- the all new codes
+						
 
 	local websock_key=string.match(part, 'Sec%-WebSocket%-Key:%s*([^\r]*)') or ""
 	local websock_host=string.match(part, 'Host:%s*([^%s]*)') or ""
