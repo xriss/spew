@@ -92,53 +92,12 @@ local ctab=data.clients_tab[client]
 	
 end
 
+
 -----------------------------------------------------------------------------
 --
--- send a line to a client
+-- needed to grab bytes etc from the websocket stream
 --
 -----------------------------------------------------------------------------
-function client_send_websocket(client,line)
-	dbg("WS send:"..line.."\n")
---	client:send(line)
-end
-
-function client_send(client,line)
-local ctab=data.clients_tab[client]
-
-dbg("send:"..line.."\n")
-
-	if ctab.websocket then return client_send_websocket(client,line) end
-
-
-local user=data.clients[client]
-
-	if ( not client ) or ( not line ) or ( not user ) then return end
-	
-	client:settimeout(0.00001) -- this is a hack fix?
-	
-	if ctab.spew_ok_to_send then
-	
-		if ctab.spew_send_cache then
-		
-			line=ctab.spew_send_cache .. line
-			ctab.spew_send_cache=nil
-		
-		end
-		
-		if line~="" then
-		
-			client:send(line)
-			
-		end
-			
-	else -- delay sending until after connection has been confirmed
-	
-		user.spew_send_cache = ( user.spew_send_cache or "" ) .. line
-		
-	end
-
-end
-
 local sb=string.byte
 local function grab1(s,n)
 	return sb(s,n)
@@ -151,6 +110,107 @@ local function grab4(s,n)
 end
 local function grab8(s,n)
 	return (grab4(s,n)*(256*256*256*256)) + grab4(s,n+4)
+end
+
+
+-----------------------------------------------------------------------------
+--
+-- fiddle with line terminators a bit
+--
+-----------------------------------------------------------------------------
+local function wrap(ctab,line)
+
+	if ctab.telnet then
+	
+		return line
+		
+	elseif ctab.irc then
+	
+		return line
+		
+	elseif ctab.websocket then
+	
+		local len=#line
+		local pre={}
+		
+		pre[#pre+1]=string.char(0x81)
+		if len<126 then -- small packet
+
+			pre[#pre+1]=string.char(len)
+		
+		elseif len<65535 then -- large packet
+		
+			pre[#pre+1]=string.char(126)
+			
+			pre[#pre+1]=string.char(math.floor(len/256))
+			pre[#pre+1]=string.char(len%256)
+
+		else -- really large packet which we do not send...
+			return ""
+		end
+		
+		pre[#pre+1]=line -- include payload
+		
+		local s= table.concat(pre)
+
+-- dbg(string.format("%02x %02x %02x %02x ... %d\n",sb(s,1),sb(s,2),sb(s,3),sb(s,4),#s))
+		
+		return s
+		
+	elseif ctab.websocket_old then
+	
+		return "\0" .. line .. "\255"
+		
+	else
+	
+		return line.."\n\0"
+				
+	end
+end
+
+-----------------------------------------------------------------------------
+--
+-- send a line to a client
+--
+-----------------------------------------------------------------------------
+
+function client_send(client,line)
+
+local ctab=data.clients_tab[client]
+
+--dbg("send:"..line.."\n")
+
+local user=data.clients[client]
+
+	if ( not client ) or ( not line ) or ( not user ) then return end
+	
+	client:settimeout(0.00001) -- this is a hack fix?
+	
+	if ctab.spew_ok_to_send then
+	
+		if ctab.spew_send_cache then
+		
+			for i,line in ipairs(ctab.spew_send_cache) do
+				if line~="" then	
+					client:send(wrap(ctab,line))			
+				end
+			end
+			
+			ctab.spew_send_cache=nil -- all sent
+		
+		end
+		
+		if line~="" then	
+			client:send(wrap(ctab,line))			
+		end
+			
+	else -- delay sending until after connection has been confirmed
+	
+		ctab.spew_send_cache=ctab.spew_send_cache or {}
+		ctab.spew_send_cache[#ctab.spew_send_cache+1]=line
+		
+	end
+
 end
 
 -----------------------------------------------------------------------------
@@ -225,7 +285,7 @@ function client_received_websocket(client,line)
 
 	local frame=b1%16
 	
-dbg("WS frame : ",frame," : ",size,"\n")
+-- dbg("WS frame : ",frame," : ",size,"\n")
 
 		if mask_size==4 then -- read the 4 mask bytes
 			mask[1]=grab1(s,header_size+1)
