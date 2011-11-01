@@ -25,10 +25,13 @@ end
 function client_connected(client,flavour)
 --dbg("connected"," ",dbg_client(client),"\n")
 
+	local ctab={}
+	data.clients_tab[client]=ctab
+
 	if flavour=="telnet" then
-		data.clients_telnet[client]={} -- extra telnet data
+		ctab.telnet=true
 	elseif flavour=="irc" then
-		data.clients_irc[client]={} -- extra irc data
+		ctab.irc=true
 	end
 	
 	client:settimeout(0.00001) -- this is a hack fix?
@@ -48,10 +51,7 @@ function client_disconnected(client,error)
 
 local user=data.clients[client]
 
-	data.clients_irc[client]=nil
-	data.clients_telnet[client]=nil
-	data.clients_websocket_old[client]=nil
-	data.clients_websocket[client]=nil
+	data.clients_tab[client]=nil
 		
 	del_user(user)
 
@@ -64,9 +64,9 @@ end
 -----------------------------------------------------------------------------
 function client_handshake_done(client)
 
-local user=data.clients[client]
+local ctab=data.clients_tab[client]
 
-	if user and user.spew_ok_to_send then return true end
+	if ctab.spew_ok_to_send then return true end
 	
 	return false
 
@@ -79,16 +79,15 @@ end
 -----------------------------------------------------------------------------
 function client_handshake_set(client,flavour)
 
-local user=data.clients[client]
+local ctab=data.clients_tab[client]
 
---	if user then
-		user.spew_ok_to_send=true
---	end
+	ctab.spew_ok_to_send=true
+	
 	
 	if flavour=="websocket_old" then
-		data.clients_websocket_old[client]={}
+		ctab.websocket_old=true
 	elseif flavour=="websocket" then
-		data.clients_websocket[client]={}
+		ctab.websocket=true
 	end
 	
 end
@@ -104,8 +103,11 @@ function client_send_websocket(client,line)
 end
 
 function client_send(client,line)
+local ctab=data.clients_tab[client]
+
 dbg("send:"..line.."\n")
-	if data.clients_websocket[client] then return client_send_websocket(client,line) end
+
+	if ctab.websocket then return client_send_websocket(client,line) end
 
 
 local user=data.clients[client]
@@ -114,12 +116,12 @@ local user=data.clients[client]
 	
 	client:settimeout(0.00001) -- this is a hack fix?
 	
-	if user.spew_ok_to_send then
+	if ctab.spew_ok_to_send then
 	
-		if user.spew_send_cache then
+		if ctab.spew_send_cache then
 		
-			line=user.spew_send_cache .. line
-			user.spew_send_cache=nil
+			line=ctab.spew_send_cache .. line
+			ctab.spew_send_cache=nil
 		
 		end
 		
@@ -159,19 +161,19 @@ end
 function client_received_websocket(client,line)
 -- dbg("WS received ",dbg_client(client),"\n")
 	
-	local ws=data.clients_websocket[client]
+	local ctab=data.clients_tab[client]
 	
 	if line then
-		if ws.lineparts then -- continue our cache
-			ws.lineparts=ws.lineparts..line			
+		if ctab.lineparts then -- continue our cache
+			ctab.lineparts=ctab.lineparts..line			
 		else -- start new cache
-			ws.lineparts=line
+			ctab.lineparts=line
 		end
 	end
-	local s=ws.lineparts
+	local s=ctab.lineparts
 	if not s then return end
 	local slen=#s
-	if slen==0 then ws.lineparts=nil return end --no more line
+	if slen==0 then ctab.lineparts=nil return end --no more line
 
 
 	if slen<2 then return end -- wait for more data
@@ -248,9 +250,9 @@ dbg("WS frame : ",frame," : ",size,"\n")
 			table.insert(user.linein,sd)
 			queue_update(user)
 			
-			if not user.spew_ok_to_send then
+			if not ctab.spew_ok_to_send then
 			
-				user.spew_ok_to_send=true -- flag as real connection, ok to start sending
+				ctab.spew_ok_to_send=true -- flag as real connection, ok to start sending
 				client_send(client,"")
 				
 			end
@@ -259,36 +261,38 @@ dbg("WS frame : ",frame," : ",size,"\n")
 		
 		
 		if slen > size then
-			ws.lineparts=s:sub(size+1) -- remove what we read
+			ctab.lineparts=s:sub(size+1) -- remove what we read
 			return client_received_websocket(client) -- call us again to try and handle the rest 
 		else
-			ws.lineparts=nil -- all used, remove it
+			ctab.lineparts=nil -- all used, remove it
 		end
 	end
 		
 end
 
 function client_received(client,line)
+	local ctab=data.clients_tab[client]
+
 --dbg("received ",line," ",dbg_client(client),"\n")
-	if data.clients_websocket[client] then return client_received_websocket(client,line) end
+	if ctab.websocket then return client_received_websocket(client,line) end
 
 local user=data.clients[client]
 
 local line_term="\0"
 
-	if data.clients_telnet[client] then -- break on \n not \0
+	if ctab.telnet then -- break on \n not \0
 		line_term="\n"
-	elseif data.clients_irc[client] then -- break on \n not \0
+	elseif ctab.irc then -- break on \n not \0
 		line_term="\n"
-	elseif data.clients_websocket_old[client] then -- break on \255 not \0
+	elseif ctab.websocket then -- break on \255 not \0
 		line_term="\255"
 	end
 
 --dbg("received ",line," ",user_ip(user),"\n")
 	
-	if not user.spew_ok_to_send then
+	if not ctab.spew_ok_to_send then
 	
-		user.spew_ok_to_send=true -- flag as real connection, ok to start sending
+		ctab.spew_ok_to_send=true -- flag as real connection, ok to start sending
 		client_send(client,"")
 		
 	end
@@ -337,10 +341,7 @@ end
 -----------------------------------------------------------------------------
 function client_remove(client)
 
-	data.clients_irc[client]=nil
-	data.clients_telnet[client]=nil
-	data.clients_websocket_old[client]=nil
-	data.clients_websocket[client]=nil
+	data.clients_tab[client]=nil
 	
 	client:close()
 	connections:remove(client)

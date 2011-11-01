@@ -52,10 +52,7 @@ end
 	
 	dd("muxouts",{})
 	dd("clients",{})
-	dd("clients_telnet",{})
-	dd("clients_irc",{})
-	dd("clients_websocket_old",{})
-	dd("clients_websocket",{})
+	dd("clients_tab",{})
 	dd("status",{ ["*"]={} })
 	dd("idstrings",{})
 	dd("names",{})
