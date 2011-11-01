@@ -5596,29 +5596,33 @@ function usercast(user,msg)
 	
 		local ctab=data.clients_tab[user.client]
 	
-		if ctab.telnet then
+		if ctab then
 		
-			local s=clean_utf8(telnet_msg_to_str(user,msg))
-			if s then client_send(user.client , s ) end
+			if ctab.telnet then
 			
-		elseif ctab.irc then
-		
-			local s=clean_utf8(irc_msg_to_str(user,msg))
-			if s then client_send(user.client , s ) end
+				local s=clean_utf8(telnet_msg_to_str(user,msg))
+				if s then client_send(user.client , s ) end
+				
+			elseif ctab.irc then
 			
-		elseif ctab.websocket then
-		
-			local sm=clean_utf8(msg_to_str(msg,user.msg))
-			client_send(user.client , sm)
+				local s=clean_utf8(irc_msg_to_str(user,msg))
+				if s then client_send(user.client , s ) end
+				
+			elseif ctab.websocket then
 			
-		elseif ctab.websocket_old then
-		
-			local sm=clean_utf8(msg_to_str(msg,user.msg))
-			client_send(user.client , "\0" .. sm .. "\255")
+				local sm=clean_utf8(msg_to_str(msg,user.msg))
+				client_send(user.client , sm)
+				
+			elseif ctab.websocket_old then
 			
-		else
-		
-			client_send(user.client , clean_utf8(msg_to_str(msg,user.msg)) .. "\n\0")
+				local sm=clean_utf8(msg_to_str(msg,user.msg))
+				client_send(user.client , sm )
+				
+			else
+			
+				client_send(user.client , clean_utf8(msg_to_str(msg,user.msg)) )
+				
+			end
 			
 		end
 		
