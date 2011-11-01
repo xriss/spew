@@ -116,11 +116,12 @@ local user={}
 	user.gamename="chat"
 	
 	if user.client then
-		if data.clients_telnet[user.client] then
+		local ctab=data.clients_tab[user.client]
+		if ctab.telnet then
 --			user.client_flavour="telnet" -- we have a special telnet flavour
 			user.gamename="telnet"
 			user.spew_ok_to_send=true -- do not wait for input
-		elseif data.clients_irc[user.client] then
+		elseif ctab.irc then
 --			user.client_flavour="irc" -- we have a special telnet flavour
 			user.gamename="irc"
 			user.spew_ok_to_send=true -- do not wait for input
@@ -632,7 +633,8 @@ end
 -----------------------------------------------------------------------------
 function irc_str_to_msg(user,_line,msg)
 
-	local irc=data.clients_irc[user.client]
+	local irc=data.clients_tab[user.client]
+
 
 -- remove control chars?
 	local line=string.gsub(_line or "", "[%c]+", "" ) or ""
@@ -718,7 +720,7 @@ end
 -----------------------------------------------------------------------------
 function irc_msg_to_str(user,msg)
 
-	local irc=data.clients_irc[user.client]
+	local irc=data.clients_tab[user.client]
 
 local s
 local frm,txt,cmd,note,a1,a2,a3
@@ -854,12 +856,13 @@ local ip=user_ip(user)
 	local max_spam_size=512
 
 	
-	if data.clients_telnet[user.client] then -- telnet stuff is special text only conversion to msgs
+	local ctab=data.clients_tab[user.client]
+	if ctab.telnet then -- telnet stuff is special text only conversion to msgs
 
 		msg.cmd="cmd"
 		msg.txt=line
 
-	elseif data.clients_irc[user.client] then -- irc stuff is special text only conversion to msgs
+	elseif ctab.irc then -- irc stuff is special text only conversion to msgs
 	
 		local r=irc_str_to_msg(user,line,msg)
 		
@@ -5591,20 +5594,26 @@ function usercast(user,msg)
 	
 	if user.client then
 	
-		if data.clients_telnet[user.client] then
+		local ctab=data.clients_tab[user.client]
+	
+		if ctab.telnet then
 		
 			local s=clean_utf8(telnet_msg_to_str(user,msg))
 			if s then client_send(user.client , s ) end
 			
-		elseif data.clients_irc[user.client] then
+		elseif ctab.irc then
 		
 			local s=clean_utf8(irc_msg_to_str(user,msg))
 			if s then client_send(user.client , s ) end
 			
-		elseif data.clients_websocket[user.client] then
+		elseif ctab.websocket then
 		
 			local sm=clean_utf8(msg_to_str(msg,user.msg))
---make sure the string is utf8 clean, no invalid sequences
+			client_send(user.client , sm)
+			
+		elseif ctab.websocket_old then
+		
+			local sm=clean_utf8(msg_to_str(msg,user.msg))
 			client_send(user.client , "\0" .. sm .. "\255")
 			
 		else

@@ -377,6 +377,7 @@ end
 -----------------------------------------------------------------------------
 function sql_named_tab(tab,idx)
 
+	if not tab then return nil end
 	if not tab[idx] then return nil end
 
 local ret={}
