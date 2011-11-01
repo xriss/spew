@@ -70,6 +70,7 @@ require("socket.http")
 require("luasql.mysql")
 require("lash")
 require("Json")
+require("bit")
 
 
 
@@ -449,7 +450,66 @@ dbg("Client atempting to irc connect\n")
 
 					elseif websock_path then
 					
---dbg("sending websock\n"..part)
+						local websock_version=string.match(part, 'Sec%-WebSocket%-Version:%s*([^\r]*)') or ""
+						
+						websock_version=tonumber(websock_version or 0) or 0
+						
+						if websock_version==13 then -- the all new codes
+						
+--dbg("sending websock13\n"..part)
+
+	local websock_key=string.match(part, 'Sec%-WebSocket%-Key:%s*([^\r]*)') or ""
+	local websock_host=string.match(part, 'Host:%s*([^%s]*)') or ""
+	local websock_origin=string.match(part, 'Origin:%s*([^%s]*)') or ""
+
+
+	local websock_location = 'ws://' .. websock_host .. websock_path
+
+	local key_base=trim(websock_key)
+	local key_add="258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
+	local key=key_base..key_add
+	local key_sha1_hex=lash.SHA1.string2hex(key)
+	
+	local aa={}
+	for i=1,#key_sha1_hex,2 do
+		local t=key_sha1_hex:sub(i,i+1)
+		aa[#aa+1]=string.char(tonumber(t,16))
+	end
+	local key_sha1_raw=table.concat(aa)
+	
+	
+
+-- encoding
+local function enc64(data)
+local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+    return ((data:gsub('.', function(x) 
+        local r,b='',x:byte()
+        for i=8,1,-1 do r=r..(b%2^i-b%2^(i-1)>0 and '1' or '0') end
+        return r;
+    end)..'0000'):gsub('%d%d%d?%d?%d?%d?', function(x)
+        if (#x < 6) then return '' end
+        local c=0
+        for i=1,6 do c=c+(x:sub(i,i)=='1' and 2^(6-i) or 0) end
+        return b:sub(c+1,c+1)
+    end)..({ '', '==', '=' })[#data%3+1])
+end
+	local key_sha1_b64=enc64(key_sha1_raw)
+
+
+	local shake=("HTTP/1.1 101 Switching Protocols" .. "\r\n"
+	.. "Upgrade: WebSocket" .. "\r\n"
+	.. "Connection: Upgrade" .. "\r\n"
+	.. "Sec-WebSocket-Accept: " .. key_sha1_b64 .. "\r\n\r\n"
+	)
+
+--print(shake)
+
+	input:send(shake)
+	ignore_handshake=true
+	client_handshake_set(input,"websocket")
+
+						else -- old junks
+
 --[[part="GET / HTTP/1.1" .. "\r\n"..
 "Connection: Upgrade" .. "\r\n"..
 "Host: example.com" .. "\r\n"..
@@ -460,10 +520,10 @@ dbg("Client atempting to irc connect\n")
 "" .. "\r\n"..
 "WjN}|M(6"]]
               
-						local websock_host=string.match(part, 'Host:%s*([^%s]*)') or ""
-						local websock_origin=string.match(part, 'Origin:%s*([^%s]*)') or ""
-						local websock_key1=string.match(part, 'Sec%-WebSocket%-Key1:%s*([^\r]*)') or ""
-						local websock_key2=string.match(part, 'Sec%-WebSocket%-Key2:%s*([^\r]*)') or ""
+	local websock_host=string.match(part, 'Host:%s*([^%s]*)') or ""
+	local websock_origin=string.match(part, 'Origin:%s*([^%s]*)') or ""
+	local websock_key1=string.match(part, 'Sec%-WebSocket%-Key1:%s*([^\r]*)') or ""
+	local websock_key2=string.match(part, 'Sec%-WebSocket%-Key2:%s*([^\r]*)') or ""
 
 	local keys={}
 	local kk={}
@@ -505,7 +565,7 @@ dbg("Client atempting to irc connect\n")
 	
 
 	
-						local websock_location = 'ws://' .. websock_host .. websock_path
+	local websock_location = 'ws://' .. websock_host .. websock_path
 --[[
 print("PART:",part)
 print("HOST:",websock_host)
@@ -516,21 +576,22 @@ print("#KK:",#kk)
 print("KK:",table.concat(kk))
 print("MD5:",key_md5_sum_hex)
 ]]					
-						ignore_handshake=true
-						
-						local shake=("HTTP/1.1 101 WebSocket Protocol Handshake" .. "\r\n"
-						.. "Upgrade: WebSocket" .. "\r\n"
-						.. "Connection: Upgrade" .. "\r\n"
-						.. "Sec-WebSocket-Origin: " .. websock_origin .. "\r\n"
-						.. "Sec-WebSocket-Location: " .. websock_location .. "\r\n"
+	ignore_handshake=true
+	
+	local shake=("HTTP/1.1 101 WebSocket Protocol Handshake" .. "\r\n"
+	.. "Upgrade: WebSocket" .. "\r\n"
+	.. "Connection: Upgrade" .. "\r\n"
+	.. "Sec-WebSocket-Origin: " .. websock_origin .. "\r\n"
+	.. "Sec-WebSocket-Location: " .. websock_location .. "\r\n"
 --						.. "Sec-WebSocket-Protocol: sample" .. "\r\n"
-						.. "\r\n"..key_md5.."\0")
+	.. "\r\n"..key_md5.."\0")
 --print(shake)
-						input:send(shake)
-		
-						client_handshake_set(input,"websocket")
+	input:send(shake)
+
+	client_handshake_set(input,"websocket_old")
+	
+						end -- websocket_old end
 					end
-					
 				end
 			
 				if not ignore_handshake then

@@ -30,6 +30,7 @@ SET(serv_dir ${CMAKE_CURRENT_SOURCE_DIR}/.. )
 SUBDIRS(
 
 	lua
+	lua_bit
 	lua_lanes
 	lua_md5
 	lua_lash

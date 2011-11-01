@@ -54,6 +54,7 @@ end
 	dd("clients",{})
 	dd("clients_telnet",{})
 	dd("clients_irc",{})
+	dd("clients_websocket_old",{})
 	dd("clients_websocket",{})
 	dd("status",{ ["*"]={} })
 	dd("idstrings",{})
