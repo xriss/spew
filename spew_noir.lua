@@ -3373,29 +3373,34 @@ local function noir_say_mud(brain,user,aa)
 	if not is_admin(user.name) then return end -- must be admin
 	
 local n=aa[3]
+
+local mudtype="mud_names"
+
+	if aa[2]=="hardmud" or aa[2]=="nothardmud" then mudtype="hardmud_names" end
 	
 	if n then
-		if aa[2]=="mud" then -- make them mud
+		if aa[2]=="mud" or aa[2]=="hardmud" then -- make them mud
+
 	
 			local tab=get_shared_names_by_ip(n) -- hit all people of the same ip
 			if not tab then tab={n} end
 			if count==1 then tab={n} end -- just change this one user
 			for i,v in ipairs(tab) do
 		
-				data.mud_names[ string.lower(v) ]=true
+				data[mudtype][ string.lower(v) ]=true
 			
 			end			
 			
-		else -- release them if we must
+		elseif aa[2]=="notmud" or aa[2]=="nothardmud" then -- release them if we must
 		
-			if n=="*" then data.mud_names={} end -- quick unmud
+			if n=="*" then data[mudtype]={} end -- quick unmud of everyone
 		
 			local tab=get_shared_names_by_ip(n) -- hit all people of the same ip
 			if not tab then tab={n} end
 			if count==1 then tab={n} end -- just change this one user
 			for i,v in ipairs(tab) do
 		
-				data.mud_names[ string.lower(v) ]=nil
+				data[mudtype][ string.lower(v) ]=nil
 			
 			end
 		
@@ -3425,7 +3430,7 @@ local n=aa[3]
 
 end
 
-for i,v in ipairs{"mud","notmud"} do
+for i,v in ipairs{"mud","notmud","hardmud","nothardmud"} do
 	noir_triggers[v]=noir_say_mud
 end
 -----------------------------------------------------------------------------

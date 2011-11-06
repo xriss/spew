@@ -189,7 +189,7 @@ end
 	data.dum_names=data.dum_names or {}
 	
 	
-	data.hardmud_names={}
+	data.hardmud_names=data.hardmud_names or {}
 	data.mud_names=data.mud_names or {}
 
 
@@ -741,7 +741,7 @@ function save_data()
 	allcast( {cmd="note",note="notice",arg1="saving state data"} )
 
 	for i,v in ipairs({	"saved_cookies","saved_color","day_flags","drama_names",
-						"drama_ips","mud_names","dum_names","ipmap","ipwho","ipsux"}) do
+						"drama_ips","hardmud_names","mud_names","dum_names","ipmap","ipwho","ipsux"}) do
 	
 		fout("function data.f()\ndata."..v.."=")
 		serialize(data[v],fout)
