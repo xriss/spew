@@ -3375,11 +3375,15 @@ local function noir_say_mud(brain,user,aa)
 local n=aa[3]
 
 local mudtype="mud_names"
+local smud=" mudded"
 
-	if aa[2]=="hardmud" or aa[2]=="nothardmud" then mudtype="hardmud_names" end
+	if aa[2]=="hardmud" or aa[2]=="nothardmud" or aa[2]=="cake" or aa[2]=="notcake" then
+		mudtype="hardmud_names"
+		smud=" caked"
+	end
 	
 	if n then
-		if aa[2]=="mud" or aa[2]=="hardmud" then -- make them mud
+		if aa[2]=="mud" or aa[2]=="hardmud" or aa[2]=="cake" then -- make them mud
 
 	
 			local tab=get_shared_names_by_ip(n) -- hit all people of the same ip
@@ -3391,7 +3395,7 @@ local mudtype="mud_names"
 			
 			end			
 			
-		elseif aa[2]=="notmud" or aa[2]=="nothardmud" then -- release them if we must
+		elseif aa[2]=="notmud" or aa[2]=="nothardmud"  or aa[2]=="notcake" then -- release them if we must
 		
 			if n=="*" then data[mudtype]={} end -- quick unmud of everyone
 		
@@ -3418,10 +3422,11 @@ local mudtype="mud_names"
 		end
 	end
 	
+	
 	if gotmud then
 		for i=10,1,-1 do
 			if tab[i] then
-				noir_say(brain,string.sub(str_join_english_list(tab[i]),1,256).." "..((tab[i][2] and "are") or "is").." mud"..i,user)
+				noir_say(brain,string.sub(str_join_english_list(tab[i]),1,256).." "..((tab[i][2] and "are") or "is")..smud..i,user)
 			end
 		end
 	else
@@ -3430,7 +3435,7 @@ local mudtype="mud_names"
 
 end
 
-for i,v in ipairs{"mud","notmud","hardmud","nothardmud"} do
+for i,v in ipairs{"mud","notmud","hardmud","nothardmud","cake","notcake"} do
 	noir_triggers[v]=noir_say_mud
 end
 -----------------------------------------------------------------------------
