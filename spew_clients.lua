@@ -23,7 +23,7 @@ end
 --
 -----------------------------------------------------------------------------
 function client_connected(client,flavour)
---dbg("connected"," ",dbg_client(client),"\n")
+--dbg("connected"," ",dbg_client(client)," : ",flavour or "","\n")
 
 	local ctab={}
 	data.clients_tab[client]=ctab
@@ -78,6 +78,7 @@ end
 --
 -----------------------------------------------------------------------------
 function client_handshake_set(client,flavour)
+--dbg("handshake"," ",dbg_client(client)," : ",flavour or "","\n")
 
 local ctab=data.clients_tab[client]
 
@@ -90,6 +91,7 @@ local ctab=data.clients_tab[client]
 		ctab.websocket=true
 	end
 	
+	client_send(client,"") -- send anything we are waiting to send
 end
 
 
@@ -206,8 +208,10 @@ local user=data.clients[client]
 			
 	else -- delay sending until after connection has been confirmed
 	
-		ctab.spew_send_cache=ctab.spew_send_cache or {}
-		ctab.spew_send_cache[#ctab.spew_send_cache+1]=line
+		if line~="" then	
+			ctab.spew_send_cache=ctab.spew_send_cache or {}
+			ctab.spew_send_cache[#ctab.spew_send_cache+1]=line
+		end
 		
 	end
 
@@ -344,7 +348,7 @@ local line_term="\0"
 		line_term="\n"
 	elseif ctab.irc then -- break on \n not \0
 		line_term="\n"
-	elseif ctab.websocket then -- break on \255 not \0
+	elseif ctab.websocket_old then -- break on \255 not \0
 		line_term="\255"
 	end
 
@@ -381,7 +385,8 @@ local line_term="\0"
 		
 			linepart=string.sub(user.lineparts,1,zero-1) -- command
 			user.lineparts=string.sub(user.lineparts,zero+1) -- remainder
-		
+
+--dbg("handling: ",linepart,"\n")		
 			table.insert(user.linein,linepart) -- do this line in the users coroutine
 		else
 			user.lineparts=string.sub(user.lineparts,zero+1) -- remainder
