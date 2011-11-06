@@ -3413,7 +3413,7 @@ local smud=" mudded"
 
 	local tab={}
 	local gotmud
-	for n,b in pairs(data.mud_names) do
+	for n,b in pairs(data[mudtype]) do
 		if n~="" then
 			if type(b)~="number" then b=10 end -- default number
 			tab[b]=tab[b] or {}
