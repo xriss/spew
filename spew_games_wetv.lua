@@ -2134,6 +2134,11 @@ local function string_to_youtubeid(s)
 local r
 local sp
 
+	sp=string.find(s,"youtu.be/",1,true)
+	if sp then
+		r=string.sub(s,sp+9,sp+9+10)
+	end
+
 	sp=string.find(s,"youtube.com/watch?v=",1,true)
 	if sp then
 		r=string.sub(s,sp+20,sp+20+10)
@@ -2157,6 +2162,17 @@ local sp
 		r=string.sub(s,sp+18,sp+18+10)
 	end
 	
+-- this is quite generic if the above failed
+	if not r then
+		sp=string.find(s,"youtube",1,true) -- check site
+		if sp then
+			sp=string.find(s,"v=",1,true) -- look for args
+			if sp then
+				r=string.sub(s,sp+2,sp+2+10)
+			end
+		end
+	end
+
 	if r then r=string.gsub(r, "[^a-zA-Z0-9_%-]+", "" ) end -- check chars
 	
 	if r and string.len(r)~=11 then r=nil end -- check length
