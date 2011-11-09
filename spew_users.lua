@@ -3721,7 +3721,6 @@ end
 -----------------------------------------------------------------------------
 function user_say_check(user,aa)
 
---[[
 	if aa[1]=="gimp" then
 
 		local vic_name=day_flag_get(user.name,"gimp")
@@ -3735,7 +3734,7 @@ function user_say_check(user,aa)
 		
 			local r=math.random(25)
 			if r==23 then
-				roomqueue(user.room,{cmd="note",note="act",arg1=user.name.." has lost their gimp "..vic.name})
+				roomqueue(user.room,{cmd="note",note="act",arg1=user.name.." has lost their gimp "..vic.name},user)
 				day_flag_clear(user.name,"gimp")
 				return
 			end
@@ -3750,14 +3749,14 @@ function user_say_check(user,aa)
 					
 			if vic.room ~= user.room then
 			
-				roomqueue(vic.room,{cmd="act",frm=vic.name,txt="dances out of the room"})
+				roomqueue(vic.room,{cmd="act",frm=vic.name,txt="dances out of the room"},user)
 				join_room_str(vic,user.room.name) -- victim gets yanked as long as they are allowed into the room					
 				
 			end
 			
 			if vic.room ~= user.room then -- gimp couldnt come, so master trys to go to gimp
 			
-				roomqueue(user.room,{cmd="act",frm=user.name,txt="dances out of the room"})
+				roomqueue(user.room,{cmd="act",frm=user.name,txt="dances out of the room"},user)
 				join_room_str(user,vic.room.name) -- master gets yanked as long as they are allowed into the room					
 				
 			end
@@ -3767,11 +3766,11 @@ function user_say_check(user,aa)
 			if vic.room==user.room then -- they are in same room
 			
 				day_flag_set(vic.name,"dizzy",os.time()+20) -- the victim is only dizzy if they end up in the same room
-				roomqueue(vic.room,{cmd="act",frm=vic.name,txt="dances for "..user.name})
+				roomqueue(vic.room,{cmd="act",frm=vic.name,txt="dances for "..user.name},user)
 			
 			else -- room entry was denied
 				
-				roomqueue(vic.room,{cmd="act",frm=vic.name,txt="pines for "..user.name})
+				roomqueue(vic.room,{cmd="act",frm=vic.name,txt="pines for "..user.name},user)
 				
 			end
 		
@@ -3788,7 +3787,7 @@ function user_say_check(user,aa)
 					
 				end
 			
-				roomqueue(vic.room,{cmd="say",frm=vic.name,txt=table.concat(ab," ")})
+				roomqueue(vic.room,{cmd="say",frm=vic.name,txt=table.concat(ab," ")},user)
 			
 			end
 			
@@ -3804,19 +3803,19 @@ function user_say_check(user,aa)
 					
 				end
 			
-				roomqueue(vic.room,{cmd="act",frm=vic.name,txt=table.concat(ab," ")})
+				roomqueue(vic.room,{cmd="act",frm=vic.name,txt=table.concat(ab," ")},user)
 			
 			end
 			
 		elseif aa[2]=="release" then -- get rid of gimp
 		
-			roomqueue(user.room,{cmd="note",note="act",arg1=user.name.." has released "..vic.name})
+			roomqueue(user.room,{cmd="note",note="act",arg1=user.name.." has released "..vic.name},user)
 			day_flag_clear(user.name,"gimp")
 			
 		end
 	
 	end
-]]
+
 end
 
 -----------------------------------------------------------------------------
