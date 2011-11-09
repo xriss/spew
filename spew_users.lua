@@ -118,11 +118,9 @@ local user={}
 	if user.client then
 		local ctab=data.clients_tab[user.client]
 		if ctab.telnet then
---			user.client_flavour="telnet" -- we have a special telnet flavour
 			user.gamename="telnet"
 			user.spew_ok_to_send=true -- do not wait for input
 		elseif ctab.irc then
---			user.client_flavour="irc" -- we have a special telnet flavour
 			user.gamename="irc"
 			user.spew_ok_to_send=true -- do not wait for input
 		end	
@@ -289,7 +287,7 @@ function telnet_str_to_msg(user,_line,msg)
 	
 		local cmd=string.lower(aa[1])
 		
-		if cmd=="/logout" then
+		if cmd=="/logout" or cmd=="/quit" then
 		
 			msg.cmd="logout"
 			return
@@ -653,9 +651,16 @@ function irc_str_to_msg(user,_line,msg)
 --dbg("IRC: "..table.concat(cmd,",").."\n")
 
 	local function irc_room(s)
-		return string.gsub(s or "", "#+", "" ) or ""
+		s=string.gsub(s or "", "#+", "" ) or ""
+		return s
+	end
+	
+	local function irc_user(s)
+		s=string.gsub(s or "", "@+", "" ) or ""
+		return s
 	end
 
+	cmd[1]=string.upper(cmd[1] or "")
 
 	if cmd[1]=="USER" then -- prelogin, the client tells us who they are
 	
@@ -684,8 +689,10 @@ function irc_str_to_msg(user,_line,msg)
 	
 	elseif cmd[1]=="JOIN" then -- join
 	
+
 		msg.cmd="join"
 		msg.room=irc_room(cmd[2])
+
 		return
 		
 	elseif cmd[1]=="PRIVMSG" then -- speak
@@ -707,6 +714,21 @@ function irc_str_to_msg(user,_line,msg)
 			
 		end
 		
+	elseif cmd[1]=="LIST" then -- requesting room list
+	
+			msg.cmd="rooms"
+			return
+  
+   	elseif cmd[1]=="USERS" then -- rewuesting user list
+	
+			msg.cmd="users"
+			return
+			
+	elseif cmd[1]=="WHOIS" then -- who/find/info
+
+		msg.cmd="find"
+		msg.user=irc_user(cmd[2])
+
 	end
 	
 end
@@ -731,28 +753,43 @@ local frm,txt,cmd,note,a1,a2,a3
 
 	if cmd=="say" then
 		
-		if frm~=user.name then -- no echo
-			s=":"..frm.." PRIVMSG #"..(irc.room or"limbo").." :"..txt
-		end
+--		if frm~=user.name then -- no echo
+			s=":"..frm.." PRIVMSG #"..(user.room.name or "limbo").." :"..txt
+--		end
 
 	elseif cmd=="act" then
 	
-		if frm~=user.name then -- no echo
-			s=":"..frm.." PRIVMSG #"..(irc.room or"limbo").." :\1ACTION "..txt.."\1"
-		end
+--		if frm~=user.name then -- no echo
+			s=":"..frm.." PRIVMSG #"..(user.room.name or "limbo").." :\1ACTION "..txt.."\1"
+--		end
 		
 	elseif cmd=="mux" then
 	
-		if frm~=user.name then -- no echo
-			s=":"..frm.." PRIVMSG #"..(irc.room or"limbo").." :"..txt
-		end
+--		if frm~=user.name then -- no echo
+			s=":"..frm.." PRIVMSG #"..(user.room.name or "limbo").." :"..txt
+--		end
 		
 	elseif cmd=="lnk" then
 	
-		if frm~=user.name then -- no echo
-			s=":"..frm.." PRIVMSG #"..(irc.room or"limbo").." :"..txt.." "..(msg.lnk or "")
-		end
+--		if frm~=user.name then -- no echo
+			s=":"..frm.." PRIVMSG #"..(user.room.name or "limbo").." :"..txt.." "..(msg.lnk or "")
+--		end
 		
+	elseif cmd=="topic" then
+
+		s=":* 331 #"..user.room.name.." :No topic is set"
+		
+	elseif cmd=="find" then
+
+		local ss={}
+
+--		table.insert(ss,":* 311 "..user.name.." ~"..user.name.." * * :"..user.name)
+		table.insert(ss,":* 319 "..user.name.." :#"..user.room.name)
+--		table.insert(ss,":* 312 "..user.name.." *:*")
+		table.insert(ss,":* 318 "..user.name.." :End of LIST")
+		s=table.concat(ss,"\r\n")
+
+
 	elseif cmd=="note" then
 	
 		note=msg.note
@@ -760,54 +797,54 @@ local frm,txt,cmd,note,a1,a2,a3
 		a2=msg.arg2 or "*"
 		a3=msg.arg3 or "*"
 		
-		if note=="notice" or note=="warning" or note=="error" then
+		if note=="notice" or note=="warning" or note=="error"  or note=="welcome" then
 
-			s=":"..frm.." PRIVMSG #"..(irc.room or"limbo").." :"..a1
+			s=":".."cthulhu".." PRIVMSG #"..(user.room.name or "limbo").." :"..a1
 		
 		elseif note=="join" then
 
-			s=":"..a1.." JOIN ".." #"..a2
-			
-			irc.room=a2
+			s=":"..a1.." JOIN ".."#"..(user.room.name or "limbo")
 		
 		elseif note=="part" then
 
-			s=":"..a1.." PART ".." #"..a2
+			s=":"..a1.." PART ".."#"..a2
 		
 		elseif note=="act" then
 
-			s=":"..frm.." PRIVMSG #"..(irc.room or"limbo").." :"..a1
+			s=":".."cthulhu".." PRIVMSG #"..(user.room.name or "limbo").." :"..a1
 			
 		elseif note=="ban" then -- should these be turned into generic notices?
 		
-			s=":"..frm.." PRIVMSG #"..(irc.room or"limbo").." :"..a2.." has been banned by "..a1
+			s=":".."cthulhu".." PRIVMSG #"..(user.room.name or "limbo").." :"..a2.." has been banned by "..a1
 			
 		elseif note=="gag" then
 		
-			s=":"..frm.." PRIVMSG #"..(irc.room or"limbo").." :"..a2.." has been gagged by "..a1
+			s=":".."cthulhu".." PRIVMSG #"..(user.room.name or "limbo").." :"..a2.." has been gagged by "..a1
 			
 		elseif note=="dis" then
 		
-			s=":"..frm.." PRIVMSG #"..(irc.room or"limbo").." :"..a2.." has been disemvoweled by "..a1
-			
+			s=":".."cthulhu".." PRIVMSG #"..(user.room.name or "limbo").." :"..a2.." has been disemvoweled by "..a1
+					
 		elseif note=="rooms" then
 		
 			local l=msg.list
-			local t={}
+			local ss={}
 			if l then
 				local aa=str_split(",",l)
 				for i,v in ipairs(aa) do
 					local au=str_split(":",v)
-					table.insert(t,au[1].."("..au[2]..")")
+					table.insert(ss,":* 322 "..user.name.." #"..au[1].." "..au[2].." : ")
 				end
 			end
-		
---			s="-=ROOMS "..str_join_english_list(t).." ROOMS=-"
+
+			table.insert(ss,":* 323 "..user.name.." :End of LIST")
+			s=table.concat(ss,"\r\n")
 
 		elseif note=="users" then
 		
 			local l=msg.list
 			local t={}
+			local ss={}
 			if l and l~="" then
 				local aa=str_split(",",l)
 				for i,v in ipairs(aa) do
@@ -816,14 +853,16 @@ local frm,txt,cmd,note,a1,a2,a3
 				end
 			end
 		
-			s="353 "..user.name.." = #"..user.room.name.." :"..table.concat(t," ")
-			s=s.."\r\n366 "..user.name
+			table.insert(ss,":* 353 "..user.name.." = #"..user.room.name.." :"..table.concat(t," ") )
+			table.insert(ss,":* 366 "..user.name.." #"..user.room.name.." :End of /NAMES list.")
 			
+			s=table.concat(ss,"\r\n")
+		
 		end
 		
 	end
 
-
+--print(serialize(msg)," TO ",s)
 	if not s then return nil end
 	
 --dbg("RSP: "..(s).."\n")
@@ -866,7 +905,7 @@ local ip=user_ip(user)
 	
 		local r=irc_str_to_msg(user,line,msg)
 		
-		if r then -- special immediate irc response
+		if r then -- special immediate irc response?
 			usercast( user,{cmd="irc",irc=r} )
 		end
 		
@@ -2739,11 +2778,16 @@ function user_msg_find(user,name)
 			
 				msg.arg1=name.." is in room "..u.room.name
 			
+if user.gamename=="irc" then -- special find msg for irc
+	return {cmd="find"}
+end
+
 			end
 		
 		end
 	
 	end
+	
 	
 	
 	return msg	
