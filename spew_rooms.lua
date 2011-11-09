@@ -553,7 +553,7 @@ function join_room(user,room)
 
 	if (not user) or (not room) then return false end	-- null check
 	
-	if user.room==room then return true end -- we are already here
+	if user.room==room then	return true end -- we are already here
 
 
 	leave_room(user)
@@ -564,6 +564,10 @@ function join_room(user,room)
 	user.room=room
 	
 	if user.brain then user.brain.room=room end
+
+
+	roomcast(user.room,join_room_build_msg(user.name))
+
 
 -- connect this user to mux if we need to
 	if room.mux then
@@ -602,13 +606,19 @@ function join_room(user,room)
 			
 		end
 		
-		if user.client_flavour=="telnet" and room.name=="limbo" and user.name=="me" then -- special welcome msg
+		if user.gamename=="irc" then -- special welcome msg
+		
+			usercast(user,{cmd="topic"})
+			usercast(user,list_users_msg(user))
+			usercast(user,{cmd="note",note="welcome",arg1=room.welcome,back=room.imgback or "-"})
+		
+		elseif user.gamename=="telnet" and room.name=="limbo" and user.name=="me" then -- special welcome msg
 		
 			usercast(user,{cmd="note",note="notice",arg1="Welcome to the world of tomorrow!"})
 			usercast(user,{cmd="note",note="notice",arg1="visit http://join.wetgenes.com/ to make an account."})
 			usercast(user,{cmd="note",note="notice",arg1="/LOGIN NAME PASS will log you in and /LOGOUT will log you out."})
 			usercast(user,{cmd="note",note="notice",arg1="Everything you type will normally just be said. Special commands begin with / for instance /ME FALLS OVER for acts or /ROOMS for a room list and /JOIN ROOMNAME to join a room, /USERS will give you a list of who is in this room."})
-			usercast(user,{cmd="note",note="notice",arg1="type CONNECT NAME PASS or GUEST NAME to login."})
+--			usercast(user,{cmd="note",note="notice",arg1="type CONNECT NAME PASS or GUEST NAME to login."})
 		
 		else
 			if string.sub(room.welcome,1,7)=="http://" then -- image welcome
@@ -627,7 +637,6 @@ function join_room(user,room)
 	
 	end
 	
-	roomcast(user.room,join_room_build_msg(user.name))
 
 	update_and_check_user_status( user , nil )
 	
@@ -1113,6 +1122,10 @@ function roomcast(room,msg,user)
 
 	fix_msg_rgb(user,msg)
 
+
+	
+
+--[[
 	if room.name=="limbo" then -- special to filter some msgs from limbo
 
 		if msg.cmd=="note" then -- ignore some notes
@@ -1122,12 +1135,17 @@ function roomcast(room,msg,user)
 					usercast(user,msg)
 --					client_send(user.client , msg_to_str(msg,user.msg) .. "\n\0")  -- every client gets a custom built string
 				end
-				return
+				if user and user.gamename=="irc" then
+				else
+					return
+				end
+--				if user.client_flavour!= "irc" then return end
 			end
 			
 		end
 		
 	end
+]]
 
 -- do not pass in the blame, just use it so bots can pick up on users spaming with bot help
 local blame=msg.blame

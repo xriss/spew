@@ -30,6 +30,7 @@ function client_connected(client,flavour)
 
 	if flavour=="telnet" then
 		ctab.telnet=true
+		ctab.spew_ok_to_send=true
 	elseif flavour=="irc" then
 		ctab.irc=true
 	end
@@ -128,7 +129,7 @@ local function wrap(ctab,line)
 		
 	elseif ctab.irc then
 	
-		return line
+		return line.."\r\n"
 		
 	elseif ctab.websocket then
 	
@@ -338,6 +339,7 @@ function client_received(client,line)
 	local ctab=data.clients_tab[client]
 
 --dbg("received ",line," ",dbg_client(client),"\n")
+
 	if ctab.websocket then return client_received_websocket(client,line) end
 
 local user=data.clients[client]
