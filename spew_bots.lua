@@ -302,13 +302,13 @@ local r
 				
 	u.brain.update(u.brain)
 
-dbg("vroom:",vroom.name,"\n")
+--dbg("vroom:",vroom.name,"\n")
 	
 	
 	
 	v="lieza" -- limbo bot
 	u=new_user{name=v}
-	data.brains[u]=new_brain[v]{ user=u }
+	data.brains[u]=new_brain[v]{ user=u, room="limbo" }
 	u.room.brain=u.brain
 
 

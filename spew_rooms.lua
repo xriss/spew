@@ -563,11 +563,11 @@ function join_room(user,room)
 	room.users[user]=true
 	user.room=room
 	
-	if user.brain then user.brain.room=room end
-
-
-	roomcast(user.room,join_room_build_msg(user.name))
-
+	if user.brain then
+		user.brain.room=room
+	else
+		roomcast(user.room,join_room_build_msg(user.name))
+	end
 
 -- connect this user to mux if we need to
 	if room.mux then
@@ -1125,27 +1125,21 @@ function roomcast(room,msg,user)
 
 	
 
---[[
 	if room.name=="limbo" then -- special to filter some msgs from limbo
 
 		if msg.cmd=="note" then -- ignore some notes
 			
 			if msg.note=="join" or msg.note=="part" or msg.note=="rename" then
 				if user and user.client then -- send to user anyway
-					usercast(user,msg)
---					client_send(user.client , msg_to_str(msg,user.msg) .. "\n\0")  -- every client gets a custom built string
+--					usercast(user,msg)
 				end
-				if user and user.gamename=="irc" then
-				else
-					return
-				end
---				if user.client_flavour!= "irc" then return end
+print(serialize(msg))
+--				return
 			end
 			
 		end
 		
 	end
-]]
 
 -- do not pass in the blame, just use it so bots can pick up on users spaming with bot help
 local blame=msg.blame

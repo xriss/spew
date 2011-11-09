@@ -119,6 +119,10 @@ end
 	{
 	} -- there are no more admins, just gods and bots and user levels
 	
+
+
+	
+	
 	data.mod_names=
 	{
 	} -- there are no more mini mods, just gods and bots and user levels
@@ -133,6 +137,17 @@ end
 	for i,v in pairs(data.admin_names) do
 		data.mod_names[i]=v
 	end
+	
+-- check for godbot powah
+	data.godbot_names=
+	{
+	}
+	for i,v in pairs(data.god_names) do
+		data.godbot_names[i]=v
+	end
+	for i,v in pairs(data.bot_names) do
+		data.godbot_names[i]=v
+	end	
 
 -- these people are perma gimped, owner=gimp
 	data.gimp_names=
@@ -508,7 +523,6 @@ dr{
 	check_spam()
 	
 -- reload bots
-	
 	remove_all_bots()
 	add_bots()
 	
