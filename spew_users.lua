@@ -119,10 +119,8 @@ local user={}
 		local ctab=data.clients_tab[user.client]
 		if ctab.telnet then
 			user.gamename="telnet"
-			user.spew_ok_to_send=true -- do not wait for input
 		elseif ctab.irc then
 			user.gamename="irc"
-			user.spew_ok_to_send=true -- do not wait for input
 		end	
 	end
 

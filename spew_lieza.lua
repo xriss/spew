@@ -520,6 +520,13 @@ local brain={}
 	
 	brain.saywait=5
 
+	if opts.room then
+	local room=get_room(opts.room)
+		if room then
+			join_room(brain.user,room)
+		end
+	end
+	
 	return brain
 end
 
