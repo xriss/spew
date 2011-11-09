@@ -1125,6 +1125,7 @@ function roomcast(room,msg,user)
 
 	
 
+--[[
 	if room.name=="limbo" then -- special to filter some msgs from limbo
 
 		if msg.cmd=="note" then -- ignore some notes
@@ -1140,6 +1141,7 @@ print(serialize(msg))
 		end
 		
 	end
+]]
 
 -- do not pass in the blame, just use it so bots can pick up on users spaming with bot help
 local blame=msg.blame
