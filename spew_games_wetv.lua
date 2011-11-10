@@ -2779,6 +2779,10 @@ local t={
 		game.vidlock=true
 		game.vid_ids=gtab.movie_ids[i]
 		game.broadcast_news=true
+
+		local room=game.room -- add some protection
+		if room and ( (room.protect_time or 0 )<os.time()+(60*60*24*10) ) then room.protect_time=os.time()+(60*60*24*10) end
+		
 	end
 
 	day_flag_clear("*","wetv_movies_done")
