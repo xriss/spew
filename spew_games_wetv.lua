@@ -2770,12 +2770,12 @@ local t={
 	
 
 
--- noir is expanding his range
+-- the all new movie tv chanels full o crap :)
 	for i,v in pairs(noir_cats) do
 		game=dr{
-		name="noir.tv."..i,
-		welcome="Welcome to noir.tv."..i.." this room is usually TV locked so just sit back and watch this movie channel.",
-		addnoir="noir"}	
+		name="tv."..i,
+		welcome="Welcome to tv."..i.." this room is usually TV locked so just sit back and watch this movie channel.",
+		addnoir="reg"}	
 		game.vidlock=true
 		game.vid_ids=gtab.movie_ids[i]
 		game.broadcast_news=true
