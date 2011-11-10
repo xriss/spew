@@ -2471,13 +2471,22 @@ dbg("movie loading\n")
 
 	local vids={}
 
-	for idx=1,5 do
+	for i,v in ipairs{
+		"http://www.youtube.com/movies/horror?fl=f&l=en&pt=g&st=d",
+		"http://www.youtube.com/movies/action-adventure?fl=f&l=en&pt=fm&st=f",
+		"http://www.youtube.com/movies/comedy?fl=f&l=en&pt=fm&st=f",
+		"http://www.youtube.com/movies/classics?fl=f&l=en&pt=fm&st=f",
+		"http://www.youtube.com/movies/mystery-suspense?fl=f&l=en&pt=fm&st=f",
+		"http://www.youtube.com/movies/animation-cartoons?fl=f&l=en&pt=fm&st=f",
+		"http://www.youtube.com/movies/crime?fl=f&l=en&pt=fm&st=f",
+--		"http://www.youtube.com/movies?fl=f&pt=fm",
+		} do
 
-		local ret=lanes_url("http://www.youtube.com/movies?s=mva&p="..idx) -- pull in video info
+		local ret=lanes_url(v) -- pull in video info source
 		
-		if ret.body then -- got some trailers...
+		if ret.body then -- got some movies
 		
-			local t=str_split("/watch?v=",ret.body)
+			local t=str_split("ytimg.com/vi/",ret.body)
 			
 			for i,v in ipairs(t) do
 			
@@ -2501,13 +2510,16 @@ dbg("movie loading\n")
 		
 	end
 	
-	for i,v in pairs(gtab.movie_ids) do -- keep table pointer
+	for i,v in pairs(gtab.movie_ids) do -- keep table pointer but clear movies
 		gtab.movie_ids[i]=nil
 	end
 	
-	for id,b in pairs(vids) do -- but refill table
+	for id,b in pairs(vids) do -- refill table with new movies
 		table.insert(gtab.movie_ids,id)
 	end
+
+dbg("movies found "..(#gtab.movie_ids).."\n")
+
 
 end
 
