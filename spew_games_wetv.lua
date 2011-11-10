@@ -2473,12 +2473,12 @@ dbg("movie loading\n")
 
 	for i,v in ipairs{
 		"http://www.youtube.com/movies/horror?fl=f&l=en&pt=g&st=d",
-		"http://www.youtube.com/movies/action-adventure?fl=f&l=en&pt=fm&st=f",
-		"http://www.youtube.com/movies/comedy?fl=f&l=en&pt=fm&st=f",
-		"http://www.youtube.com/movies/classics?fl=f&l=en&pt=fm&st=f",
-		"http://www.youtube.com/movies/mystery-suspense?fl=f&l=en&pt=fm&st=f",
-		"http://www.youtube.com/movies/animation-cartoons?fl=f&l=en&pt=fm&st=f",
-		"http://www.youtube.com/movies/crime?fl=f&l=en&pt=fm&st=f",
+		"http://www.youtube.com/movies/action-adventure?fl=f&l=en&pt=g&st=d",
+		"http://www.youtube.com/movies/comedy?fl=f&l=en&pt=g&st=d",
+		"http://www.youtube.com/movies/classics?fl=f&l=en&pt=g&st=d",
+		"http://www.youtube.com/movies/mystery-suspense?fl=f&l=en&pt=g&st=d",
+		"http://www.youtube.com/movies/animation-cartoons?fl=f&l=en&pt=g&st=d",
+		"http://www.youtube.com/movies/crime?fl=f&l=en&pt=g&st=d",
 --		"http://www.youtube.com/movies?fl=f&pt=fm",
 		} do
 
