@@ -7,6 +7,24 @@ data.gametypes["tv"]=gtab -- shorter name
 
 gtab.name="wetv"
 
+local noir_cats={
+		horror="horror",
+		scifi="science-fiction",
+		action="action-adventure",
+		comedy="comedy",
+		clasic="classics",
+		mystery="mystery-suspense",
+		toons="animation-cartoons",
+		crime="crime",
+		doc="documentary",
+		drama="drama",
+		family="family",
+		romance="romance",
+		foreign="foreign-film",
+		new="",
+}
+
+
 local tv_triggers={}
 local tv_trigger=nil
 
@@ -310,6 +328,7 @@ local vid_ids=
 gtab.vid_ids=gtab.vid_ids or vid_ids -- keep in gtab
 
 gtab.movie_ids=gtab.movie_ids or {}
+for i,v in pairs(noir_cats) do gtab.movie_ids[i]=gtab.movie_ids[i] or {} end -- need perma table for each
 
 
 local tv_add_lines=
@@ -2469,9 +2488,14 @@ gtab.update_co_movies = function()
 
 dbg("movie loading\n")
 
-	local vids={}
 
-	for i,v in ipairs{
+	for i,v in pairs(gtab.movie_ids) do -- keep table pointers but clear all movies
+		for j,v in pairs(v) do
+			gtab.movie_ids[i][j]=nil
+		end
+	end
+
+--[[	for i,v in ipairs{
 		"http://www.youtube.com/movies/horror?fl=f&l=en&pt=g&st=d",
 		"http://www.youtube.com/movies/action-adventure?fl=f&l=en&pt=g&st=d",
 		"http://www.youtube.com/movies/comedy?fl=f&l=en&pt=g&st=d",
@@ -2481,8 +2505,13 @@ dbg("movie loading\n")
 		"http://www.youtube.com/movies/crime?fl=f&l=en&pt=g&st=d",
 --		"http://www.youtube.com/movies?fl=f&pt=fm",
 		} do
+]]
 
-		local ret=lanes_url(v) -- pull in video info source
+	for i,v in pairs(noir_cats) do
+	
+		local vids={}
+
+		local ret=lanes_url("http://www.youtube.com/movies/"..v.."?fl=f&l=en&pt=nr&st=d") -- pull in video info source
 		
 		if ret.body then -- got some movies
 		
@@ -2508,17 +2537,15 @@ dbg("movie loading\n")
 		
 		end
 		
-	end
-	
-	for i,v in pairs(gtab.movie_ids) do -- keep table pointer but clear movies
-		gtab.movie_ids[i]=nil
-	end
-	
-	for id,b in pairs(vids) do -- refill table with new movies
-		table.insert(gtab.movie_ids,id)
-	end
+		for id,b in pairs(vids) do -- refill table with new movies
+			table.insert(gtab.movie_ids[i],id)
+		end
 
-dbg("movies found "..(#gtab.movie_ids).."\n")
+dbg(i.." movies found "..(#gtab.movie_ids[i]).."\n")
+
+	end
+	
+	
 
 
 end
@@ -2736,13 +2763,17 @@ local t={
 	addnoir="reg"}
 	
 
-	game=dr{
-	name="noir.tv",
-	welcome="Welcome to noir.tv this room is usually TV locked so just sit back and watch this movie channel.",
-	addnoir="noir"}	
-	game.vidlock=true
-	game.vid_ids=gtab.movie_ids
-	game.broadcast_news=true
+
+-- noir is expanding his range
+	for i,v in pairs(noir_cats) do
+		game=dr{
+		name="noir.tv."..i,
+		welcome="Welcome to noir.tv."..i.." this room is usually TV locked so just sit back and watch this movie channel.",
+		addnoir="noir"}	
+		game.vidlock=true
+		game.vid_ids=gtab.movie_ids[i]
+		game.broadcast_news=true
+	end
 
 	day_flag_clear("*","wetv_movies_done")
 
