@@ -328,6 +328,7 @@ local vid_ids=
 gtab.vid_ids=gtab.vid_ids or vid_ids -- keep in gtab
 
 gtab.movie_ids=gtab.movie_ids or {}
+
 for i,v in pairs(noir_cats) do gtab.movie_ids[i]=gtab.movie_ids[i] or {} end -- need perma table for each
 
 
@@ -2490,9 +2491,14 @@ dbg("movie loading\n")
 
 
 	for i,v in pairs(gtab.movie_ids) do -- keep table pointers but clear all movies
-		for j,v in pairs(v) do
-			gtab.movie_ids[i][j]=nil
-		end
+
+		if type(v)=="table" then
+			for j,v in pairs(v) do
+				gtab.movie_ids[i][j]=nil
+			end
+		else
+			gtab.movie_ids[i]=nil -- live cleanup
+ 		end
 	end
 
 --[[	for i,v in ipairs{
