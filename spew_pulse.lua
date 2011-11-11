@@ -204,7 +204,7 @@ local function update(pulse)
 	else
 		pulse.next_check_minute = (force_floor(os.time()/(60))+1)*(60) -- check again next minute on the minute
 		save_posix_data()
-		game_pulse()
+		game_pulse() -- pulse everygame
 	end
 	
 	if ( pulse.next_check_hour ) and ( pulse.next_check_hour >= os.time() ) then -- wait
@@ -212,7 +212,7 @@ local function update(pulse)
 		pulse.next_check_hour = (force_floor(os.time()/(60*60))+1)*(60*60) -- check again next hour, on the hour
 		
 		local tab={}
-		for i,v in pairs(data.gametypes) do tab[v]=true end
+		for i,v in pairs(data.gametypes) do tab[v]=true end -- pulse every game type
 		for v,b in pairs(tab) do
 			if v.hour_tick then v.hour_tick() end
 		end
