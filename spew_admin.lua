@@ -183,7 +183,7 @@ end
 -----------------------------------------------------------------------------
 function is_god(name)
 
-	if data.god_names[ string.lower(name) ] then return true end
+	if name and data.god_names[ string.lower(name) ] then return true end
 	
 	return false
 end
