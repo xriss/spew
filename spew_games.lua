@@ -2673,3 +2673,25 @@ local m={}
 	end
 
 end
+
+
+
+-----------------------------------------------------------------------------
+--
+-- called once a minute to update games pulse in all active games
+--
+-----------------------------------------------------------------------------
+function game_pulse()
+
+
+	for i,v in pairs(data.games) do
+	
+		local gtab=data.gametypes[v.name or ""]
+
+		if gtab and gtab.pulse then
+			gtab.pulse(v)
+		end	
+	end
+
+end
+

@@ -204,6 +204,7 @@ local function update(pulse)
 	else
 		pulse.next_check_minute = (force_floor(os.time()/(60))+1)*(60) -- check again next minute on the minute
 		save_posix_data()
+		game_pulse()
 	end
 	
 	if ( pulse.next_check_hour ) and ( pulse.next_check_hour >= os.time() ) then -- wait

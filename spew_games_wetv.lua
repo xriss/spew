@@ -2062,7 +2062,18 @@ gtab.clean = function(game)
 
 
 end
+-----------------------------------------------------------------------------
+-- 
+-- called once a minute by the pulse code for all active games
+-- 
+-----------------------------------------------------------------------------
+gtab.pulse = function(game)
 
+--dbg("gamepulse ",game.id,"\n")
+
+	check_vid(game)
+
+end
 -----------------------------------------------------------------------------
 --
 -- add a tv to this newly created room
@@ -2545,6 +2556,7 @@ dbg("movie loading\n")
 		
 		for id,b in pairs(vids) do -- refill table with new movies
 			table.insert(gtab.movie_ids[i],id)
+			table.insert(gtab.vid_reqs,id) -- request info from thepubes about video
 		end
 
 dbg(i.." movies found "..(#gtab.movie_ids[i]).."\n")
@@ -2579,7 +2591,7 @@ gtab.update_co = function()
 --			dbg("Video not found\n")
 		
 			gtab.vid_infos[utvid]={title="broken",duration=0,stamp=os.time()} -- mark this id as dead from youtubes point of view
-			
+dbg("bad video id "..utvid,"\n")
 		else
 		
 			if string.find(ret.body, "yt$noembed", 1, true) then -- we can not play this :(
@@ -2587,7 +2599,17 @@ gtab.update_co = function()
 --			dbg("Video not embededable\n")
 			
 			gtab.vid_infos[utvid]={title="noembed",duration=0,stamp=os.time()} -- mark this id as dead from youtubes point of view
+
+dbg("bad video id "..utvid.." NOEMBED","\n")
 			
+			elseif string.find(ret.body, "media$restriction", 1, true) then -- if you restrict media to anyone...
+
+				gtab.vid_infos[utvid]={title="restricted",duration=0,stamp=os.time()} -- mark this id as dead
+
+-- refuse to play *any* region restricted videos, one for all and all for one as they say	
+
+dbg("bad video id "..utvid.." REGION","\n")
+
 			else
 	
 			local info=Json.Decode(ret.body)
@@ -2612,6 +2634,8 @@ gtab.update_co = function()
 				if tab.title and tab.duration then -- remember what we know, trust youtube to tell us the truth
 				
 					gtab.vid_infos[utvid]=tab
+
+dbg("new video id "..utvid.." : "..tab.title,"\n")
 					
 				end
 			
@@ -2643,25 +2667,6 @@ gtab.update = function()
 	if type(gtab.co)~="thread" then gtab.co=nil end -- no co yet
 	if gtab.co and coroutine.status(gtab.co)=="dead" then gtab.co=nil end -- the co died
 
--- grab new trailers from youtube once a day?
---
--- fucking emo wankers, I can take it no more,
---
--- adios douchbags
---
---[[
-
-	if not day_flag_get("*","wetv_trailers_done") then
-	
-		if not gtab.co then -- only when not doing anything else
-		
-			gtab.co=coroutine.create(gtab.update_co_trailers)
-		
-			day_flag_set("*","wetv_trailers_done")
-		end
-	end
-]]
-	
 -- grab new movies from youtube once a day?
 	if not day_flag_get("*","wetv_movies_done") then
 		if not gtab.co then -- only when not doing anything else
