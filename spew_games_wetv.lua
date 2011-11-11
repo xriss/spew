@@ -2556,7 +2556,10 @@ dbg("movie loading\n")
 		
 		for id,b in pairs(vids) do -- refill table with new movies
 			table.insert(gtab.movie_ids[i],id)
-			table.insert(gtab.vid_reqs,id) -- request info from thepubes about video
+			
+			if not gtab.vid_infos[id] then -- only ask for new vids
+				table.insert(gtab.vid_reqs,id) -- request info from thepubes about video
+			end
 		end
 
 dbg(i.." movies found "..(#gtab.movie_ids[i]).."\n")
