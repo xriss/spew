@@ -1369,22 +1369,40 @@ local hash_lookup={
 		local tim=tonumber(msg.time) or 0
 		if tim>0 then tim=os.time()+(tim*60) else tim=0  end
 
-		set_status_all(user,"ban", string.gsub(msg.user, "[^0-9a-zA-Z%-_.]+", "" ) , tim )
-	
+		if msg.user=="*" then
+			for v,b in pairs(user.room.users) do
+				set_status_all(user,"ban", v.name , tim )
+			end
+		else
+			set_status_all(user,"ban", string.gsub(msg.user, "[^0-9a-zA-Z%-_.]+", "" ) , tim )
+		end
+		
 	elseif msg.cmd=="gag" then
 
 		local tim=tonumber(msg.time) or 0
 		if tim>0 then tim=os.time()+(tim*60) else tim=0  end
 
-		set_status_all(user,"gag", string.gsub(msg.user, "[^0-9a-zA-Z%-_]+", "" ) , tim )
+		if msg.user=="*" then
+			for v,b in pairs(user.room.users) do
+				set_status_all(user,"gag", v.name , tim )
+			end
+		else
+			set_status_all(user,"gag", string.gsub(msg.user, "[^0-9a-zA-Z%-_]+", "" ) , tim )
+		end
 	
 	elseif msg.cmd=="dis" then
 
 		local tim=tonumber(msg.time) or 0
 		if tim>0 then tim=os.time()+(tim*60) else tim=0 end
 
-		set_status_all(user,"dis", string.gsub(msg.user, "[^0-9a-zA-Z%-_]+", "" ) , tim )
-	
+		if msg.user=="*" then
+			for v,b in pairs(user.room.users) do
+				set_status_all(user,"dis", v.name , tim )
+			end
+		else
+			set_status_all(user,"dis", string.gsub(msg.user, "[^0-9a-zA-Z%-_]+", "" ) , tim )
+		end
+		
 	elseif msg.cmd=="kick" then
 	
 		if msg.user and msg.user=="*" then -- multi boot
