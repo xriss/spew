@@ -1084,7 +1084,12 @@ dbg(msg_to_str(msg).."\n")
 					
 					data.ipmap={}
 					data.ipwho={}
+					
+				elseif aa[2] == "crowns" then
 
+					game_thorns() -- check for the real weaners every day
+					game_crowns() -- check for game weaners on the hour
+	
 				elseif aa[2] == "shutdown" then
 				
 					for i=100,0,-1 do -- let's have a little count down to shit up the users
