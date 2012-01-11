@@ -343,13 +343,11 @@ dr{
 }
 
 -- create fiction room
---[[
 dr{
 	name="fiction",
 	mux=true,
 	welcome="Welcome to Wet Fiction, this is a MUSH ROOM, type *help for help and remember to put * before all commands otherwise you will just talk.",
 }
-]]
 
 -- create public room
 dr{
