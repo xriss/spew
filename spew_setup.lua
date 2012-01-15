@@ -303,6 +303,10 @@ end
 	data.alt_names["zombunny"]=1
 	data.alt_names["eiko"]=1
 
+-- new for 2012
+
+	data.alt_names["darkest_waist"]=1
+	
 
 -- cache the ips here, do not save these ips
 
