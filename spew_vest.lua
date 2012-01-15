@@ -161,7 +161,8 @@ function vest_load_rates()
 	end
 	
 	data.vest["EUR"] = 1 -- always 1:1
-	
+	data.vest["EEK"]=  60000000/os.time() -- no longer exists...
+		
 --	data.vest["CKE"] = 100000 -- fixed number of cookies to 1 euro? nope, keep numbers scaled up and integers
 
 -- pull in live data
@@ -178,6 +179,8 @@ dbg( "Check vest.\n")
 	
 	local old={}
 	
+	
+	
 -- old data
 	
 	for i,v in pairs(data.vest) do
@@ -185,7 +188,8 @@ dbg( "Check vest.\n")
 		old[i]=v
 	
 	end
-	
+
+
 	ret=lanes_url("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml") -- pull in feed
 	
 	if ret.body then
