@@ -1196,15 +1196,25 @@ local newtxt=nil
 	end
 	
 	local star_tag=day_flag_get("*","tag") -- the stars align for a special tag effect today
+	
 	if star_tag and user then
+	
 		if string.lower(user.name)==string.lower(data.tagged_name or "") then -- only the tagged user
 		
 			if msg.cmd=="say" and star_tag=="strong" then -- the tagged user has a special case
 				oldtxt=msg.txt
 				newtxt="Cirno am the strongest!"
 			end
-		
+			
 		end
+		
+		if star_tag=="redacted" then
+			if (msg.cmd=="say" or msg.cmd=="act") then -- redacted
+				oldtxt=msg.txt
+				newtxt="[REDACTED]"
+			end
+		end
+		
 	end
 	
 	if room.game then -- send chat into the game, this may kill the ,msg
