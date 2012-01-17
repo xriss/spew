@@ -878,6 +878,10 @@ dbg( "STARS ARE ALIGNED TO ", d.year , " " , d.month , " " , d.day , "\n" )
 
 		day_flag_set("*","ville_size",75)
 		
+	elseif d.month==1 and d.day==18 then -- welcome to freedom day
+
+		day_flag_set("*","tag","redacted")
+		
 	end
 
 	if d.day==1 then -- first day of each month gets...
