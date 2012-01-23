@@ -1208,8 +1208,8 @@ local newtxt=nil
 			
 		end
 		
-		if star_tag=="redacted" then
-			if (msg.cmd=="say" or msg.cmd=="act") then -- redacted
+		if star_tag=="redacted" then -- everyone not just the tag victim
+			if (msg.cmd=="say" or msg.cmd=="act") then -- redact all forms of communication
 				oldtxt=msg.txt
 				newtxt="[REDACTED]"
 			end
