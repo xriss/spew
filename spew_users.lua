@@ -3772,7 +3772,7 @@ function user_say_check(user,aa)
 					
 			if vic.room ~= user.room then
 			
-				roomqueue(vic.room,{cmd="act",frm=vic.name,txt="dances out of the room"},user)
+				roomqueue(vic.room,{cmd="act",frm=vic.name,txt="dances out of the room",blame=user.name},vic)
 				join_room_str(vic,user.room.name) -- victim gets yanked as long as they are allowed into the room					
 				
 			end
@@ -3789,11 +3789,11 @@ function user_say_check(user,aa)
 			if vic.room==user.room then -- they are in same room
 			
 				day_flag_set(vic.name,"dizzy",os.time()+20) -- the victim is only dizzy if they end up in the same room
-				roomqueue(vic.room,{cmd="act",frm=vic.name,txt="dances for "..user.name},user)
+				roomqueue(vic.room,{cmd="act",frm=vic.name,txt="dances for "..user.name,blame=user.name},vic)
 			
 			else -- room entry was denied
 				
-				roomqueue(vic.room,{cmd="act",frm=vic.name,txt="pines for "..user.name},user)
+				roomqueue(vic.room,{cmd="act",frm=vic.name,txt="pines for "..user.name,blame=user.name},vic)
 				
 			end
 		
@@ -3810,7 +3810,7 @@ function user_say_check(user,aa)
 					
 				end
 			
-				roomqueue(vic.room,{cmd="say",frm=vic.name,txt=table.concat(ab," ")},user)
+				roomqueue(vic.room,{cmd="say",frm=vic.name,txt=table.concat(ab," "),blame=user.name},vic)
 			
 			end
 			
@@ -3826,7 +3826,7 @@ function user_say_check(user,aa)
 					
 				end
 			
-				roomqueue(vic.room,{cmd="act",frm=vic.name,txt=table.concat(ab," ")},user)
+				roomqueue(vic.room,{cmd="act",frm=vic.name,txt=table.concat(ab," "),blame=user.name},vic)
 			
 			end
 			
