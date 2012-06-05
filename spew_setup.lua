@@ -307,6 +307,7 @@ end
 
 	data.alt_names["darkest_waist"]=1
 	
+	data.alt_names["verms"]=1
 
 -- cache the ips here, do not save these ips
 
