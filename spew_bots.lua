@@ -59,35 +59,33 @@ end
 			local spam=data.spam[ipnum]
 
 			
-			spam.count=spam.count+force_floor(len/50) -- penalise for length
+--			spam.count=spam.count+force_floor(len/50) -- penalise for length?
+--			if msg.txt and string.find(msg.txt,"http://") then -- post images / links			
+--				spam.count=spam.count+1 -- only a slight image fine
+--			end
 			
-			if msg.txt and string.find(msg.txt,"http://") then -- post images / links
-			
-				spam.count=spam.count+4
-			end
-			
-			if spam.time < os.time()-(2+(len/5)) then -- zero counter on more than 2 secs between talking, 
+			if spam.time < os.time()-(1) then -- zero the spam counter if you can just shut the fuck up for 2 secs
 				spam.count=0
 			end
 			
 			spam.count=spam.count+1
 			spam.time=os.time()
 					
-			if spam.count>9 then
+			if spam.count>10 then
 			-- say 10 things with a gap of less than 2 secs between each, get kicked
 			
 				return kicked(spam)
 				
 			end
 			
-			if ( user.status and ( user.status.active=="gag" or user.status.active=="dis" ) ) and spam.count>2 then
+			if ( user.status and ( user.status.active=="gag" or user.status.active=="dis" ) ) and spam.count>5 then
 			-- say 3 things with a gap of less than 2 secs between each, get kicked if you have been gagged
 			
 				return kicked(spam)
 				
 			end
 			
-			if is_mud(user.name) and spam.count>2 then
+			if is_mud(user.name) and spam.count>5 then
 			-- say 3 things with a gap of less than 2 secs between each, get kicked if your name is mud
 			
 				return kicked(spam)
