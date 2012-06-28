@@ -2599,7 +2599,10 @@ local endlen=string.len(ending)
 		if dat and dat.result=="OK" then
 		
 			for _,rname in pairs{"active","last"} do -- current active game and last round winers
-							
+			
+				local hoe_nerf=0 -- no crowns by default
+				if rname=="last" then hoe_nerf=0.5 end -- only the lastround gives 1/2 crowns
+
 				if dat[rname] and dat[rname].info then -- sanity check
 					
 					for i=1,#dat[rname].info do local v=dat[rname].info[i]
@@ -2613,9 +2616,12 @@ local endlen=string.len(ending)
 									if name then -- finally remember awards
 										name=string.lower(name)
 										local count=data.hoe.crowns.score[name] or 0
-										count=count+(v.crown or 0)
-										data.hoe.crowns.score[name]=count		
-										names[name]=true
+										local crown=math.ceil((v.crown or 0)*hoe_nerf)
+										if crown>0 then
+											count=count+crown
+											data.hoe.crowns.score[name]=count
+											names[name]=true
+										end
 									end
 								end
 							end
