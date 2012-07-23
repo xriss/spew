@@ -381,6 +381,16 @@ function telnet_str_to_msg(user,_line,msg)
 			msg.cmd="who"
 			return
 			
+		elseif cmd=="/ansi" then
+		
+			if aa[2]=="on" then
+				user.noansi=false
+			else
+				user.noansi=true
+			end
+			
+			return
+			
 		end
 	
 	end
@@ -618,6 +628,8 @@ local ansi=ansi_color_white
 	end
 	
 	if not s then return nil end
+	
+	if user.noansi then s="" end -- no ansi codes
 
 	return ansi..s.."\r\n"
 end
