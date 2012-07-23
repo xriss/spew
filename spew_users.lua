@@ -629,7 +629,7 @@ local ansi=ansi_color_white
 	
 	if not s then return nil end
 	
-	if user.noansi then s="" end -- no ansi codes
+	if user.noansi then ansi="" end -- no ansi codes
 
 	return ansi..s.."\r\n"
 end
