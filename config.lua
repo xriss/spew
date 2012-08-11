@@ -20,12 +20,11 @@ cfg.email_logs="wetgenes.rowboatlogs@blogger.com"
 
 cfg.temp_chat_file="/var/www/wetgenes/swf/beta.chat.txt"
 
-cfg.mux_server="vermaxhosting.com"
+cfg.mux_server="themudhost.net"
 cfg.mux_port=9956
 
-cfg.data_dir="/home/wet/wet/www/wetgenes/subs/data"
-
-cfg.base_data_url="http://data2.wetgenes.com"
+cfg.data_dir="/home/wet/hg/wetgenes/subs/data"
+cfg.base_data_url="http://data.wetgenes.com"
 
 --cfg.dbg_stdio_off=true
 

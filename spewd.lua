@@ -71,7 +71,7 @@ function run_spew(data)
 	local pid=posix.getpid("pid")
 	dbg("Starting spew server "..pid.." \n")
 
-local tim=os.date()
+local tim=os.time()
 
 os.execute([[mail -s"SPEW ERR ]]..tim..[[" krissd@gmail.com <spew.err]])
 os.execute([[mv spew.err spew.]]..tim..[[.err]])
