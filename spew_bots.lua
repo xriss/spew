@@ -176,7 +176,7 @@ local tab={}
 	
 		if not v.owners[1] then -- this is a public room
 		
-			if not v.locked and not v.mux then -- and unlocked and not fiction
+			if v.name:sub(1,7)=="public." then -- pick a public.* room
 		
 				table.insert(tab,v)
 			
