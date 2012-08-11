@@ -19,13 +19,13 @@ local t={}
 
 local fp=io.open(dbg_filename,"a")
 	if fp then
-		fp:write(unpack(t))
+		fp:write(table.concat(t))
 		fp:close()
 	end
 	
 	if dbg_stdio then -- output to console?
 
-		io.write(unpack(t))
+		io.write(table.concat(t))
 		io.flush()
 	
 	end

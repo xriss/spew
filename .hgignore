@@ -13,4 +13,5 @@ spew.err
 spew.log
 spew.*.err
 spew.*.log
+spew.*.dbg
 *.orig
