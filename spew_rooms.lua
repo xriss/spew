@@ -947,7 +947,7 @@ local dizzy=day_flag_get(user.name,"dizzy")
 		
 		elseif room.locked=="kolumbo" then
 		
-dbg("kolumbo "..room.name.." attempted by "..user.name.."from "..user.room.name.."\n")
+dbg("kolumbo "..room.name.." attempted by "..user.name.." from "..user.room.name.."\n")
 
 			if user.gametype~="WetVille" and (not room_allow) then
 			
