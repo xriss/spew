@@ -10,4 +10,6 @@ spewd.dat
 spew.dbg
 spew.err
 spew.log
+spew.*.err
+spew.*.log
 *.orig
