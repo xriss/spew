@@ -1,8 +1,13 @@
+syntax: glob
+
 config.lua
 config.data.lua
 src/cmake
 src/build
 save/logs
-spew.dbg
 spewd.dbg
 spewd.dat
+spew.dbg
+spew.err
+spew.log
+*.orig

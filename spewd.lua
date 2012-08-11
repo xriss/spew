@@ -70,10 +70,18 @@ function run_spew(data)
 
 	local pid=posix.getpid("pid")
 	dbg("Starting spew server "..pid.." \n")
-	
-os.execute([[nix/bin/lua -e "package.cpath='./nix/lib/?.so;'..package.cpath;package.path='./nix/share/?.lua;'..package.path;" spew.lua &]])
 
-os.execute([[mail -s"SPEW REBOOT ]]..os.date()..[[" krissd@gmail.com </dev/null]])
+local tim=os.date()
+
+os.execute([[mail -s"SPEW ERR ]]..tim..[[" krissd@gmail.com <spew.err]])
+os.execute([[mv spew.err spew.]]..tim..[[.err]])
+
+os.execute([[mail -s"SPEW DBG ]]..tim..[[" krissd@gmail.com <spew.dbg]])
+os.execute([[mv spew.dbg spew.]]..tim..[[.dbg]])
+	
+os.execute([[nix/bin/lua -e "package.cpath='./nix/lib/?.so;'..package.cpath;package.path='./nix/share/?.lua;'..package.path;" spew.lua 2>spew.err &]])
+
+os.execute([[mail -s"SPEW BOOT ]]..tim..[[" krissd@gmail.com </dev/null]])
 
 end
 
