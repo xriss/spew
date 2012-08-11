@@ -947,6 +947,8 @@ local dizzy=day_flag_get(user.name,"dizzy")
 		
 		elseif room.locked=="kolumbo" then
 		
+dbg("kolumbo "..room.name.." attempted by "..user.name.."from "..user.room.name.."\n")
+
 			if user.gametype~="WetVille" and (not room_allow) then
 			
 				usercast(user,{cmd="note",note="warning",arg1="Sorry but you must be playing in WetVille to enter that room."})
