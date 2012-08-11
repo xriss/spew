@@ -313,7 +313,7 @@ end
 -----------------------------------------------------------------------------
 function lanes_sql(q,flags)
 local d=debug.getinfo(2)
-dbg("SQL CALL "..(d.source or "?").." "..d.currentline.."\n")
+--dbg("SQL CALL "..(d.source or "?").." "..d.currentline.."\n")
 
 local msg={}
 local ret
