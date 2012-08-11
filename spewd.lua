@@ -78,6 +78,14 @@ os.execute([[mv spew.err spew.]]..tim..[[.err]])
 
 os.execute([[mail -s"SPEW DBG ]]..tim..[[" krissd@gmail.com <spew.dbg]])
 os.execute([[mv spew.dbg spew.]]..tim..[[.dbg]])
+
+
+-- make sure we can log
+os.execute([[echo "***" >spew.dbg]])
+os.execute([[chmod 777 spew.dbg]])
+os.execute([[echo "***" >spew.err]])
+os.execute([[chmod 777 spew.err]])
+
 	
 os.execute([[nix/bin/lua -e "package.cpath='./nix/lib/?.so;'..package.cpath;package.path='./nix/share/?.lua;'..package.path;" spew.lua 2>spew.err &]])
 
