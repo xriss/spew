@@ -79,7 +79,7 @@ os.execute([[mv spew.err spew.]]..tim..[[.err]])
 os.execute([[mail -s"SPEW DBG ]]..tim..[[" krissd@gmail.com <spew.dbg]])
 os.execute([[mv spew.dbg spew.]]..tim..[[.dbg]])
 	
-os.execute([[nix/bin/lua -e "package.cpath='./nix/lib/?.so;'..package.cpath;package.path='./nix/share/?.lua;'..package.path;" spew.lua 2>spew.err &]])
+os.execute([[nix/bin/lua -e "package.cpath='./nix/lib/?.so;'..package.cpath;package.path='./nix/share/?.lua;'..package.path;" spew.lua &]])
 
 os.execute([[mail -s"SPEW BOOT ]]..tim..[[" krissd@gmail.com </dev/null]])
 
