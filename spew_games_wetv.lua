@@ -2628,7 +2628,7 @@ gtab.update_co = function()
 	
 	if ret.body then
 	
-		if not string.find(ret.body, "yt$duration", 1, true) then -- bad video, contains no useful info
+		if not (string.find(ret.body, "yt$duration", 1, true)) then -- bad video, contains no useful info
 		
 --			dbg("Video not found\n")
 		
@@ -2645,9 +2645,9 @@ dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid,"\n")
 dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid.." NOEMBED","\n")
 
 
-		elseif string.find(ret.body,[["media$restriction":{"$t":"US","type":"country","relationship":"allow"}]]) or
-				string.find(ret.body,[["media$restriction":{"$t":"CA","type":"country","relationship":"allow"}]]) or
-				string.find(ret.body,[["media$restriction":{"$t":"CA US","type":"country","relationship":"allow"}]]) then
+		elseif string.find(ret.body,[["media$restriction":{"$t":"US","type":"country","relationship":"allow"}]],1,true) or
+				string.find(ret.body,[["media$restriction":{"$t":"CA","type":"country","relationship":"allow"}]],1,true) or
+				string.find(ret.body,[["media$restriction":{"$t":"CA US","type":"country","relationship":"allow"}]],1,true) then
 -- restricted to US/CA only, which is generally the worst possible case (fucking americans)
 
 				gtab.vid_infos[utvid]={title="restricted",duration=0,stamp=os.time()} -- mark this id as dead
