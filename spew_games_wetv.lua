@@ -2638,7 +2638,12 @@ gtab.update_co = function()
 	
 	if ret.body then
 	
-		if not (string.find(ret.body, "yt$duration", 1, true)) then -- bad video, contains no useful info
+		if ret.body:sub(1,15)=="Video not found" then
+		
+			gtab.vid_infos[utvid]={title="notfound",duration=0,stamp=os.time()} -- mark this id as dead from youtubes point of view
+dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid," NOTFOUND\n")
+		
+		elseif not (string.find(ret.body, "yt$duration", 1, true)) then -- bad video, contains no useful info
 		
 --			dbg("Video not found\n")
 		
