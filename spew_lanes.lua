@@ -570,7 +570,7 @@ local loop=true
 
 	local msg= linda:receive( nil, idx )
 
---dbg(idx," : ",msg.cmd,"\n")
+dbg(idx," : ",msg.cmd," : ",msg.url or "?","\n")
 	
 		if msg then
 		
