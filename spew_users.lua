@@ -312,7 +312,7 @@ function telnet_str_to_msg(user,_line,msg)
 			
 		elseif cmd=="/me" or a1=="*" then
 		
-			if user.room.name~="limbo" then -- no talking in limbo, so safer to text login
+--			if user.room.name~="limbo" then -- no talking in limbo, so safer to text login
 			
 				msg.cmd="act"
 				msg.txt=line
@@ -322,7 +322,7 @@ function telnet_str_to_msg(user,_line,msg)
 				else
 					msg.txt=string.sub(msg.txt,5)
 				end
-			end
+--			end
 		
 			return
 			
@@ -395,12 +395,11 @@ function telnet_str_to_msg(user,_line,msg)
 	
 	end
 
---[[
-	if user.name~="me" or (user.room.name~="limbo" and a1~="/") then -- no talking in limbo for mes, so safer to text login?
+--	if user.name~="me" or (user.room.name~="limbo" and a1~="/") then -- no talking in limbo for mes, so safer to text login?
 		msg.cmd="say"
 		msg.txt=line
-	end
-]]
+--	end
+
 
 end
 
