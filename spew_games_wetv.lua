@@ -2633,7 +2633,7 @@ gtab.update_co = function()
 --			dbg("Video not found\n")
 		
 --			gtab.vid_infos[utvid]={title="broken",duration=0,stamp=os.time()} -- mark this id as dead from youtubes point of view
-dbg(#gtab.vid_reqs.." : "..bad video id "..utvid,"\n")
+dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid,"\n")
 		else
 		
 			if string.find(ret.body, "yt$noembed", 1, true) then -- we can not play this :(
