@@ -2576,7 +2576,7 @@ dbg("movie loading\n")
 					if string.len(id)==11 then -- only if right length
 					
 						if gtab.vid_infos[id] then -- we know this vid so we can check it first
-							if gtab.vid_infos[id].length>0 then
+							if gtab.vid_infos[id].duration>0 then
 								vids[id]=true -- merge
 							end
 						else
