@@ -1455,11 +1455,29 @@ tv_trigger=function(game,user,aa)
 	
 	else
 	
-		name="Videos"
-
-		for n,t in pairs(game.vidlists) do -- get all possible names
+		if game.vid_ids and game.vid_ids[1] then
 		
-			table.insert(tab,n)
+			name="playing"
+
+			for i,v in ipairs(game.vid_ids) do
+				
+				local vi=gtab.vid_infos[v]
+				if vi then
+					table.insert(tab,vi.title)
+				else
+					table.insert(tab,v)
+				end
+			end
+		
+		else
+	
+			name="Videos"
+
+			for n,t in pairs(game.vidlists) do -- get all possible names
+			
+				table.insert(tab,n)
+				
+			end
 			
 		end
 		
