@@ -144,7 +144,7 @@ local ret,_ret
 dbg("update begin\n")
 	for i,v in pairs(data.updates) do -- call all updates
 
-dbg(tostring(i))
+dbg(i.name or tostring(i))
 	
 		ret,_ret = copcall(i.update,i)
 	
