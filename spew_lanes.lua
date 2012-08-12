@@ -177,7 +177,7 @@ function lanes_update()
 			for i,v in ipairs(data.lanes.threads) do -- we shouldnt share lindas amongst worker threads, it seems to confuse things, a bug no doubt
 			
 				repeat
-				
+dbg(i)
 					msg=data.lanes.threads[i].linda:receive( 0 , 0 ) -- check for returned msgs, but do not block
 					
 					if msg then
