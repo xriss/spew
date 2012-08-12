@@ -2594,8 +2594,9 @@ gtab.update_co = function()
 	
 	if utvid then
 
---dbg("reading data from youtube "..utvid.."\n")
+dbg("reading data from youtube "..utvid.."\n")
 	local ret=lanes_url("http://gdata.youtube.com/feeds/api/videos/"..utvid.."?alt=json") -- pull in video info
+dbg("read    data from youtube "..utvid.."\n")
 	
 	if ret.body then
 	
