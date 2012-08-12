@@ -397,11 +397,11 @@ end
 -----------------------------------------------------------------------------
 function lanes_url_worker(linda,msg)
 
-dbg("URL WAIT "..msg.url)
+dbg("URL WAIT "..msg.url.."\n")
 
 local body, headers, code = socket.http.request(msg.url)
 
-dbg("URL DONE "..msg.url)
+dbg("URL DONE "..msg.url.."\n")
 
 local ret={}
 
