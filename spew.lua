@@ -148,7 +148,7 @@ dbg("update begin\n")
 	
 		if ret~=true then
 
-			print("\n",( _ret or "" ),"\n")
+			dbg("\n",( tostring(_ret) or "" ),"\n")
 			
 			remove_update(i)
 
