@@ -2555,9 +2555,11 @@ dbg("movie loading\n")
 
 	for i,v in pairs(noir_cats) do
 	
+		for p=1,5 do
+	
 		local vids={}
 
-		local ret=lanes_url("http://www.youtube.com/movies/"..v.."?fl=f&l=en&pt=nr&st=d") -- pull in video info source
+		local ret=lanes_url("http://www.youtube.com/movies/"..v.."?fl=f&l=en&pt=nr&st=d&p="..p) -- pull in video info source
 		
 		if ret.body then -- got some movies
 		
@@ -2593,6 +2595,7 @@ dbg("movie loading\n")
 
 dbg(i.." movies found "..(#gtab.movie_ids[i]).."\n")
 
+		end
 	end
 	
 	
