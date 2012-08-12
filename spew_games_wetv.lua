@@ -2636,7 +2636,7 @@ gtab.update_co = function()
 	local ret=lanes_url("http://gdata.youtube.com/feeds/api/videos/"..utvid.."?alt=json") -- pull in video info
 --dbg("read    data from youtube "..utvid.."\n")
 	
-	if ret.body then
+	if ret.body and ret.body~="" then
 	
 		if ret.body:sub(1,15)=="Video not found" then
 		
