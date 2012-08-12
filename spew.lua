@@ -141,10 +141,10 @@ function do_updates()
 local done_kill=false
 local ret,_ret
 
-dbg("update begin\n")
+--dbg("update begin\n")
 	for i,v in pairs(data.updates) do -- call all updates
 
-dbg(i.name or tostring(i))
+--dbg(i.name or tostring(i))
 	
 		ret,_ret = copcall(i.update,i)
 	
@@ -157,7 +157,7 @@ dbg(i.name or tostring(i))
 		end
 	
 	end
-dbg("update end\n")
+--dbg("update end\n")
 
 	for i,v in pairs(data.updates_kill) do -- kill all flaged tasks
 		data.updates[i]=nil

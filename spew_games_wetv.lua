@@ -1079,7 +1079,6 @@ end
 local function check_vid(game,vid_len)
 
 	if not game.room.brain then -- kill the tv if the bot goes missing
-dbg("CV kill room\n")
 		tv_game_clean(game.room)
 		return
 	end
@@ -1114,7 +1113,6 @@ local vi=game.vidinfo
 			not vi.vid_len or
 			( os.time()-vi.vid_start+vi.vid_start_tim >= force_floor(vi.vid_len) ) then -- play next
 
-dbg("CV play next1\n")
 			play_next_vid(game)
 
 		end
@@ -1125,13 +1123,11 @@ dbg("CV play next1\n")
 	
 	if game.next_queue and tim<=0 then -- if the time lock has expired and people have tried to play something then...
 	
-dbg("CV play next2\n")
 		play_next_vid(game)
 
 	end
 	
 
-dbg("CV send title\n")
 	check_send_vid_title(game) -- see if we should update everyone  with the video title
 	
 
@@ -2289,7 +2285,7 @@ end
 -- 
 -----------------------------------------------------------------------------
 gtab.brain_update = function(game,brain)
-dbg("checking vid "..brain.user.name.."\n")
+--dbg("checking vid "..brain.user.name.."\n")
 	check_vid(game) -- start a new vid?
 end
 
@@ -2599,9 +2595,9 @@ gtab.update_co = function()
 	
 	if utvid then
 
-dbg("reading data from youtube "..utvid.."\n")
+--dbg("reading data from youtube "..utvid.."\n")
 	local ret=lanes_url("http://gdata.youtube.com/feeds/api/videos/"..utvid.."?alt=json") -- pull in video info
-dbg("read    data from youtube "..utvid.."\n")
+--dbg("read    data from youtube "..utvid.."\n")
 	
 	if ret.body then
 	
@@ -2706,9 +2702,8 @@ gtab.update = function()
 	
 	end
 
-dbg("X")
 	local ret,_ret=coroutine.resume(gtab.co)
-dbg("Y")
+
 	if ret~=true then
 		dbg('\n'.._ret..'\n')
 		gtab.co=nil
