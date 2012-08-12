@@ -168,7 +168,7 @@ end
 -----------------------------------------------------------------------------
 function lanes_update()
 
-dbg("searching for msg\n")
+--dbg("searching for msg\n")
 	if data.lanes.state=="working" then
 		local msg
 		
@@ -229,7 +229,7 @@ dbg("searching for msg\n")
 	
 	end
 
-dbg("finished searching for msg\n")
+--dbg("finished searching for msg\n")
 end
 
 -----------------------------------------------------------------------------
