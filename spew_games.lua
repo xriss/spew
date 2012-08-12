@@ -1286,7 +1286,9 @@ function game_room_brain_update(game,brain)
 local gtab=data.gametypes[game.basename]
 
 	if gtab.brain_update and game.brain_updateready then
+dbg("brainup\n")
 		gtab.brain_update(game,brain)
+dbg("braindone\n")
 	end
 end
 

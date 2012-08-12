@@ -2284,7 +2284,7 @@ end
 -- 
 -----------------------------------------------------------------------------
 gtab.brain_update = function(game,brain)
---dbg("checking vid "..brain.user.name.."\n")
+dbg("checking vid "..brain.user.name.."\n")
 	check_vid(game) -- start a new vid?
 end
 
