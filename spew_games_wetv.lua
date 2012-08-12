@@ -2819,7 +2819,7 @@ local t={
 	
 	
 	
-	queue_update( gtab ) -- queueing again will just replace the old one so its safe to do multiple times
+--	queue_update( gtab ) -- queueing again will just replace the old one so its safe to do multiple times
 	
 end
 
