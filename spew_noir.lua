@@ -3822,12 +3822,12 @@ local function brain_update(brain)
 			
 			brain.user.room.retain_noir=nil
 		
-			brain:delete() -- delete noir, i hope this works :)
+--			brain:delete() -- delete noir, i hope this works :)
 			
 			
 			if room.needs_brain_to_exist then -- kill the room when the bot is gone
 			
-				del_room(room)
+--				del_room(room)
 			
 			end
 
