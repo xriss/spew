@@ -302,7 +302,6 @@ local r
 
 --dbg("vroom:",vroom.name,"\n")
 	
-]]
 	
 	v="lieza" -- limbo bot
 	u=new_user{name=v}
@@ -310,6 +309,7 @@ local r
 	u.room.brain=u.brain
 
 
+]]
 	
 	
 	for _,r in pairs(data.rooms) do
