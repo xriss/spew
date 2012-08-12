@@ -397,7 +397,11 @@ end
 -----------------------------------------------------------------------------
 function lanes_url_worker(linda,msg)
 
+dbg("URL WAIT "..msg.url)
+
 local body, headers, code = socket.http.request(msg.url)
+
+dbg("URL DONE "..msg.url)
 
 local ret={}
 
@@ -570,9 +574,9 @@ local loop=true
 
 	local msg= linda:receive( nil, idx )
 
-dbg(idx," : ",msg.cmd," : ",msg.url or "?","\n")
 	
 		if msg then
+--dbg(idx," : ",msg.cmd," : ",msg.url or "?","\n")
 		
 			if msg.cmd=="end" then
 
