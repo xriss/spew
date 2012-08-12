@@ -1103,6 +1103,10 @@ local function check_vid(game,vid_len)
 
 local vi=game.vidinfo
 
+
+	vid_len=10 -- fake length
+
+
 	if gtab.vid_infos and gtab.vid_infos[ vi.vid_id ] then -- we got good cached info from youtube
 	
 		vi.vid_len=gtab.vid_infos[ vi.vid_id ].duration
@@ -1124,7 +1128,7 @@ local vi=game.vidinfo
 		end
 	
 	end
-	
+-
 	if vi.vid_len ~= -1 then -- wait till we hear back from someone
 	
 		if	not vi.vid_start or
@@ -1136,7 +1140,7 @@ local vi=game.vidinfo
 		end
 		
 	end
-	
+
 	local tim=math.ceil(vi.vid_timelock-os.time())
 	
 	if game.next_queue and tim<=0 then -- if the time lock has expired and people have tried to play something then...
