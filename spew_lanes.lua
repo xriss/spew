@@ -254,7 +254,7 @@ local ret
 		lanes_send(msg,2)
 		
 dbg("waiting for "..msg.id.."\n")
-		repeat coroutine.yield() until data.lanes.rets[msg.id] -- poll wait for return value
+		repeat coroutine.yield() dbg(msg.id) until data.lanes.rets[msg.id] -- poll wait for return value
 dbg("got "..msg.id.."\n")
 
 		ret=data.lanes.rets[msg.id]
