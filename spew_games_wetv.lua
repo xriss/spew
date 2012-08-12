@@ -2645,8 +2645,10 @@ dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid,"\n")
 dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid.." NOEMBED","\n")
 
 
-		elseif string.find(ret.body,[["media$restriction":{"$t":"US","type":"country","relationship":"allow"}]]) then
--- restricted to US only, which is the worst possible case
+		elseif string.find(ret.body,[["media$restriction":{"$t":"US","type":"country","relationship":"allow"}]]) or
+				string.find(ret.body,[["media$restriction":{"$t":"CA US","type":"country","relationship":"allow"}]]) then
+-- restricted to US/CA only, which is generally the worst possible case (fucking americans)
+
 				gtab.vid_infos[utvid]={title="restricted",duration=0,stamp=os.time()} -- mark this id as dead
 -- refuse to play *any* region restricted videos, one for all and all for one as they say	
 dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid.." REGION","\n")
