@@ -531,7 +531,7 @@ local brain={}
 		end
 	end
 	
-	queue_update(brain)
+--	queue_update(brain)
 
 	return brain
 end

@@ -79,7 +79,7 @@ local brain={}
 	
 	brain.saywait=5
 
-	queue_update(brain)
+--	queue_update(brain)
 
 	return brain
 end
@@ -99,7 +99,7 @@ local brain={}
 	
 	brain.saywait=5
 	
-	queue_update(brain)
+--	queue_update(brain)
 
 	return brain
 end
