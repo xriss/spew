@@ -64,7 +64,8 @@ dofile("spew_log.lua")
 
 
 --package.preload.ffi=nil
---lanes=require("lanes").configure(1)
+lanes=require("lanes").configure(1)
+lanes.now_secs=require("lua51-lanes").now_secs -- not exported anymore?
 
 require("lanes")
 require("socket")
