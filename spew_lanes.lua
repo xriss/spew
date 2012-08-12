@@ -177,7 +177,7 @@ function lanes_update()
 			for i,v in ipairs(data.lanes.threads) do -- we shouldnt share lindas amongst worker threads, it seems to confuse things, a bug no doubt
 			
 				repeat
-dbg(i)
+--dbg(i)
 					msg=data.lanes.threads[i].linda:receive( 0 , 0 ) -- check for returned msgs, but do not block
 					
 					if msg then
@@ -253,9 +253,9 @@ local ret
 	
 		lanes_send(msg,2)
 		
---dbg("waiting for "..msg.id.."\n")
+dbg("waiting for "..msg.id.."\n")
 		repeat coroutine.yield() until data.lanes.rets[msg.id] -- poll wait for return value
---dbg("got "..msg.id.."\n")
+dbg("got "..msg.id.."\n")
 
 		ret=data.lanes.rets[msg.id]
 		data.lanes.rets[msg.id]=nil
