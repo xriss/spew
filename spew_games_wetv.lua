@@ -2645,16 +2645,17 @@ dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid,"\n")
 dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid.." NOEMBED","\n")
 
 
-		elseif string.find(ret.body,[["media$restriction":{"$t":"US","type":"country","relationship":"allow"}]],1,true) or
-				string.find(ret.body,[["media$restriction":{"$t":"CA","type":"country","relationship":"allow"}]],1,true) or
-				string.find(ret.body,[["media$restriction":{"$t":"CA US","type":"country","relationship":"allow"}]],1,true) then
+-- fuckit, lets just say learn to proxy is the new motto
+-- try http://www.tunnelbear.com/ for a free taste
+--
+--		elseif string.find(ret.body,[["media$restriction":{"$t":"US","type":"country","relationship":"allow"}]],1,true) or
+--				string.find(ret.body,[["media$restriction":{"$t":"CA","type":"country","relationship":"allow"}]],1,true) or
+--				string.find(ret.body,[["media$restriction":{"$t":"CA US","type":"country","relationship":"allow"}]],1,true) then
 -- restricted to US/CA only, which is generally the worst possible case (fucking americans)
 
-				gtab.vid_infos[utvid]={title="restricted",duration=0,stamp=os.time()} -- mark this id as dead
+--				gtab.vid_infos[utvid]={title="restricted",duration=0,stamp=os.time()} -- mark this id as dead
 -- refuse to play *any* region restricted videos, one for all and all for one as they say	
-dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid.." REGION","\n")
-
-
+--dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid.." REGION","\n")
 
 -- so many restrictions this just censors everything I am afraid...
 --			
