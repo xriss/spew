@@ -2431,7 +2431,7 @@ function tv_game_setup(room)
 		end
 	end
 
-	
+	brain_updateready=true
 	return game
 	
 end
