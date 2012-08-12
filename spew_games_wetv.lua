@@ -1103,42 +1103,20 @@ local function check_vid(game,vid_len)
 
 local vi=game.vidinfo
 
-
-	vid_len=10 -- fake length
-
-
 	if gtab.vid_infos and gtab.vid_infos[ vi.vid_id ] then -- we got good cached info from youtube
 	
 		vi.vid_len=gtab.vid_infos[ vi.vid_id ].duration
 			
 	else
-
-		if vid_len then
-		
-			if vid_len>60*60 then vid_len=60*60 end -- maximun length of
-		
-			if vi.vid_len==-1 or vi.vid_len==10.5 then -- accept first responce as valid
-				vi.vid_len=force_floor(vid_len)
-			end
-			
-			if vi.vid_len==0 then -- errors are less than errors :)
-				vi.vid_len=10.5
-			end
-		
-		end
-	
+		vi.vid_len=10 -- fake length, you tube has 10secs to respond or video gets chopped
 	end
--
-	if vi.vid_len ~= -1 then -- wait till we hear back from someone
 	
-		if	not vi.vid_start or
-			not vi.vid_len or
-			( os.time()-vi.vid_start+vi.vid_start_tim >= force_floor(vi.vid_len) ) then -- play next
+	if	not vi.vid_start or
+		not vi.vid_len or
+		( os.time()-vi.vid_start+vi.vid_start_tim >= force_floor(vi.vid_len) ) then -- play next
 
-			play_next_vid(game)
+		play_next_vid(game)
 
-		end
-		
 	end
 
 	local tim=math.ceil(vi.vid_timelock-os.time())
