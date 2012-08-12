@@ -2529,7 +2529,7 @@ gtab.update_co_movies = function()
 
 dbg("movie loading\n")
 
-
+--[[
 	for i,v in pairs(gtab.movie_ids) do -- keep table pointers but clear all movies
 
 		if type(v)=="table" then
@@ -2540,6 +2540,7 @@ dbg("movie loading\n")
 			gtab.movie_ids[i]=nil -- live cleanup
  		end
 	end
+]]
 
 --[[	for i,v in ipairs{
 		"http://www.youtube.com/movies/horror?fl=f&l=en&pt=g&st=d",
@@ -2556,6 +2557,7 @@ dbg("movie loading\n")
 	for i,v in pairs(noir_cats) do
 	
 		local vids={}
+		local do_replace=false
 
 		for p=1,5 do	
 
@@ -2578,9 +2580,11 @@ dbg("movie loading\n")
 						if gtab.vid_infos[id] then -- we know this vid so we can check it first
 							if gtab.vid_infos[id].duration>0 then
 								vids[id]=true -- merge
+								do_replace=true
 							end
 						else
 							vids[id]=true -- merge
+							do_replace=true
 						end
 						
 					end
@@ -2593,11 +2597,17 @@ dbg("movie loading\n")
 		
 		end
 		
-		for id,b in pairs(vids) do -- refill table with new movies
-			table.insert(gtab.movie_ids[i],id)
-			
-			if not gtab.vid_infos[id] then -- only ask for new vids
-				table.insert(gtab.vid_reqs,id) -- request info from thepubes about video
+		if do_replace then
+			for j,v in pairs(gtab.movie_ids[i]) do -- remove old
+				gtab.movie_ids[i][j]=nil
+			end
+
+			for id,b in pairs(vids) do -- refill table with new movies
+				table.insert(gtab.movie_ids[i],id)
+				
+				if not gtab.vid_infos[id] then -- only ask for new vids
+					table.insert(gtab.vid_reqs,id) -- request info from thepubes about video
+				end
 			end
 		end
 
