@@ -16,17 +16,27 @@ end
 
 local function brain_update(brain)
 
-local vo=brain.user.vobj -- get id
-	vo=data.ville.vobjs[vo] -- turn id into object
-	
-	if vo then
-	
-		vobj_set(vo,"menu","base/cancel/Enter Kolumbo")
-		
---dbg(vo.owner," ",vo.props.menu,"\n")
-	
-	end
+	if brain.updatetime and brain.updatetime+1>os.time() then return end -- pulse
+	brain.updatetime=os.time()
+--dbg((brain.user and brain.user.name or "*").." : "..(brain.user and brain.user.room and brain.user.room.name or "*").." : "..brain.updatetime.."\n")
 
+	if brain.user then
+
+		local vo=brain.user.vobj -- get id
+
+		if vo then
+			vo=data.ville.vobjs[vo] -- turn id into object
+		end
+		
+		if vo then
+		
+			vobj_set(vo,"menu","base/cancel/Enter Kolumbo")
+			
+	--dbg(vo.owner," ",vo.props.menu,"\n")
+		
+		end
+	end
+	
 end
 
 local function brain_msg(brain,msg,user)
@@ -69,6 +79,8 @@ local brain={}
 	
 	brain.saywait=5
 
+	queue_update(brain)
+
 	return brain
 end
 
@@ -86,6 +98,8 @@ local brain={}
 	brain.set_prop_use=set_prop_use
 	
 	brain.saywait=5
+	
+	queue_update(brain)
 
 	return brain
 end
