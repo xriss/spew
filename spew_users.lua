@@ -1104,6 +1104,7 @@ dbg(msg_to_str(msg).."\n")
 	
 				elseif aa[2] == "cleartube" then
 				
+					data.gametypes["wetv"].vid_reqs={}
 					data.gametypes["wetv"].vid_infos={}
 					usercast( user,{cmd="note",note="notice",arg1="cleared youtube cache"} )
 	

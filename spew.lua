@@ -63,10 +63,10 @@ dofile("spew_log.lua")
 -----------------------------------------------------------------------------
 
 
-package.preload.ffi=nil
-lanes=require("lanes").configure(1)
+--package.preload.ffi=nil
+--lanes=require("lanes").configure(1)
 
---require("lanes")
+require("lanes")
 require("socket")
 require("socket.smtp")
 require("socket.http")
