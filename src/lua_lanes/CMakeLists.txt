@@ -1,97 +1,89 @@
+# Copyright (C) 2007-2009 LuaDist.
+# Created by Peter Kapec
+# Redistribution and use of this file is allowed according to the terms of the MIT license.
+# For details see the COPYRIGHT file distributed with LuaDist.
+# Please note that the package source code is licensed under its own license.
+
+PROJECT(lanes C)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+INCLUDE(dist.cmake)
+
+FIND_PACKAGE(Lua51 REQUIRED)
+FIND_PROGRAM(LUA NAMES lua5.1 lua51 lua)
+FIND_PROGRAM(LUAC NAMES luac5.1 luac51 luac)
+INCLUDE_DIRECTORIES(${LUA_INCLUDE_DIR})
+
+#2DO - patch threading.c to suppot cygwin.
+# The following values are just a guess.
+# WARNING: test segfault under Cygwin
+IF(CYGWIN)
+  ADD_DEFINITIONS(-D_PRIO_MODE=SCHED_FIFO)
+  ADD_DEFINITIONS(-D_PRIO_HI=15) # maximum that doesn't crash
+  ADD_DEFINITIONS(-D_PRIO_0=0)
+  ADD_DEFINITIONS(-D_PRIO_LO=-15) # ???
+  ADD_DEFINITIONS(-Dpthread_yield=sched_yield)
+ENDIF(CYGWIN)
+
+#2DO - use provided bin2c
+# Embed keeper.lua in text form in C (embedding bytecode is not LuaJIT2-compatible)
+ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/keeper.lch
+  DEPENDS src/keeper.lua
+    COMMAND "${LUA}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/bin2c.lua"
+            "${CMAKE_CURRENT_SOURCE_DIR}/src/keeper.lua"
+            "-o" "${CMAKE_CURRENT_BINARY_DIR}/keeper.lch")
+SET_SOURCE_FILES_PROPERTIES(src/lanes.c PROPERTIES OBJECT_DEPENDS
+  ${CMAKE_CURRENT_BINARY_DIR}/keeper.lch)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
+
+
+# Build
+INCLUDE_DIRECTORIES(src)
+ADD_LIBRARY(lua51-lanes MODULE src/lanes.c src/threading.c src/tools.c src/keeper.c)
+
+IF(UNIX AND NOT CYGWIN)
+  SET(LIBS pthread)
+ENDIF(UNIX AND NOT CYGWIN)
+
+IF(MINGW)
+#~ 	FIND_FILE(MSVCR80 NAMES msvcr80.dll msvcr90.dll)
+#~ 	SET(LIBS gcc ${MSVCR80})
+#~ 	IF(MSVC90)
+
+#~ 		from InstallRequiredSystemLibraries.cmake
+
+		IF(CMAKE_CL_64)
+			SET(CMAKE_MSVC_ARCH amd64)
+		ELSE(CMAKE_CL_64)
+			SET(CMAKE_MSVC_ARCH x86)
+		ENDIF(CMAKE_CL_64)
+
+		GET_FILENAME_COMPONENT(devenv_dir "${CMAKE_MAKE_PROGRAM}" PATH)
+		GET_FILENAME_COMPONENT(base_dir "${devenv_dir}/../.." ABSOLUTE)
+
+		# Find the runtime library redistribution directory.
+		FIND_PATH(MSVC90_REDIST_DIR NAMES ${CMAKE_MSVC_ARCH}/Microsoft.VC90.CRT/Microsoft.VC90.CRT.manifest
+		PATHS
+		"[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\VisualStudio\\9.0;InstallDir]/../../VC/redist"
+		"[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\VCExpress\\9.0;InstallDir]/../../VC/redist"
+		"${base_dir}/VC/redist"
+		)
+		SET(MSVC90_CRT_DIR "${MSVC90_REDIST_DIR}/${CMAKE_MSVC_ARCH}/Microsoft.VC90.CRT")
+		SET(LIBS gcc msvcr90 "${MSVC90_CRT_DIR}/msvcr90.dll")
+
+#~ 	ENDIF()
+
+ENDIF()
 
 
 
-PROJECT(lua_lanes)
 
+TARGET_LINK_LIBRARIES(lua51-lanes ${LUA_LIBRARY} ${LIBS})
+SET_TARGET_PROPERTIES(lua51-lanes PROPERTIES PREFIX "")
 
-INCLUDE_DIRECTORIES(
+# Install all files and documentation
+INSTALL (TARGETS lua51-lanes DESTINATION ${INSTALL_CMOD})
+INSTALL (FILES src/lanes.lua DESTINATION ${INSTALL_LMOD})
 
-	${CMAKE_CURRENT_SOURCE_DIR}/src
-	${lua_include_dir}
-)
-
-
-LINK_DIRECTORIES(
-
-	${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-
-SET(lua_lanes_src_sources
-
-
-src/lanes.c
-
-src/tools.h
-src/tools.c
-
-src/threading.h
-src/threading.c
-
-)
-
-
-
-SET(lua_lanes_sources ${lua_lanes_src_sources} )
-
-IF(WIN32)
-
-	IF(BUILD_SHARED_LIBS)
-
-#		ADD_DEFINITIONS(-DLUA_BUILD_AS_DLL)
-
-	ENDIF(BUILD_SHARED_LIBS)
-	
-ENDIF(WIN32)
-
-
-
-SOURCE_GROUP(src FILES ${lua_lanes_src_sources} )
-
-
-
-
-IF(BUILD_SHARED_LIBS)
-
-	ADD_LIBRARY(lua_lanes SHARED ${lua_lanes_sources} )
-	
-ELSE(BUILD_SHARED_LIBS)
-
-	ADD_LIBRARY(lua_lanes STATIC ${lua_lanes_sources} )
-
-ENDIF(BUILD_SHARED_LIBS)
-
-
-
-
-
-TARGET_LINK_LIBRARIES(lua_lanes
-
-	lua5.1
-)
-
-IF(WIN32)
-
-	ADD_CUSTOM_COMMAND( TARGET lua_lanes POST_BUILD COMMAND ${CMAKE_COMMAND} ARGS -E copy
-		${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/lua_lanes.dll
-		${CMAKE_CURRENT_SOURCE_DIR}/../../nix/lib/lua51-lanes.dll
-	)
-
-	ADD_CUSTOM_COMMAND( TARGET lua_lanes POST_BUILD COMMAND ${CMAKE_COMMAND} ARGS -E copy
-		${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/lua_lanes.pdb
-		${CMAKE_CURRENT_SOURCE_DIR}/../../nix/lib/lua51-lanes.pdb
-	)
-
-ELSE(WIN32)
-
-TARGET_LINK_LIBRARIES(lua_lanes
-
-	pthread
-)
-
-	ADD_CUSTOM_COMMAND( TARGET lua_lanes POST_BUILD COMMAND ${CMAKE_COMMAND} ARGS -E copy
-		${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/liblua_lanes.so
-		${CMAKE_CURRENT_SOURCE_DIR}/../../nix/lib/lua51-lanes.so
-	)
-
-ENDIF(WIN32)
+INSTALL (FILES ABOUT BUGS COPYRIGHT CHANGES README TODO DESTINATION ${INSTALL_DATA})
+INSTALL (DIRECTORY docs/ DESTINATION ${INSTALL_DOC})
+INSTALL (DIRECTORY tests/ DESTINATION ${INSTALL_TEST})

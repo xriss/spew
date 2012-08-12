@@ -1,5 +1,5 @@
 /*
- * THREADING.C   	                    Copyright (c) 2007-08, Asko Kauppi
+ * THREADING.C   	                    Copyright (c) 2007-10, Asko Kauppi
  *
  * Lua Lanes OS threading specific code.
  *
@@ -10,7 +10,7 @@
 /*
 ===============================================================================
 
-Copyright (C) 2007-08 Asko Kauppi <akauppi@gmail.com>
+Copyright (C) 2007-10 Asko Kauppi <akauppi@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -41,9 +41,9 @@ THE SOFTWARE.
 #include "threading.h"
 #include "lua.h"
 
-#if !((defined PLATFORM_WIN32) || (defined PLATFORM_POCKETPC))
+#if THREADAPI == THREADAPI_PTHREAD
 # include <sys/time.h>
-#endif
+#endif // THREADAPI == THREADAPI_PTHREAD
 
 
 #if defined(PLATFORM_LINUX) || defined(PLATFORM_CYGWIN)
@@ -71,12 +71,15 @@ THE SOFTWARE.
 * FAIL is for unexpected API return values - essentially programming 
 * error in _this_ code. 
 */
-#if (defined PLATFORM_WIN32) || (defined PLATFORM_POCKETPC)
+#if THREADAPI == THREADAPI_WINDOWS
 static void FAIL( const char *funcname, int rc ) {
     fprintf( stderr, "%s() failed! (%d)\n", funcname, rc );
+#ifdef _MSC_VER
+    __debugbreak(); // give a chance to the debugger!
+#endif // _MSC_VER
     abort();
 }
-#endif
+#endif // THREADAPI == THREADAPI_WINDOWS
 
 
 /*
@@ -87,7 +90,7 @@ static void FAIL( const char *funcname, int rc ) {
 */
 time_d now_secs(void) {
 
-#if (defined PLATFORM_WIN32) || (defined PLATFORM_POCKETPC)
+#if THREADAPI == THREADAPI_WINDOWS
     /*
     * Windows FILETIME values are "100-nanosecond intervals since 
     * January 1, 1601 (UTC)" (MSDN). Well, we'd want Unix Epoch as
@@ -124,10 +127,10 @@ time_d now_secs(void) {
      * it would do so gracefully. In practise, the integer accuracy is not
      * of the 100ns class but just 1ms (Windows XP).
      */
-# if 0
+# if 1
     // >= 2.0.3 code
     return (double) ((uli.QuadPart - uli_epoch.QuadPart)/10000) / 1000.0;
-# elif 1
+# elif 0
     // fix from Kriss Daniels, see: 
     // <http://luaforge.net/forum/forum.php?thread_id=22704&forum_id=1781>
     //
@@ -137,12 +140,12 @@ time_d now_secs(void) {
     // This was a bad fix, and caused timer test 5 sec timers to disappear.
     // --AKa 25-Jan-2009
     //
-    return ((double)(signed __int64)(((uli.QuadPart/10000) - (uli_epoch.QuadPart/10000)))) / 1000.0;
+    return ((double)((signed)((uli.QuadPart/10000) - (uli_epoch.QuadPart/10000)))) / 1000.0;
 # else
     // <= 2.0.2 code
     return (double)(uli.QuadPart - uli_epoch.QuadPart) / 10000000.0;
 # endif
-#else
+#else // THREADAPI == THREADAPI_PTHREAD
     struct timeval tv;
         // {
         //   time_t       tv_sec;   /* seconds since Jan. 1, 1970 */
@@ -153,7 +156,7 @@ time_d now_secs(void) {
     assert( rc==0 );
 
     return ((double)tv.tv_sec) + ((tv.tv_usec)/1000) / 1000.0;
-#endif
+#endif // THREADAPI THREADAPI_PTHREAD
 }
 
 
@@ -165,7 +168,7 @@ time_d SIGNAL_TIMEOUT_PREPARE( double secs ) {
 }
 
 
-#if !((defined PLATFORM_WIN32) || (defined PLATFORM_POCKETPC))
+#if THREADAPI == THREADAPI_PTHREAD
 /*
 * Prepare 'abs_secs' kind of timeout to 'timespec' format
 */
@@ -178,8 +181,13 @@ static void prepare_timeout( struct timespec *ts, time_d abs_secs ) {
 
     ts->tv_sec= floor( abs_secs );
     ts->tv_nsec= ((long)((abs_secs - ts->tv_sec) * 1000.0 +0.5)) * 1000000UL;   // 1ms = 1000000ns
+    if (ts->tv_nsec == 1000000000UL)
+    {
+        ts->tv_nsec = 0;
+        ts->tv_sec = ts->tv_sec + 1;
+    }
 }
-#endif
+#endif // THREADAPI == THREADAPI_PTHREAD
 
 
 /*---=== Threading ===---*/
@@ -222,7 +230,7 @@ static void prepare_timeout( struct timespec *ts, time_d abs_secs ) {
 # endif
 #endif
 
-#if (defined PLATFORM_WIN32) || (defined PLATFORM_POCKETPC)
+#if THREADAPI == THREADAPI_WINDOWS
   //
   void MUTEX_INIT( MUTEX_T *ref ) {
      *ref= CreateMutex( NULL /*security attr*/, FALSE /*not locked*/, NULL );
@@ -274,10 +282,11 @@ static void prepare_timeout( struct timespec *ts, time_d abs_secs ) {
     *ref= h;
   }
   //
-  bool_t THREAD_WAIT( THREAD_T *ref, double secs ) {
-    long ms= (long)((secs*1000.0)+0.5);
+bool_t THREAD_WAIT_IMPL( THREAD_T *ref, double secs)
+{
+    DWORD ms = (secs<0.0) ? INFINITE : (DWORD)((secs*1000.0)+0.5);
 
-    DWORD rc= WaitForSingleObject( *ref, ms<0 ? INFINITE:ms /*timeout*/ );
+    DWORD rc= WaitForSingleObject( *ref, ms /*timeout*/ );
         //
         // (WAIT_ABANDONED)
         // WAIT_OBJECT_0    success (0)
@@ -365,7 +374,7 @@ static void prepare_timeout( struct timespec *ts, time_d abs_secs ) {
     if (!PulseEvent( *ref ))
         FAIL( "PulseEvent", GetLastError() );
   }
-#else
+#else // THREADAPI == THREADAPI_PTHREAD
   // PThread (Linux, OS X, ...)
   //
   // On OS X, user processes seem to be able to change priorities.
@@ -461,9 +470,6 @@ static void prepare_timeout( struct timespec *ts, time_d abs_secs ) {
 #else
         prio == 0;      // create a default thread if
 #endif
-
-normal=!0; //openvz problems
-
     if (!normal) {
         // NB: PThreads priority handling is about as twisty as one can get it
         //     (and then some). DON*T TRUST ANYTHING YOU READ ON THE NET!!!
@@ -471,7 +477,9 @@ normal=!0; //openvz problems
         // "The specified scheduling parameters are only used if the scheduling
         //  parameter inheritance attribute is PTHREAD_EXPLICIT_SCHED."
         //
-        PT_CALL( pthread_attr_setinheritsched( a, PTHREAD_EXPLICIT_SCHED ) );
+
+//TODO???? ANDROID
+//        PT_CALL( pthread_attr_setinheritsched( a, PTHREAD_EXPLICIT_SCHED ) );
 
         //---
         // "Select the scheduling policy for the thread: one of SCHED_OTHER 
@@ -542,7 +550,7 @@ normal=!0; //openvz problems
         // but even Ubuntu does not seem to define it.
         //
         #define _PRIO_MODE SCHED_RR
-
+        
         // NTLP 2.5: only system scope allowed (being the basic reason why
         //           root privileges are required..)
         //#define _PRIO_SCOPE PTHREAD_SCOPE_PROCESS
@@ -589,7 +597,6 @@ normal=!0; //openvz problems
             (prio == -1) ? _PRIO_BN : _PRIO_LO;
 
         PT_CALL( pthread_attr_setschedparam( a, &sp ) );
-
     }
 
     //---
@@ -648,7 +655,7 @@ normal=!0; //openvz problems
     }
   }
   //
-  /*
+ /*
   * Wait for a thread to finish.
   *
   * 'mu_ref' is a lock we should use for the waiting; initially unlocked.
@@ -656,11 +663,7 @@ normal=!0; //openvz problems
   *
   * Returns TRUE for succesful wait, FALSE for timed out
   */
-#ifdef PTHREAD_TIMEDJOIN
-  bool_t THREAD_WAIT( THREAD_T *ref, double secs )
-#else
-  bool_t THREAD_WAIT( THREAD_T *ref, SIGNAL_T *signal_ref, MUTEX_T *mu_ref, volatile enum e_status *st_ref, double secs )
-#endif
+bool_t THREAD_WAIT( THREAD_T *ref, double secs , SIGNAL_T *signal_ref, MUTEX_T *mu_ref, volatile enum e_status *st_ref)
 {
     struct timespec ts_store;
     const struct timespec *timeout= NULL;
@@ -668,16 +671,17 @@ normal=!0; //openvz problems
 
     // Do timeout counting before the locks
     //
-#ifdef PTHREAD_TIMEDJOIN
-    if (secs>=0.0) {
-#else
-    if (secs>0.0) {
-#endif
+#if THREADWAIT_METHOD == THREADWAIT_TIMEOUT
+    if (secs>=0.0)
+#else // THREADWAIT_METHOD == THREADWAIT_CONDVAR
+    if (secs>0.0)
+#endif // THREADWAIT_METHOD == THREADWAIT_CONDVAR
+    {
         prepare_timeout( &ts_store, now_secs()+secs );
         timeout= &ts_store;
     }
 
-#ifdef PTHREAD_TIMEDJOIN
+#if THREADWAIT_METHOD == THREADWAIT_TIMEOUT
     /* Thread is joinable
     */
     if (!timeout) {
@@ -690,10 +694,11 @@ normal=!0; //openvz problems
         }
         done= rc==0;
     }
-#else
+#else // THREADWAIT_METHOD == THREADWAIT_CONDVAR
     /* Since we've set the thread up as PTHREAD_CREATE_DETACHED, we cannot
      * join with it. Use the cond.var.
     */
+    (void) ref; // unused
     MUTEX_LOCK( mu_ref );
     
         // 'secs'==0.0 does not need to wait, just take the current status
@@ -713,13 +718,17 @@ normal=!0; //openvz problems
         done= *st_ref >= DONE;  // DONE|ERROR_ST|CANCELLED
 
     MUTEX_UNLOCK( mu_ref );
-#endif
+#endif // THREADWAIT_METHOD == THREADWAIT_CONDVAR
     return done;
-  }    
+  }
   //
   void THREAD_KILL( THREAD_T *ref ) {
+// missing....
+#if !defined(pthread_cancel)
     pthread_cancel( *ref );
-  }
 #endif
+
+  }
+#endif // THREADAPI == THREADAPI_PTHREAD
 
 static const lua_Alloc alloc_f= 0;
