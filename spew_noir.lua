@@ -4102,7 +4102,7 @@ local brain={}
 		end
 	end
 	
-	queue_update(brain) -- this brain always wants updates
+--	queue_update(brain) -- this brain always wants updates
 
 	return brain
 end
