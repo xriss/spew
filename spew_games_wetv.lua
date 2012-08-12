@@ -2555,9 +2555,9 @@ dbg("movie loading\n")
 
 	for i,v in pairs(noir_cats) do
 	
-		for p=1,2 do
-	
 		local vids={}
+
+		for p=1,5 do	
 
 		local ret=lanes_url("http://www.youtube.com/movies/"..v.."?fl=f&l=en&pt=nr&st=d&p="..p) -- pull in video info source
 		
@@ -2591,6 +2591,8 @@ dbg("movie loading\n")
 		
 		end
 		
+		end
+		
 		for id,b in pairs(vids) do -- refill table with new movies
 			table.insert(gtab.movie_ids[i],id)
 			
@@ -2600,8 +2602,6 @@ dbg("movie loading\n")
 		end
 
 dbg(i.." movies found "..(#gtab.movie_ids[i]).."\n")
-
-		end
 	end
 	
 	
