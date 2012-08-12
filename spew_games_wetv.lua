@@ -408,9 +408,27 @@ local tv_add_lines=
 local function get_random_vid_id(game)
 
 	if game.vid_ids and #game.vid_ids>0 then -- play from a special list
-
-		return game.vid_ids[ math.random(#game.vid_ids) ]
 		
+		if #game.vid_ids<1 then -- list is fucked
+		
+			game.vid_ids=nil 
+			
+		else
+
+			local idx=math.random(#game.vid_ids)
+			local id=game.vid_ids[ idx ]
+
+			if gtab.vid_infos and gtab.vid_infos[ id ] then -- we got good cached info from youtube
+			
+				local vi=gtab.vid_infos[ id ]
+				if vi.duration==0 then
+					table.remove(game.vid_ids,idx)
+				else
+					return id
+				end
+			end
+			
+		end
 	end
 
 local vi=game.vidinfo
