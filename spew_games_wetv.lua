@@ -1139,7 +1139,7 @@ end
 --
 -----------------------------------------------------------------------------
 local function check_vid_id(s)
-
+	if type(s)~="string" then return "" end
 	return string.sub(string.gsub(s, "[^a-zA-Z0-9_%-]+", "" ),-11)
 
 end
