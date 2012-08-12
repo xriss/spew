@@ -254,7 +254,7 @@ local v,u
 local vuser,vroom
 local r
 
---[[
+
 	v="kolumbo" -- special wandering bot
 	
 	u=get_bot_by_name(v)
@@ -308,8 +308,6 @@ local r
 	data.brains[u]=new_brain[v]{ user=u, room="limbo" }
 	u.room.brain=u.brain
 
-
-]]
 	
 	
 	for _,r in pairs(data.rooms) do
