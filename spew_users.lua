@@ -395,10 +395,13 @@ function telnet_str_to_msg(user,_line,msg)
 	
 	end
 
-	if user.room.name~="limbo" and a1~="/" then -- no talking in limbo, so safer to text login
+--[[
+	if user.name~="me" or (user.room.name~="limbo" and a1~="/") then -- no talking in limbo for mes, so safer to text login?
 		msg.cmd="say"
 		msg.txt=line
 	end
+]]
+
 end
 
 -----------------------------------------------------------------------------
