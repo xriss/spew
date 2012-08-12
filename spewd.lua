@@ -74,10 +74,10 @@ function run_spew(data)
 local tim=os.time()
 
 os.execute([[mail -s"SPEW ERR ]]..tim..[[" krissd@gmail.com <spew.err]])
-os.execute([[mv spew.err spew.]]..tim..[[.err]])
+os.execute([[mv spew.err save/spew.]]..tim..[[.err]])
 
 os.execute([[mail -s"SPEW DBG ]]..tim..[[" krissd@gmail.com <spew.dbg]])
-os.execute([[mv spew.dbg spew.]]..tim..[[.dbg]])
+os.execute([[mv spew.dbg save/spew.]]..tim..[[.dbg]])
 
 
 -- make sure we can log
