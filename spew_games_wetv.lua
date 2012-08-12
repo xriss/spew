@@ -833,7 +833,9 @@ dbg("ADDING default vid : "..vi.vid_id.." : "..(vi.vid_title or "").."\n")
 	
 	if gtab.vid_infos[vid_id] and gtab.vid_infos[vid_id].duration==0 then -- refuse to play vids flagged as broken
 	
-		return play_vid( game , get_random_vid_id(game) ) -- tail recursion so mostly safe? possibly :)
+-- some lists are fucked?
+--		return play_vid( game , get_random_vid_id(game) ) -- tail recursion so mostly safe? possibly :)
+		return
 	end
 	
 -- dbg(tim)
