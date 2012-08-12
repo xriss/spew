@@ -2555,7 +2555,7 @@ dbg("movie loading\n")
 
 	for i,v in pairs(noir_cats) do
 	
-		for p=1,5 do
+		for p=1,2 do
 	
 		local vids={}
 
