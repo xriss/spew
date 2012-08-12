@@ -606,6 +606,7 @@ local gaybar=false
 				td.vic=""
 				
 				local task={}
+				task.name="thunderdome"
 				
 				local action=function(t)
 					roomqueue( brain.user.room,{cmd="note",note="notice",arg1=t} )
@@ -4086,6 +4087,8 @@ end
 -----------------------------------------------------------------------------
 new_brain.noir = function(opts)
 local brain={}
+
+	brain.name="noir"
 
 	brain.user=opts.user
 	brain.user.brain=brain

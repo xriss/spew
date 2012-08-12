@@ -266,6 +266,7 @@ local pulse=data.pulse or {} -- use old or create new
 
 	pulse.timestamp=os.time()
 	pulse.update=update
+	pulse.name="pulse"
 	
 	queue_update( pulse ) -- queueing again will just replace the old one so its safe
 	data.pulse=pulse
