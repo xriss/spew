@@ -406,6 +406,10 @@ end
 
 local function brain_update(brain)
 
+	if brain.updatetime and brain.updatetime+1>os.time() then return end -- pulse
+	brain.updatetime=os.time()
+--dbg((brain.user and brain.user.name or "*").." : "..(brain.user and brain.user.room and brain.user.room.name or "*").." : "..brain.updatetime.."\n")
+
 	if brain.say then
 		
 		if brain.saytime<=os.time() then
@@ -414,7 +418,7 @@ local function brain_update(brain)
 	
 			brain.say=nil
 			
-			remove_update(brain)
+--			remove_update(brain)
 			
 			if brain.vid then
 			
@@ -463,7 +467,7 @@ local newmsg
 		
 			brain.say=say
 			brain.saytime=os.time()+1
-			queue_update(brain)
+--			queue_update(brain)
 			return
 		end
 		
@@ -487,7 +491,7 @@ local newmsg
 		brain.say=newmsg
 		brain.saytime=os.time()+brain.saywait
 		
-		queue_update(brain)
+--		queue_update(brain)
 	end
 
 end
@@ -527,6 +531,8 @@ local brain={}
 		end
 	end
 	
+	queue_update(brain)
+
 	return brain
 end
 

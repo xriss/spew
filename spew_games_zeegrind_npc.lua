@@ -454,7 +454,7 @@ local vuser
 
 local zroom=gtab.rooms[vroom.class]
 if not zroom then zroom=gtab.rooms[0] end
-
+if not zroom then return end
 
 	for i,znam in ipairs(zroom.zombies) do -- check and create each bot if we need to
 	

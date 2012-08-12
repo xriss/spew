@@ -1503,7 +1503,7 @@ function user_update(user)
 		end
 		
 	end
-
+	
 end
 
 

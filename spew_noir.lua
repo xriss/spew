@@ -3807,6 +3807,12 @@ end
 -----------------------------------------------------------------------------
 local function brain_update(brain)
 
+	if brain.updatetime and brain.updatetime+1>os.time() then return end -- pulse
+	brain.updatetime=os.time()
+--dbg((brain.user and brain.user.name or "*").." : "..(brain.user and brain.user.room and brain.user.room.name or "*").." : "..brain.updatetime.."\n")
+
+	if brain.user and brain.user.room and brain.user.room.game then game_room_brain_update(brain.user.room.game,brain) end
+
 	if brain.user and brain.user.room and brain.user.room.retain_noir then -- we are a retainer bot, so we leave when the time is up
 
 		if brain.user.room.retain_noir<os.time() then -- time up
@@ -3823,7 +3829,7 @@ local function brain_update(brain)
 				del_room(room)
 			
 			end
-		
+
 		end
 	
 	end
@@ -4088,7 +4094,6 @@ local brain={}
 	brain.update=brain_update
 	brain.delete=del_brain
 	
-	queue_update(brain) -- this brain always wants updates
 	
 	if opts.room then
 	local room=get_room(opts.room)
@@ -4097,6 +4102,8 @@ local brain={}
 		end
 	end
 	
+	queue_update(brain) -- this brain always wants updates
+
 	return brain
 end
 
