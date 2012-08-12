@@ -2633,7 +2633,7 @@ gtab.update_co = function()
 --			dbg("Video not found\n")
 		
 --			gtab.vid_infos[utvid]={title="broken",duration=0,stamp=os.time()} -- mark this id as dead from youtubes point of view
-dbg("bad video id "..utvid,"\n")
+dbg(#gtab.vid_reqs.." : "..bad video id "..utvid,"\n")
 		else
 		
 			if string.find(ret.body, "yt$noembed", 1, true) then -- we can not play this :(
@@ -2642,14 +2642,14 @@ dbg("bad video id "..utvid,"\n")
 			
 			gtab.vid_infos[utvid]={title="noembed",duration=0,stamp=os.time()} -- mark this id as dead from youtubes point of view
 
-dbg("bad video id "..utvid.." NOEMBED","\n")
+dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid.." NOEMBED","\n")
 
 
 		elseif string.find(ret.body,[["media$restriction":{"$t":"US","type":"country","relationship":"allow"}]]) then
 -- restricted to US only, which is the worst possible case
 				gtab.vid_infos[utvid]={title="restricted",duration=0,stamp=os.time()} -- mark this id as dead
 -- refuse to play *any* region restricted videos, one for all and all for one as they say	
-dbg("bad video id "..utvid.." REGION","\n")
+dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid.." REGION","\n")
 
 
 
@@ -2685,7 +2685,7 @@ dbg("bad video id "..utvid.." REGION","\n")
 				
 					gtab.vid_infos[utvid]=tab
 
-dbg("new video id "..utvid.." : "..tab.title,"\n")
+dbg(#gtab.vid_reqs.." : ".."new video id "..utvid.." : "..tab.title,"\n")
 					
 				end
 			
