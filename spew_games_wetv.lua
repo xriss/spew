@@ -2632,7 +2632,7 @@ gtab.update_co = function()
 		
 --			dbg("Video not found\n")
 		
-			gtab.vid_infos[utvid]={title="broken",duration=0,stamp=os.time()} -- mark this id as dead from youtubes point of view
+--			gtab.vid_infos[utvid]={title="broken",duration=0,stamp=os.time()} -- mark this id as dead from youtubes point of view
 dbg("bad video id "..utvid,"\n")
 		else
 		
