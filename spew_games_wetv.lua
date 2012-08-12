@@ -1077,7 +1077,7 @@ end
 local function check_vid(game,vid_len)
 
 	if not game.room.brain then -- kill the tv if the bot goes missing
-	
+dbg("CV kill room\n")
 		tv_game_clean(game.room)
 		return
 	end
@@ -1112,6 +1112,7 @@ local vi=game.vidinfo
 			not vi.vid_len or
 			( os.time()-vi.vid_start+vi.vid_start_tim >= force_floor(vi.vid_len) ) then -- play next
 
+dbg("CV play next1\n")
 			play_next_vid(game)
 
 		end
@@ -1122,11 +1123,13 @@ local vi=game.vidinfo
 	
 	if game.next_queue and tim<=0 then -- if the time lock has expired and people have tried to play something then...
 	
+dbg("CV play next2\n")
 		play_next_vid(game)
 
 	end
 	
 
+dbg("CV send title\n")
 	check_send_vid_title(game) -- see if we should update everyone  with the video title
 	
 
