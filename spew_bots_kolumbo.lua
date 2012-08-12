@@ -16,8 +16,8 @@ end
 
 local function brain_update(brain)
 
-	if brain.updatetime and brain.updatetime+1>os.time() then return end -- pulse
-	brain.updatetime=os.time()
+--	if brain.updatetime and brain.updatetime+1>os.time() then return end -- pulse
+--	brain.updatetime=os.time()
 --dbg((brain.user and brain.user.name or "*").." : "..(brain.user and brain.user.room and brain.user.room.name or "*").." : "..brain.updatetime.."\n")
 
 	if brain.user then
