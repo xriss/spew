@@ -2701,7 +2701,9 @@ gtab.update = function()
 	
 	end
 
+dbg("X")
 	local ret,_ret=coroutine.resume(gtab.co)
+dbg("Y")
 	if ret~=true then
 		dbg('\n'.._ret..'\n')
 		gtab.co=nil

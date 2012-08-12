@@ -141,6 +141,7 @@ function do_updates()
 local done_kill=false
 local ret,_ret
 
+dbg("update begin\n")
 	for i,v in pairs(data.updates) do -- call all updates
 	
 		ret,_ret = copcall(i.update,i)
@@ -154,6 +155,7 @@ local ret,_ret
 		end
 	
 	end
+dbg("update end\n")
 
 	for i,v in pairs(data.updates_kill) do -- kill all flaged tasks
 		data.updates[i]=nil
