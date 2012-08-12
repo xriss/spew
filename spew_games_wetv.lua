@@ -2646,6 +2646,7 @@ dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid.." NOEMBED","\n")
 
 
 		elseif string.find(ret.body,[["media$restriction":{"$t":"US","type":"country","relationship":"allow"}]]) or
+				string.find(ret.body,[["media$restriction":{"$t":"CA","type":"country","relationship":"allow"}]]) or
 				string.find(ret.body,[["media$restriction":{"$t":"CA US","type":"country","relationship":"allow"}]]) then
 -- restricted to US/CA only, which is generally the worst possible case (fucking americans)
 
