@@ -524,7 +524,7 @@ local vi=game.vidinfo
 			
 			vi.vid_title=gtab.vid_infos[ vi.vid_id ].title -- remember we told everyone
 			
-			if game.broadcast_news and vi.duration>60 then -- tell the world, but only once
+			if game.broadcast_news and gtab.vid_infos[ vi.vid_id ].duration>60 then -- tell the world, but only once
 			
 				local msg={cmd="note",note="notice",
 				arg1=vi.vid_title.." is now starting in room "..game.room.name}
