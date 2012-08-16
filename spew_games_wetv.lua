@@ -2561,7 +2561,7 @@ dbg("movie loading\n")
 
 		for p=1,5 do	
 
-		local ret=lanes_url("http://www.youtube.com/movies/"..v.."?fl=f&l=en&pt=nr&st=d&p="..p) -- pull in video info source
+		local ret=lanes_url("http://www.youtube.com/movies/"..v.."?fl=f&l=en&pt=nr&st=d&view=11&p="..p) -- pull in video info source
 		
 		if ret and ret.body and type(ret.body)=="string" and ret.body~="" then -- got some movies
 		
