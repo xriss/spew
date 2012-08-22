@@ -584,7 +584,7 @@ local gaybar=false
 	brain.thunderdome=brain.thunderdome or {from="",vic="",start=0} -- init?
 	local td=brain.thunderdome
 	local tim=os.time()-td.start
-	if tim<30 then -- fight in progress
+	if td.state=="active" then -- fight in progress
 		noir_say(brain,"Thunderdome is already in progress ("..math.floor(tim)..").",user)
 	else
 		if name=="" or name==string.lower(user.name) then
@@ -592,13 +592,14 @@ local gaybar=false
 			noir_say(brain,"Who would you like to challenge?",user)
 		
 		else
-			if td.vic==string.lower(user.name) and td.from==name then -- accept
+			if td.vic==string.lower(user.name) and td.from==name and tim<30 and td.state=="challenge" then -- accept
 			
 				noir_say(brain,td.from.." has accepted "..td.vic.."s challenge to THUNDERDOME!",user)
 				
 -- now we start a special FIGHT
 
 				td.start=os.time()
+				td.state="active"
 				
 				td.p1={name=td.from,time=td.start,hp=100}
 				td.p2={name=td.vic,time=td.start,hp=100}
@@ -613,6 +614,8 @@ local gaybar=false
 				end
 				
 				local dokill=function(p,v)
+
+					td.state="finished"
 					
 					if gaybar then -- no real mud
 						action(p.name.." made "..v.name.." jizz their pants.")
@@ -632,10 +635,12 @@ log(p.name,"thunderdome",v.name)
 				local active=true
 				while active do
 					local tim=os.time()-td.start					
-					if tim>60 then
+					if tim>120 then
 						if math.random(0,100)<50 then -- random mud
+							action(td.p2.name.." trips and falls...")
 							dokill(td.p1,td.p2)
 						else
+							action(td.p1.name.." trips and falls...")
 							dokill(td.p2,td.p1)
 						end
 						return
@@ -651,7 +656,7 @@ log(p.name,"thunderdome",v.name)
 				
 					local tim=os.time()-td.start
 					
-					if tim>70 then -- sanity kill
+					if tim>150 then -- sanity kill
 						remove_update(task)
 						brain.msghook=nil
 						return
@@ -697,6 +702,9 @@ log(p.name,"thunderdome",v.name)
 			
 				td.from=string.lower(user.name)
 				td.vic=name
+				td.start=os.time()
+
+				td.state="challenge"
 				
 				noir_say(brain,td.from.." has challenged "..td.vic.." to THUNDERDOME!",user)
 				
