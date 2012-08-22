@@ -2600,7 +2600,7 @@ local endlen=string.len(ending)
 	data.hoe.crowns={}
 	data.hoe.crowns.score={}
 	
-	local ret=lanes_url("http://hoe-house.appspot.com/hoe/api/tops")	
+	local ret=lanes_url("http://hoe.4lfa.com/hoe/api/tops")
 	if ret.body then
 		
 		local dat=Json.Decode(ret.body)
