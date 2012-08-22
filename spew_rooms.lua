@@ -1267,7 +1267,7 @@ local newtxt=nil
 				
 			end
 			
-		elseif v.brain and room.users[user] then -- must be in room?
+		elseif v.brain --[[ and room.users[user] ]] then -- must be in room?
 		
 			local frm
 			local old_user
