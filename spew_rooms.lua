@@ -1267,7 +1267,7 @@ local newtxt=nil
 				
 			end
 			
-		elseif v.brain --[[ and room.users[user] ]] then -- must be in room?
+		elseif v.brain then
 		
 			local frm
 			local old_user
@@ -1280,18 +1280,22 @@ local newtxt=nil
 				user=get_user(blame)
 			
 			end
+			
+			if (not user) or (room.users[user]) then -- must be in room to talk to brain
 		
-			if form_filter then -- the brain still sees everything
-			
-				msg.txt=form_msg
+				if form_filter then -- the brain still sees everything
 				
-				safecall( v.brain.msg , v.brain , msg ,user)
+					msg.txt=form_msg
+					
+					safecall( v.brain.msg , v.brain , msg ,user)
+					
+				else
 				
-			else
-			
-				if oldtxt then msg.txt=oldtxt end
-			
-				safecall( v.brain.msg , v.brain , msg ,user)
+					if oldtxt then msg.txt=oldtxt end
+				
+					safecall( v.brain.msg , v.brain , msg ,user)
+					
+				end
 				
 			end
 			
