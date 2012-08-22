@@ -469,6 +469,7 @@ dr{
 dr{
 	name="panopticon",
 	welcome="IGNORE ME!.",
+	addnoir="reg",
 	locked="all",
 }
 	
