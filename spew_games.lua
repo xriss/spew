@@ -2609,7 +2609,7 @@ local endlen=string.len(ending)
 		
 			for _,rname in pairs{"active","last"} do -- current active game and last round winers
 			
-				local hoe_nerf=0 -- no crowns by default
+				local hoe_nerf=0.5 -- half crowns by default
 				if rname=="last" then hoe_nerf=0.5 end -- only the lastround gives 1/2 crowns
 
 				if dat[rname] and dat[rname].info then -- sanity check
