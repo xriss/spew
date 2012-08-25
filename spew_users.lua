@@ -3133,7 +3133,7 @@ log(user.name,"guest")
 		
 		if ipnum~=0 then -- bots have a 0 ip
 		
-			local shared=data.alt_names[string.lower(name)] or 0
+			local shared=data.alt_names[string.lower(name)] or 1 -- allow two logind per IP by default
 			if shared<0 then shared=0 end
 			
 --[[
@@ -3155,7 +3155,7 @@ log(user.name,"guest")
 			
 				if (ipnum==user_ipnum(u)) and (u~=user) then -- alt?
 				
-					if u.fud and not data.alt_names[string.lower(u.name)] then -- a real login and not multiallowed
+					if u.fud then -- couint all real logins
 					
 						table.insert(names,u.name)
 						count=count+1
