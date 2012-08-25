@@ -252,13 +252,15 @@ end
 		data.crowns_special[name]=data.crowns_special[name] or {}
 		data.crowns_special[name][crown]=num
 	end
-	addacrown("miss_wetgenes","desu_boku",6)
-	addacrown("miss_wetgenes","kohaku",5)
-	addacrown("miss_wetgenes","qata",4)
-	addacrown("miss_wetgenes","traces",3)
-	addacrown("miss_wetgenes","bees",2)
-	addacrown("miss_wetgenes","tosi",2)
-	addacrown("miss_wetgenes","erik_revolution",1)
+
+-- kill miss wetgenes
+--	addacrown("miss_wetgenes","desu_boku",6)
+--	addacrown("miss_wetgenes","kohaku",5)
+--	addacrown("miss_wetgenes","qata",4)
+--	addacrown("miss_wetgenes","traces",3)
+--	addacrown("miss_wetgenes","bees",2)
+--	addacrown("miss_wetgenes","tosi",2)
+--	addacrown("miss_wetgenes","erik_revolution",1)
 
 	addacrown("poet","riceguy",1)
 	addacrown("putty","lunboks",1)
@@ -269,45 +271,6 @@ end
 
 	data.alt_names["xix"]=100
 	data.alt_names["shi"]=100
-	
-	data.alt_names["amanda"]=nil
-	data.alt_names["zatech"]=nil
-	data.alt_names["shroom"]=nil
-	data.alt_names["duffmcwhalen94"]=nil
-	data.alt_names["fish"]=nil
-	data.alt_names["stumblewater"]=nil
-	data.alt_names["uelrindru"]=nil
-	data.alt_names["msleeper"]=nil
-	data.alt_names["tricky"]=nil
-	data.alt_names["hosaka"]=nil
-	data.alt_names["linux"]=nil
-	data.alt_names["hexi"]=nil
-	data.alt_names["ellios"]=nil
-	data.alt_names["baal"]=nil
-	data.alt_names["sailor_moon"]=nil
-	data.alt_names["negative_spaces"]=nil
-	data.alt_names["tobiy"]=nil
-	data.alt_names["blues_girl"]=nil
-	data.alt_names["santos"]=nil
-	data.alt_names["hei"]=nil
-	data.alt_names["fatchocobo"]=nil
-	data.alt_names["mudokonlaw"]=nil
-	data.alt_names["portgaz"]=nil
-	data.alt_names["darkest_waist"]=nil
-	
--- all the old ones removed	so all new for 2011
-	
-	data.alt_names["gunxdonk"]=1
-	data.alt_names["jeffpwnsyou"]=1
-
-	data.alt_names["zombunny"]=1
-	data.alt_names["eiko"]=1
-
--- new for 2012
-
-	data.alt_names["darkest_waist"]=1
-	
-	data.alt_names["verms"]=1
 
 -- cache the ips here, do not save these ips
 
