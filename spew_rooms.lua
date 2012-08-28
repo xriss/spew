@@ -1189,6 +1189,17 @@ local form_msg="..."
 local oldtxt=nil
 local newtxt=nil
 
+	if user and msg.cmd=="say" then -- check for butt buddies
+		link=data.butt_names[ user.name ]
+		if link then
+			local ulink=get_user(link)
+			if not ulink then
+				msg.txt="I wish "..link.." was here."
+			end
+		end
+	end
+
+
 -- last minute translation	
 	if user and msg.cmd=="say" and day_flag_get(user.name,"zom_bork") then -- this user has had their brain adjusted by a zombie
 
