@@ -156,6 +156,14 @@ end
 		["shi"]="XIX",
 	}
 
+-- selected users can not talk unless their butt buddie is also online.
+	data.butt_names=
+	{
+		["Taokaka"]="DROSS",
+		["DROSS"]="Taokaka",
+	}
+
+
 -- these people are not allowed in the same room as each other
 	data.drama_names={}
 
