@@ -1190,15 +1190,13 @@ local oldtxt=nil
 local newtxt=nil
 
 	if user and msg.cmd=="say" then -- check for butt buddies
-		link=data.butt_names[ user.name ]
---[[
+		local link=data.butt_names[ user.name ]
 		if link then
 			local ulink=get_user(link)
 			if not ulink then
 				msg.txt="I wish "..link.." was here."
 			end
 		end
-]]
 	end
 
 
