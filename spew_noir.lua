@@ -3327,6 +3327,8 @@ local count=tonumber(aa[4] or "0") or 0
 		
 		if tab[1] then
 			noir_say(brain,string.sub(str_join_english_list(tab),1,256).." "..((tab[2] and "are") or "is").." fag.",user)
+		else
+			noir_say(brain,"I see no fags.",user)
 		end
 		
 		return
@@ -3392,6 +3394,8 @@ local count=tonumber(aa[4] or "0") or 0
 		
 		if tab[1] then
 			noir_say(brain,string.sub(str_join_english_list(tab),1,256).." "..((tab[2] and "are") or "is").." dum.",user)
+		else
+			noir_say(brain,"I see no dumdums.",user)
 		end
 		
 		return
