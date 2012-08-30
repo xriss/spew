@@ -30,6 +30,10 @@ local len=string.len(msg.txt or "")
 
 local function kicked(spam)
 
+	if is_fag(user.name) then
+		data.mud_names[string.lower(user.name)]=10
+	end
+
 	local count=spam.kicks or 0
 
 	count=count+1 -- one more kick

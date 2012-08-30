@@ -240,6 +240,18 @@ end
 
 -----------------------------------------------------------------------------
 --
+-- check if name is a fag, which means we have lost patience
+--
+-----------------------------------------------------------------------------
+function is_fag(name)
+
+	if data.fag_names[ string.lower(name) ] then return true end
+	
+	return false
+end
+
+-----------------------------------------------------------------------------
+--
 -- check if a string contains a bad word
 --
 -----------------------------------------------------------------------------

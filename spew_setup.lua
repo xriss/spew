@@ -207,6 +207,9 @@ end
 	drama_update() -- clean up ips etc
 	
 	
+-- these people are useless faggots
+	data.fag_names=data.fag_names or {}
+
 -- these people are too dum to be allowed cthulhu privilages
 -- I expect this list will grow grow grow
 	data.dum_names=data.dum_names or {}
@@ -286,14 +289,12 @@ end
 	
 
 data.badwords={ -- we are not dealing with smart people here, just trying to catch the first thing they say
+"jew",
 "cunt",
 "fuck",
 "shit",
 "nigger",
 "faggot",
-"boxxy",
-"kongregate",
-"steam",
 }
 
 -- create limbo room

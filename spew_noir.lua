@@ -3307,6 +3307,71 @@ end
 
 -----------------------------------------------------------------------------
 --
+-- fag control
+--
+-----------------------------------------------------------------------------
+local function noir_say_fag(brain,user,aa)
+
+	if not is_admin(user.name) then return end -- must be admin
+	
+local n=aa[3] or ""
+local count=tonumber(aa[4] or "0") or 0
+	
+	if n=="" then  -- need a user
+	
+		local tab={}
+		
+		for n,b in pairs(data.fag_names) do
+			table.insert(tab,n)
+		end
+		
+		if tab[1] then
+			noir_say(brain,string.sub(str_join_english_list(tab),1,256).." "..((tab[2] and "are") or "is").." fag.",user)
+		end
+		
+		return
+	
+	end
+	
+	if aa[2]=="fag" then -- make them fag
+	
+		local tab=get_shared_names_by_ip(n) -- hit all people of the same ip
+		if not tab then tab={n} end
+		if count==1 then tab={n} end -- just change this one user
+		for i,v in ipairs(tab) do
+		
+			data.fag_names[ string.lower(v) ]=true
+			
+		end
+	
+		noir_say(brain,string.sub(str_join_english_list(tab),1,256).." "..((tab[2] and "are") or "is").." fag.",user)
+			
+			
+	else -- release them if we must
+		
+		if n=="*" then data.fag_names={} end -- quick unfag
+		
+		local tab=get_shared_names_by_ip(n) -- hit all people of the same ip
+		if not tab then tab={n} end
+		if count==1 then tab={n} end -- just change this one user
+		for i,v in ipairs(tab) do
+		
+			data.fag_names[ string.lower(v) ]=nil
+			
+		end
+		
+		noir_say(brain,string.sub(str_join_english_list(tab),1,256).." "..((tab[2] and "are") or "is").." not fag.",user)
+		
+	end
+
+end
+
+for i,v in ipairs{"fag","notfag"} do
+	noir_triggers[v]=noir_say_fag
+end
+
+-----------------------------------------------------------------------------
+--
 -- lock or unlock room
 --
 -----------------------------------------------------------------------------
@@ -3869,10 +3934,22 @@ local user=get_user(msg.frm)
 		
 		if user.swear.count==0 then
 		
-			user.swear.count=1
-			user.swear.time=os.time()
+			if is_fag(user.name) then
+			
+				data.mud_names[string.lower(user.name)]=10
+
+				set_status(nil,"ban",msg.frm,os.time()+(60*60*24))
+				
+				join_room_str(user,"swearbox")
+				
+				return {cmd="act",frm=brain.user.name,txt="escorts "..msg.frm.." into the swearbox for the next 24 hours"}
+			else
 		
-			return {cmd="act",frm=brain.user.name,txt="shows "..msg.frm.." a yellow card"}
+				user.swear.count=1
+				user.swear.time=os.time()
+			
+				return {cmd="act",frm=brain.user.name,txt="shows "..msg.frm.." a yellow card"}
+			end
 			
 		elseif user.swear.count==1 then
 		
