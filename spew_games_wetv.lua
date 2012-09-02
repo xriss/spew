@@ -525,21 +525,15 @@ local vi=game.vidinfo
 			vi.vid_title=gtab.vid_infos[ vi.vid_id ].title -- remember we told everyone
 			
 			if game.broadcast_news and gtab.vid_infos[ vi.vid_id ].duration>60 then -- tell the world, but only once
-			
-				local msg={cmd="note",note="notice",
-				arg1=vi.vid_title.." is now starting in room "..game.room.name}
-			
-				if msg then
+
+				for _,r in pairs(data.rooms) do -- broadcast to all rooms
 				
-					for _,r in pairs(data.rooms) do -- broadcast to all rooms
-					
-						if r.brain and ( not r.hush_time or r.hush_time<os.time() ) then
-							roomqueue(r,msg)
-						end
+					if r.brain and ( not r.hush_time or r.hush_time<os.time() ) then
+						roomqueue(r,{cmd="lnk",frm=r.brain.name,
+							txt=vi.vid_title.." is now starting in room "..game.room.name,
+							lnk="http://play.4lfa.com/tv/"..game.room.name})
 					end
-				
 				end
-					
 			
 			end
 
@@ -2320,11 +2314,11 @@ local nam="cthulhu"
 	
 	if user.brain then return end
 
-	if user.gamename~="WetV" and user.gametype~="WetVille" then
+	if user.gamename~="WetV" and user.gametype~="WetVille" and game.room then
 	
 		userqueue(user,{cmd="lnk",frm=nam,
 		txt="This is a TV room. Click here to watch TV with everyone else.",
-		lnk="http://tv.wetgenes.com/"})
+		lnk="http://play.4lfa.com/tv/"..game.room.name})
 		
 	end
 	
