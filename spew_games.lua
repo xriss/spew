@@ -2122,6 +2122,7 @@ local v
 
 	local mincap=10
 	local maxcap=1
+	local user=get_user(name)
 	if user and user.fud and user.fud.join_date then --need to know your age
 		local t=math.floor(os.time()/(60*60*24)) -- days now
 		local d=(tonumber(user.fud.join_date or 0) or 0) -- time when regged

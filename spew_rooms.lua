@@ -1125,6 +1125,11 @@ function roomcast(room,msg,user)
 	fix_msg_rgb(user,msg)
 
 
+	if user and msg.txt and is_fag(user.name) then -- this user does not get nice things
+	
+		msg.txt=string_fag_filter(msg.txt)
+		
+	end
 	
 
 --[[
@@ -1198,7 +1203,6 @@ local newtxt=nil
 			end
 		end
 	end
-
 
 -- last minute translation	
 	if user and msg.cmd=="say" and day_flag_get(user.name,"zom_bork") then -- this user has had their brain adjusted by a zombie
