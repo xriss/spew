@@ -2208,9 +2208,21 @@ end
 -----------------------------------------------------------------------------
 local function noir_say_stat(brain,user,aa)
 
+	if not is_admin(user.name) then return end
+	
+
 local name=aa[3] or "me"
 
 		noir_say(brain,name.." "..get_banedfor_string(name),user)
+
+		local u=get_user(name)
+		
+		if u then
+		
+			local ip=user_ip(u)
+			noir_say(brain,u.name.." is a user with an ip of "..ip,user)
+			
+		end
 
 end
 

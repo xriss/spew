@@ -1915,7 +1915,27 @@ local vi=game.vidinfo
 local vid_id
 local ret=false
 
-local start_tim=force_floor(tonumber(aa[4] or "0") or 0) -- can specify a start time for this vid in secs
+-- allow simple way of setting time in hours or minutes
+local start_tim=0
+	local str=aa[4] or ""
+	local ss
+	if str~="" then
+		ss=str_split("h",str,false)
+		if ss[1] and ss[2] then -- hours
+			start_tim=start_tim+(60*60*force_floor(tonumber(ss[1])))
+			str=ss[2] -- the rest
+		end
+		if str~="" then
+			ss=str_split("m",str,false)
+			if ss[1] and ss[2] then -- minutes
+				start_tim=start_tim+(60*force_floor(tonumber(ss[1])))
+				str=ss[2] -- the rest
+			end
+			if str~="" then
+				start_tim=start_tim+force_floor(tonumber(str))
+			end
+		end
+	end
 	if start_tim<0 then start_tim=0 end
 
 	if aa[3] then

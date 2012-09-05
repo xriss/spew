@@ -2118,10 +2118,10 @@ local v
 		end
 	end
 	
--- cap only at the end because we are nice
+-- cap only at the end because we are nice and 20 + crowns can cancel out -10 crowns
 
-	local cap=10
---[[ bye bye super levels :)
+	local mincap=10
+	local maxcap=1
 	if user and user.fud and user.fud.join_date then --need to know your age
 		local t=math.floor(os.time()/(60*60*24)) -- days now
 		local d=(tonumber(user.fud.join_date or 0) or 0) -- time when regged
@@ -2129,17 +2129,16 @@ local v
 		local days=math.floor((d/(60*60*24))) -- convert registration to days
 		if days>0 then days=t-days end -- convert to days to age if it looks valid
 		local months=math.floor(days/28) -- get age of account in luna months (4 weeks)
-		if months>30 then months=30 end -- max crowns 
 
-		if months>10 then	-- crown cap is never less than 10, so you need to be at least 10 months old
-			cap=months      -- your crown cap increases by+1 for every month old you are after 10 months
-		end
+		if months<1 then months=1 end -- max crowns starts at 1
+		if months>10 then months=10 end -- max crowns reaches 10 after 10 months
+		maxcap=months      -- your crown cap increases by+1 for every month old you are to a maximum of 10
+		
 	end
-]]
 	
 	if data.crowns[name] then
-		if data.crowns[name]> cap then data.crowns[name]= cap end
-		if data.crowns[name]<-cap then data.crowns[name]=-cap end -- what is good is also bad...
+		if data.crowns[name]> maxcap then data.crowns[name]= maxcap end
+		if data.crowns[name]<-mincap then data.crowns[name]=-mincap end
 	end
 	
 end
