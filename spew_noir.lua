@@ -2203,6 +2203,23 @@ end
 
 -----------------------------------------------------------------------------
 --
+-- ban user
+--
+-----------------------------------------------------------------------------
+local function noir_say_stat(brain,user,aa)
+
+local name=aa[3] or "me"
+
+		noir_say(brain,name.." "..get_banedfor_string(name),user)
+
+end
+
+for i,v in ipairs{"stat"} do
+	noir_triggers[v]=noir_say_stat
+end
+
+-----------------------------------------------------------------------------
+--
 -- spy on user and report their possible alts
 --
 -----------------------------------------------------------------------------
