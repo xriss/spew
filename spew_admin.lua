@@ -295,7 +295,7 @@ end
 
 function string_fag_filter(s)
 
-	return string.gsub(s or "", "[^0-9a-zA-Z%-_%s%p]+", "" )
+	return string.gsub(s or "", "[^%s%l%u]+", "" )
 
 end
 
