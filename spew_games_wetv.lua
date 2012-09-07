@@ -2642,7 +2642,7 @@ gtab.update_co = function()
 
 	local utvid=table.remove(gtab.vid_reqs,1)
 	
-	if gtab.vid_infos[utvid] and gtab.vid_infos[utvid].stamp and gtab.vid_infos[utvid].stamp+(60*60*24)<os.time() then return end -- already done
+	if gtab.vid_infos[utvid] and gtab.vid_infos[utvid].stamp --[[and gtab.vid_infos[utvid].stamp+(60*60*24)<os.time()]] then return end -- already done
 	
 	if utvid then
 
