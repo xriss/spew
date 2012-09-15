@@ -320,13 +320,13 @@ local r
 		
 			u=new_user{name=r.retain_noir_name}
 			data.brains[u]=new_brain["noir"]{ user=u , room=r.name }
-			u.room.brain=u.brain
+			r.brain=u.brain
 			
 		elseif r.addnoir then
 		
 			u=new_user{name=r.addnoir}
 			data.brains[u]=new_brain["noir"]{ user=u , room=r.name }
-			u.room.brain=u.brain
+			r.brain=u.brain
 			
 		end
 		
