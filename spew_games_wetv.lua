@@ -524,7 +524,7 @@ local vi=game.vidinfo
 			
 			vi.vid_title=gtab.vid_infos[ vi.vid_id ].title -- remember we told everyone
 			
-			if game.broadcast_news and gtab.vid_infos[ vi.vid_id ].duration>60 then -- tell the world, but only once
+			if game.broadcast_news and gtab.vid_infos[ vi.vid_id ].duration>60*10 then -- tell the world, but only once
 
 				for _,r in pairs(data.rooms) do -- broadcast to all rooms
 				
