@@ -189,8 +189,7 @@ dbg( "Check vest.\n")
 	
 	end
 
--- fucked?
-	ret={}--lanes_url("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml") -- pull in feed
+	ret=lanes_url("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml") -- pull in feed
 	
 	if ret.body then
 	
