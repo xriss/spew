@@ -2709,6 +2709,7 @@ dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid.." NOEMBED","\n")
 
 					tab.title=info["entry"]["title"]["$t"]
 					tab.duration=tonumber(info["entry"]["media$group"]["yt$duration"]["seconds"])
+					if tab.duration==0 then tab.duration=60*60*3 end -- hack fix
 					tab.stamp=os.time()
 				
 				end
