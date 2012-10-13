@@ -2121,7 +2121,8 @@ local v
 -- cap only at the end because we are nice and 20 + crowns can cancel out -10 crowns
 
 	local mincap=10
-	local maxcap=1
+	local maxcap=10
+--[[
 	local user=get_user(name)
 	if user and user.fud and user.fud.join_date then --need to know your age
 		local t=math.floor(os.time()/(60*60*24)) -- days now
@@ -2136,6 +2137,7 @@ local v
 		maxcap=months      -- your crown cap increases by+1 for every month old you are to a maximum of 10
 		
 	end
+]]
 	
 	if data.crowns[name] then
 		if data.crowns[name]> maxcap then data.crowns[name]= maxcap end
