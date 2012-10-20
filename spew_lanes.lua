@@ -313,8 +313,11 @@ end
 --
 -----------------------------------------------------------------------------
 function lanes_sql(q,flags)
-local d=debug.getinfo(2)
+if not sql then return end
+
+--local d=debug.getinfo(2)
 --dbg("SQL CALL "..(d.source or "?").." "..d.currentline.."\n")
+
 
 local msg={}
 local ret
@@ -350,6 +353,7 @@ end
 --
 -----------------------------------------------------------------------------
 function lanes_sql_noblock(q)
+if not sql then return end
 
 local msg={}
 local ret
@@ -420,6 +424,10 @@ end
 --
 -----------------------------------------------------------------------------
 function lanes_sql_worker(linda,msg)
+
+if not sql then
+	return lanes_return(linda,msg,false)
+end
 
 local con,cur,ret,err
 local lastid,lastcur
@@ -553,8 +561,10 @@ require("socket")
 require("socket.http")
 
 
-require("luasql.mysql")
+pcall( function() require("luasql.mysql") end )
+if luasql then
 sql=luasql.mysql()
+end
 
 
 require("md5")

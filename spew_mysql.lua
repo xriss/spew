@@ -35,6 +35,8 @@
 -----------------------------------------------------------------------------
 function spew_mysql_table_create(name,cols,extra)
 
+if sql then
+
 local con,cur,err
 local q
 
@@ -133,6 +135,7 @@ local q
 
 	if cur then cur:close() end
 	if con then con:close() end
+end
 	
 end
 
@@ -313,5 +316,7 @@ function spew_mysql_insertup(name,dat)
 	return lanes_sql( spew_mysql_make_insertup(name,dat) )
 	
 end
+
+
 
 

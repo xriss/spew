@@ -613,7 +613,7 @@ end
 	
 	vest_load_rates()
 	
-	setup_room_protction()
+	setup_room_protection()
 	
 if not (flags and flags.nocrowns) then
 	game_thorns() -- check for the real weaners every day
@@ -627,7 +627,7 @@ end
 -- called every hour
 --
 -----------------------------------------------------------------------------
-function setup_room_protction()
+function setup_room_protection()
 
 local room
 

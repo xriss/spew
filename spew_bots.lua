@@ -151,7 +151,6 @@ function remove_all_bots()
 	for u,b in pairs(data.brains) do
 
 		b:delete()
-		data.brains[u]=nil
 
 	end
 
@@ -248,6 +247,38 @@ dbg("Kolumbo is in "..(r.name).."\n")
 
 end
 
+
+function room_check_bots(room)
+
+	local user
+	local vroom
+
+		if room.brain then
+			room.brain:delete()
+		end
+
+		if room.retain_noir and room.retain_noir>os.time() and room.retain_noir_name then -- this room still has paid for supervision, add noir back in when i reset
+		
+			user=new_user{name=room.retain_noir_name}
+			new_brain["noir"]{ user=user , room=room.name }
+			room.brain=user.brain
+			
+		elseif room.addnoir then
+		
+			user=new_user{name=room.addnoir}
+			new_brain["noir"]{ user=user , room=room.name }
+			room.brain=user.brain
+			
+		end
+		
+		vroom=data.ville and data.ville.rooms and data.ville.rooms[room.name] -- check the virtual bots
+		
+		if vroom then
+			vroom_check_bots(vroom)
+		end
+
+end
+
 -----------------------------------------------------------------------------
 --
 -- add generic bots
@@ -264,7 +295,7 @@ local r
 	u=get_bot_by_name(v)
 	if not u then
 		u=new_user{}
-		data.brains[u]=new_brain[v]{ user=u }
+		new_brain[v]{ user=u }
 		login_newname(u,v)
 	end
 	kolumbo_relocate() -- put kolumbo somewhere random
@@ -289,7 +320,7 @@ local r
 	u=get_bot_by_name(v)
 	if not u then
 		u=new_user{}
-		data.brains[u]=new_brain[v]{ user=u }
+		new_brain[v]{ user=u }
 		login_newname(u,v)
 	end
 	
@@ -309,35 +340,15 @@ local r
 	
 	v="lieza" -- limbo bot
 	u=new_user{name=v}
-	data.brains[u]=new_brain[v]{ user=u, room="limbo" }
+	new_brain[v]{ user=u, room="limbo" }
 	u.room.brain=u.brain
 
 	
 	
 	for _,r in pairs(data.rooms) do
-	
-		if r.retain_noir and r.retain_noir>os.time() and r.retain_noir_name then -- this room still has paid for supervision, add noir back in when i reset
-		
-			u=new_user{name=r.retain_noir_name}
-			data.brains[u]=new_brain["noir"]{ user=u , room=r.name }
-			r.brain=u.brain
-			
-		elseif r.addnoir then
-		
-			u=new_user{name=r.addnoir}
-			data.brains[u]=new_brain["noir"]{ user=u , room=r.name }
-			r.brain=u.brain
-			
-		end
-		
-		vroom=data.ville and data.ville.rooms and data.ville.rooms[r.name] -- check the virtual bots
-		if vroom then
-			vroom_check_bots(vroom)
-		end
-		
+		room_check_bots(r)
 	end
-		
-	
+
 end
 
 

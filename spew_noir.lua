@@ -3756,14 +3756,14 @@ end
 			room.retain_noir_name=brain.user.name
 			
 			local u=new_user{name=room.retain_noir_name}
-			data.brains[u]=new_brain["noir"]{ user=u , room=room.name }
+			new_brain["noir"]{ user=u , room=room.name }
 			u.room.brain=u.brain
 	
 		end
 		
 		user.cookies=user.cookies-num
 		
-		room.retain_noir=room.retain_noir+(num*60) -- 60 secs per cookie
+		room.retain_noir=( tonumber(room.retain_noir) or os.time() )+(num*60) -- 60 secs per cookie
 		
 		saytime()
 		
@@ -4186,6 +4186,8 @@ local function del_brain(brain)
 	
 		if brain.user then
 		
+			data.brains[brain.user]=nil
+			
 			brain.user.room.brain=nil
 			
 			brain.user.brain=nil
@@ -4210,6 +4212,7 @@ local brain={}
 
 	brain.user=opts.user
 	brain.user.brain=brain
+	data.brains[brain.user]=brain
 	
 	brain.msg=brain_msg
 	brain.update=brain_update

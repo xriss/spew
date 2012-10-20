@@ -71,7 +71,11 @@ require("lanes")
 require("socket")
 require("socket.smtp")
 require("socket.http")
+
+if cfg.sql=="mysql" then
 require("luasql.mysql")
+end
+
 require("lash")
 require("Json")
 require("bit")
@@ -728,8 +732,9 @@ end
 
 if not data then -- only do this if this is the first time this file has been loaded, that way we can reload the other functions in this file
 
-
+if cfg.sql=="mysql" then -- just fake functions
 	global.sql=luasql.mysql()
+end
 
 	global.host = host or "*"
 	global.port1 = port1 or 5223
