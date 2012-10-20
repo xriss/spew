@@ -167,6 +167,8 @@ local vid_blip_ids=
 "X_BWSqEWPIc", -- blipvert : there's someything about Alice - Bernie Drummond
 "H52_208ATxQ", -- blipvert : CLANS PEOPLE - Bernie Drummond
 "s5CMl1ceeho", -- blipvert : MOTHER - Bernie Drummond
+
+"LmIBBUSrjw4", -- blipuser : we tv
 }
 
 
