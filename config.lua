@@ -8,8 +8,7 @@ cfg={}
 cfg.os="nix"
 cfg.posix_username="wet"
 
---cfg.sql="mysql"
-
+cfg.sql="mysql"
 cfg.mysql_hostname="127.0.0.1"
 cfg.mysql_database="forum"
 cfg.mysql_username="wet"
@@ -32,10 +31,20 @@ cfg.base_data_url="http://data.wetgenes.com"
 
 cfg.blocked={
 
+        ["24.241.194.99"]=true,
+        ["24.241."]=true,
+
 --[[
         ["70.114.2.84"]=true,
 ]]
 
+}
+
+cfg.cockblocked={
+	"24.241.",
+	"71.12.",
+	"75.137.",
+	"24.196.",
 }
 
 
