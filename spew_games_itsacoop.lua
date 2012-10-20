@@ -17,6 +17,8 @@ gtab.build_and_check_environment = function()
 
 dbg("checking itsacoop data\n")
 
+if sql then
+
 local con,cur,ret,tab
 
 	con=sql:connect(cfg.mysql_database,cfg.mysql_username,cfg.mysql_password)
@@ -45,6 +47,8 @@ local con,cur,ret,tab
 	
 	if cur then cur:close() end
 	if con then con:close() end
+	
+end
 
 end
 

@@ -216,6 +216,8 @@ local s
 
 -- save back into mysql
 	
+if sql then
+
 local con,num
 
 	con=sql:connect(cfg.mysql_database,cfg.mysql_username,cfg.mysql_password)
@@ -233,6 +235,7 @@ local con,num
 	end
 	
 	if con then con:close() end
+end
 	
 	
 end

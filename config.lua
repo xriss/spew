@@ -8,6 +8,8 @@ cfg={}
 cfg.os="nix"
 cfg.posix_username="wet"
 
+--cfg.sql="mysql"
+
 cfg.mysql_hostname="127.0.0.1"
 cfg.mysql_database="forum"
 cfg.mysql_username="wet"

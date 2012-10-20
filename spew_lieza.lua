@@ -501,6 +501,9 @@ local function del_brain(brain)
 	if brain then
 	
 		if brain.user then
+
+			data.brains[brain.user]=nil
+
 			brain.user.brain=nil
 			del_user(brain.user)
 			brain.user=nil
@@ -517,6 +520,7 @@ local brain={}
 
 	brain.user=opts.user
 	brain.user.brain=brain
+	data.brains[brain.user]=brain
 	
 	brain.msg=brain_msg
 	brain.update=brain_update
