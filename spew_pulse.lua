@@ -223,7 +223,7 @@ local function update(pulse)
 		
 		kolumbo_relocate() -- he moves in mysterious ways
 		
-		setup_room_protction() -- some rooms are re-protected on the hour
+		setup_room_protection() -- some rooms are re-protected on the hour
 		
 		co_wrap_and_wait( vest_load_rates ) -- check the money market
 	end
