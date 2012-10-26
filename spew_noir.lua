@@ -567,6 +567,7 @@ local mudlen=force_floor(aa[4] or 10) or 10 -- default mudlenth of 10
 local gaybar=false
 
 	if mudlen<1 then mudlen=1 end
+	if mudlen>1000 then mudlen=1000 end
 
 -- must be level 10+ to play
 	if user.room.name~="public.gaybar" then -- anyone in the gaybar
