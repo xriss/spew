@@ -2188,15 +2188,16 @@ local function noir_say_ban(brain,user,aa)
 local name=aa[3] or ""
 
 	if is_mod(name) then return end
-	if not ( is_room_owner(user.room,user.name) or is_god(user.name) ) then
-		if not is_mud(name) then -- anyone can request a ban on a mudded player, otherwise you must own the room
+	
+	if not ( is_room_owner(user.room,user.name) or is_god(user.name) ) then -- you must own the room
+		if not is_mud(name) then -- or the victim must be mud
 			return
 		end
 	end
 
 	local u=get_user(name)
 	
-	if u and u.room==user.room then
+	if u and u.room==user.room then -- must be in same room
 			
 		set_status(nil,"ban",name,os.time()+(60*5))
 		join_room_str(u,"swearbox")
