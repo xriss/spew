@@ -230,20 +230,7 @@ end
 -- check if name is a mud, which means reduced powers
 --
 -----------------------------------------------------------------------------
-function is_mud(name)
-
-	for i,v in ipairs( get_shared_names_by_ip(user.name) or {} ) do
-	
-		if is_mud(v) then
-			if not data.mud_names[ string.lower(user.name) ] then -- if not already set
-				data.mud_names[ string.lower(user.name) ]=true
-log(v,"mud",user.name) -- log the mudding of
-			end
-			break
-		end
-	
-	end
-		
+function is_mud(name)	
 		
 	if data.mud_names[ string.lower(name) ] then return true end
 	
