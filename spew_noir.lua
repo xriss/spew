@@ -563,7 +563,10 @@ local function noir_say_thunderdome(brain,user,aa)
 
 local tab,str
 local name=string.lower(aa[3] or "")
+local mudlen=force_floor(aa[4] or 10) or 10 -- default mudlenth of 10
 local gaybar=false
+
+	if mudlen<1 then mudlen=1 end
 
 -- must be level 10+ to play
 	if user.room.name~="public.gaybar" then -- anyone in the gaybar
@@ -581,7 +584,7 @@ local gaybar=false
 		gaybar=true
 	end
 	
-	brain.thunderdome=brain.thunderdome or {from="",vic="",start=0} -- init?
+	brain.thunderdome=brain.thunderdome or {from="",vic="",start=0,mudlen=1} -- init?
 	local td=brain.thunderdome
 	local tim=os.time()-td.start
 	if td.state=="active" then -- fight in progress
@@ -589,12 +592,12 @@ local gaybar=false
 	else
 		if name=="" or name==string.lower(user.name) then
 		
-			noir_say(brain,"Who would you like to challenge?",user)
+			noir_say(brain,"Who would you like to challenge and how many days of mud do you want to risk? eg NOIR THUNDERDOME BOB 10 to fight bob for 10 days of mud.",user)
 		
 		else
-			if td.vic==string.lower(user.name) and td.from==name and tim<30 and td.state=="challenge" then -- accept
+			if td.vic==string.lower(user.name) and td.from==name and tim<30 and td.mudlen==mudlen and td.state=="challenge" then -- accept
 			
-				noir_say(brain,td.from.." has accepted "..td.vic.."s challenge to THUNDERDOME!",user)
+				noir_say(brain,td.from.." has accepted "..td.vic.."s challenge to THUNDERDOME("..td.mudlen..")!",user)
 				
 -- now we start a special FIGHT
 
@@ -620,9 +623,11 @@ local gaybar=false
 					if gaybar then -- no real mud
 						action(p.name.." made "..v.name.." jizz their pants.")
 					else
-						action(p.name.." made "..v.name.." crap their pants.")
-						data.mud_names[v.name]=true
-log(p.name,"thunderdome",v.name)
+						action(p.name.." made "..v.name.." crap their pants for "..td.mudlen.." days.")
+						data.mud_names[v.name]=td.mudlen
+						data.thorns_mud[string.lower(v.name)]=-td.mudlen
+						build_crowns_for(v.name)
+log(p.name,"thunderdome",v.name,td.mudlen)
 					end
 					
 					remove_update(task)
@@ -703,10 +708,11 @@ log(p.name,"thunderdome",v.name)
 				td.from=string.lower(user.name)
 				td.vic=name
 				td.start=os.time()
-
+				td.mudlen=mudlen
+				
 				td.state="challenge"
 				
-				noir_say(brain,td.from.." has challenged "..td.vic.." to THUNDERDOME!",user)
+				noir_say(brain,td.from.." has challenged "..td.vic.." to THUNDERDOME("..td.mudlen..")! To accept say "..brain.user.name.." thunderdome "..td.from.." "..td.mudlen,user)
 				
 			end
 		end		
