@@ -18,7 +18,7 @@ end
 -----------------------------------------------------------------------------
 function is_admin(name)
 
-	if data.admin_names[ string.lower(name) ] then return true end
+	if data.admin_names[ string.lower(name or "") ] then return true end
 	
 	return false
 end
@@ -252,7 +252,7 @@ end
 
 -----------------------------------------------------------------------------
 --
--- check if name is a mud, which means reduced powers
+-- check if name is a dum, which means reduced powers
 --
 -----------------------------------------------------------------------------
 function is_dum(name)
