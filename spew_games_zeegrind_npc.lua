@@ -1004,11 +1004,15 @@ local vtarg=vobj_get_vobj_str(npc.target)
 		
 	end
 	
-	npc.bonk_reload=gtab.now+npc.weapon.reload
-	
-	npc_show_reload(npc)
+	if npc.weapon then --error missing weapon?
+		npc.bonk_reload=gtab.now+npc.weapon.reload
+		
+		npc_show_reload(npc)
 
-	npc_wakeme(npc,gtab.now+npc.weapon.reload)
+		npc_wakeme(npc,gtab.now+npc.weapon.reload)
+	else
+		npc_wakeme(npc,gtab.now)
+	end
 end
 
 -----------------------------------------------------------------------------
