@@ -4055,7 +4055,7 @@ local mud=false
 	
 -- if your name is mud then the noir bots do not respond to you, but still check da swears mkay
 
-	if user and is_mud(user.name) and not is_room_admin(user,user.room) then
+	if user and is_mudip(user.name) and not is_room_admin(user,user.room) then
 		mud=true -- flag mud but keep going
 	end
 	

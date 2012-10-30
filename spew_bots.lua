@@ -89,7 +89,7 @@ end
 				
 			end
 			
-			if is_mud(user.name) and spam.count>5 then
+			if is_mudip(user.name) and spam.count>5 then
 			-- say 3 things with a gap of less than 2 secs between each, get kicked if your name is mud
 			
 				return kicked(spam)
