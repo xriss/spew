@@ -879,7 +879,7 @@ function feats_award(user,name)
 
 	if not user or not user.client then return end -- must be real user
 	
-	if is_mud(user.name) then return end -- no feats for the muds
+	if is_mudip(user.name) then return end -- no feats for the muds
 	
 local feat=feats_hash[name]
 

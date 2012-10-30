@@ -3330,16 +3330,11 @@ log(user.name,"guest")
 		
 -- if this ip has been used by a mud, add this user to the mudlist...
 		
-		for i,v in ipairs( get_shared_names_by_ip(user.name) or {} ) do
-		
-			if is_mud(v) then
-				if not data.mud_names[ string.lower(user.name) ] then -- if not already set
-					data.mud_names[ string.lower(user.name) ]=true
+		if is_mudip(user.name) then
+			if not data.mud_names[ string.lower(user.name) ] then -- if not already set
+				data.mud_names[ string.lower(user.name) ]=true
 log(v,"mud",user.name) -- log the mudding of
-				end
-				break
 			end
-		
 		end
 	
 	end
@@ -3981,7 +3976,7 @@ local protected
 	
 	local function call_cthulhu_to(dothis)
 	
-		if is_mud(user.name) then return end -- naughty users
+		if is_mudip(user.name) then return end -- naughty users
 		
 		if user.room.owners[1] then return nil end -- cthulhu no longer enters private rooms
 		if user.room.name=="swearbox" then return nil end -- cthulhu no longer enters swearbox		
@@ -4096,7 +4091,7 @@ tlog_chance(0.01,user.name, user.name.." called cthulhu to "..dothis.." "..vic_s
 			return
 		end
 ]]
-		if is_mud(user.name) then return end -- naughty users
+		if is_mudip(user.name) then return end -- naughty users
 
 		local form_str=(user.form or "man")
 		local invokes_flag ="invokes_"..form_str
@@ -5445,7 +5440,7 @@ dbg(user.name.." : "..s.."\n")
 		
 	elseif act=="cthulhu" then
 	
-		if is_mud(user.name) then return end -- naughty users
+		if is_mudip(user.name) then return end -- naughty users
 
 		if is_dum(user.name) or ( ( 5>user.cookies ) and ( not is_admin(user.name) ) ) then
 		
