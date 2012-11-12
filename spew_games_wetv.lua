@@ -127,23 +127,23 @@ local vid_blip_ids=
 
 "WiBYFkABr7Y", -- blip : red dwarf alphabetipesgheti - requested by Athens
 "qBW2z0NZ5zA", -- blip : arrested dev return from whence you came - requested by dizzy.
-"F0Nlatc-XIg", -- blip : dramatic perfume 444 - yukarin
-"0aCNJWeOiF4", -- blip : sugoi - paramedic
+--"F0Nlatc-XIg", -- blip : dramatic perfume 444 - yukarin
+--"0aCNJWeOiF4", -- blip : sugoi - paramedic
 
-"rUhOpCaQ9AU", -- blip : koffi! - butch
+--"rUhOpCaQ9AU", -- blip : koffi! - butch
 "x9gN2hdybFY", -- blip : i'm a bad troll - butch
-"4qeC6VKZblI", -- blip : ish goose, omgstn - butch
+--"4qeC6VKZblI", -- blip : ish goose, omgstn - butch
 "N3iBN_Q7TuU", -- blip : kiss me, fat ghost - butch
 "hMTJr4WI7uY", -- blip : nice tits, butch - butch
 "cmYkUEnIzYY", -- blip : pastaaa~ - butch
 "lHjpaqv7CQw", -- blip : vodkaa~ - butch
-"7hDqPmrhGa4", -- blip : chen is gay - butch
-"oOogTp-A5zM", -- blip : stop judging me! - butch
-"atcFIFrqfZc", -- blip : miku has something to say - butch
+--"7hDqPmrhGa4", -- blip : chen is gay - butch
+--"oOogTp-A5zM", -- blip : stop judging me! - butch
+--"atcFIFrqfZc", -- blip : miku has something to say - butch
 "E2Dvmj9K_og", -- blip : you're pathetic - kam
 "IxmqKOSBOMo", -- blip : you fools - kam
 "SHE-kXUqRKk", -- blip : video in 3 words - kam
-"fuoUm7il4tM", -- blip : you have no taste but we like you - kohaku
+--"fuoUm7il4tM", -- blip : you have no taste but we like you - kohaku
 "UEk-m4hZCV8", -- blip : batman tas - kohaku
 "UgOUiRavhIw", -- blip : today's quote - kohaku
 "Fm2MskcNMXk", -- blip : potato chip - big_al
