@@ -1263,6 +1263,7 @@ end
 -----------------------------------------------------------------------------
 function noir_say_signup(brain,user)
 
+--[[
 if user and user.name and string.lower(user.name)=="traces" then
 
 noir_msg(brain,{cmd="lnk",frm=brain.user.name,
@@ -1270,12 +1271,13 @@ txt="http://mklasing.files.wordpress.com/2008/09/spiderman-gay.jpg",
 lnk="http://join.wetgenes.com/"..user.name},user)
 
 else
+]]
 
 noir_msg(brain,{cmd="lnk",frm=brain.user.name,
 txt="The simplest way to signup is to click here and create an account on the wetgenes forum, this name and password can also be used to login to all of the games and chat.",
 lnk="http://join.wetgenes.com/"..user.name},user)
 
-end
+--end
 
 end
 
