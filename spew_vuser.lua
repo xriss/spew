@@ -249,6 +249,8 @@ local name=string.lower(user.name)
 local tab
 local vuser
 
+dbg("vuser_obtain ",name,"\n")
+
 	vuser=data.ville.users[name]
 	
 	if not vuser then -- need to create
