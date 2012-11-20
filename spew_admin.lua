@@ -232,7 +232,9 @@ end
 -----------------------------------------------------------------------------
 function is_mud(name)	
 		
-	if data.mud_names[ string.lower(name) ] then return true end
+	local days=data.mud_names[ string.lower(name) ]
+	
+	if days then return days end
 	
 	return false
 end
@@ -241,12 +243,24 @@ function is_mudip(name)
 
 	for i,v in ipairs( get_shared_names_by_ip(name) or {name} ) do
 	
-		if is_mud(v) then
-			return true
+		local days=is_mud(v)
+		if days then
+			return days
 		end
 	
 	end
+
+	local ipnum=data.ipmap[string.lower(name)]
+	if cfg.cockblocked and type(ipnum)=="string" then -- sanity
+		for i,v in ipairs(cfg.cockblocked) do
+			if ip:sub(1,#v) == v then -- string must begin with
+--dbg("cock blocked "..ip.."\n")
+				return 10
+			end
+		end
+	end
 	
+		
 	return false
 end
 
