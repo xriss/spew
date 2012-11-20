@@ -255,12 +255,16 @@ dbg("vuser_obtain ",name,"\n")
 	
 	if not vuser then -- need to create
 
+dbg("vuser_obtain01 ",name,"\n")
+
 		if user_confirmed(user) then -- load from data base
 
 			tab=vobj_data_load({owner=user.fud.id,type=data.ville.types.user}) -- grab player vobj, there should only be one
 			
 		end
 		
+dbg("vuser_obtain02 ",name,"\n")
+
 		if tab then -- we loaded an old saved data in
 
 		else -- need to make new
