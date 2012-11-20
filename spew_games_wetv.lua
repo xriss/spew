@@ -13,7 +13,7 @@ local noir_cats={
 		comedy="http://www.youtube.com/channel/SBNsxfepiAWGo/videos?flow=grid&view=11",
 		classic="http://www.youtube.com/channel/SB3w5c6v0vLX0/videos?flow=grid&view=11",
 		toons="http://www.youtube.com/channel/SBTv6ixmnVooo/videos?flow=grid&view=11",
-		uk="http://www.youtube.com/user/YouTubeMoviesGB/videos?flow=grid&view=26",
+--		uk="http://www.youtube.com/user/YouTubeMoviesGB/videos?flow=grid&view=26",
 --[[
 		horror="horror",
 		scifi="science-fiction",
