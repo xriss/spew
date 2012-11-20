@@ -73,11 +73,11 @@ function run_spew(data)
 
 local tim=os.time()
 
-os.execute([[mail -s"SPEW ERR ]]..tim..[[" krissd@gmail.com <spew.err]])
-os.execute([[mv spew.err save/spew.]]..tim..[[.err]])
+os.execute([[mail -s"SPEW LOG ]]..tim..[[" krissd@gmail.com <spew.log]])
 
-os.execute([[mail -s"SPEW DBG ]]..tim..[[" krissd@gmail.com <spew.dbg]])
 os.execute([[mv spew.dbg save/spew.]]..tim..[[.dbg]])
+os.execute([[mv spew.log save/spew.]]..tim..[[.log]])
+os.execute([[mv spew.err save/spew.]]..tim..[[.err]])
 
 
 -- make sure we can log
@@ -85,6 +85,8 @@ os.execute([[echo "***" >spew.dbg]])
 os.execute([[chmod 777 spew.dbg]])
 os.execute([[echo "***" >spew.err]])
 os.execute([[chmod 777 spew.err]])
+os.execute([[echo "***" >spew.log]])
+os.execute([[chmod 777 spew.log]])
 
 	
 os.execute([[nix/bin/lua -e "package.cpath='./nix/lib/?.so;'..package.cpath;package.path='./nix/share/?.lua;'..package.path;" spew.lua >spew.log 2>spew.err]])
