@@ -250,6 +250,7 @@ local tab
 local vuser
 
 dbg("vuser_obtain ",name,"\n")
+print("this is another test \n")
 
 	vuser=data.ville.users[name]
 	
@@ -304,15 +305,15 @@ dbg("new vuser ",tab.owner,"\n")
 	
 	end
 	
-dbg("vuser,tab,owner==",tostring(vuser),tostring(tab),tostring(tab and tab.owner),"\n")
+--dbg("vuser,tab,owner==",tostring(vuser),tostring(tab),tostring(tab and tab.owner),"\n")
 
 
 
 	if vuser then -- force url update
 
-for i,v in pairs(vuser) do
-	dbg(tostring(i),"=",tostring(v),"\n")
-end
+--for i,v in pairs(vuser) do
+--	dbg(tostring(i),"=",tostring(v),"\n")
+--end
 	
 		local ville_size=day_flag_get("*","ville_size")
 		
@@ -328,7 +329,7 @@ end
 		
 	end
 
-dbg("vuser_obtain done \n")
+--dbg("vuser_obtain done \n")
 
 	return vuser
 		
