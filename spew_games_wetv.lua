@@ -8,6 +8,13 @@ data.gametypes["tv"]=gtab -- shorter name
 gtab.name="wetv"
 
 local noir_cats={
+		horror="http://www.youtube.com/channel/SBkqDlG0PHTIA/videos?flow=grid&view=11",
+		scifi="http://www.youtube.com/channel/SBpDoh20iB9Ck/videos?flow=grid&view=11",
+		comedy="http://www.youtube.com/channel/SBNsxfepiAWGo/videos?flow=grid&view=11",
+		classic="http://www.youtube.com/channel/SB3w5c6v0vLX0/videos?flow=grid&view=11",
+		toons="http://www.youtube.com/channel/SBTv6ixmnVooo/videos?flow=grid&view=11",
+		uk="http://www.youtube.com/user/YouTubeMoviesGB/videos?flow=grid&view=26",
+--[[
 		horror="horror",
 		scifi="science-fiction",
 		action="action-adventure",
@@ -22,6 +29,7 @@ local noir_cats={
 		romance="romance",
 		foreign="foreign-film",
 		new="",
+]]
 }
 
 
@@ -2575,9 +2583,10 @@ dbg("movie loading\n")
 		local vids={}
 		local do_replace=false
 
-		for p=1,5 do	
+		for p=1,1 do	
 
-		local ret=lanes_url("http://www.youtube.com/movies/"..v.."?fl=f&l=en&pt=nr&st=d&view=11&p="..p) -- pull in video info source
+--		local ret=lanes_url("http://www.youtube.com/movies/"..v.."?fl=f&l=en&pt=nr&st=d&view=11&p="..p) -- pull in video info source
+		local ret=lanes_url(v) -- pull in video info source
 		
 		if ret and ret.body and type(ret.body)=="string" and ret.body~="" then -- got some movies
 		
