@@ -265,6 +265,8 @@ dbg("vuser_obtain ",name,"\n")
 
 		else -- need to make new
 		
+dbg("vuser_obtain1 ",name,"\n")
+
 			if user_confirmed(user) then -- load from data base
 			
 				tab=vobj_data_create({owner=user.fud.id,type=data.ville.types.user})
@@ -275,9 +277,13 @@ dbg("vuser_obtain ",name,"\n")
 				
 			end
 		end
+
+dbg("vuser_obtain2 ",name,"\n")
 		
 		if tab then -- create the player data locally
 		
+dbg("vuser_obtain3 ",name,"\n")
+
 			tab.type=data.ville.types[tab.type]
 			tab.owner=name
 			tab.group=nil
