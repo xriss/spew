@@ -2644,7 +2644,7 @@ gtab.update_co = function()
 
 	local utvid=table.remove(gtab.vid_reqs,1)
 	
-	if gtab.vid_infos[utvid] and gtab.vid_infos[utvid].stamp --[[and gtab.vid_infos[utvid].stamp+(60*60*24)<os.time()]] then return end -- already done
+	if gtab.vid_infos[utvid] and gtab.vid_infos[utvid].stamp < os.time() then return end -- done and still valid
 	
 	if utvid then
 
@@ -2656,7 +2656,7 @@ gtab.update_co = function()
 	
 		if (ret.body:sub(1,15)=="Video not found") or (ret.body:sub(1,10)=="Invalid id") then
 		
-			gtab.vid_infos[utvid]={title="notfound",duration=0,stamp=os.time()} -- mark this id as dead from youtubes point of view
+			gtab.vid_infos[utvid]={title="notfound",duration=0,stamp=os.time()+(60*60)} -- mark this id as dead from youtubes point of view, but only for a little while
 dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid," NOTFOUND\n")
 		
 		elseif not (string.find(ret.body, "yt$duration", 1, true)) then -- bad video, contains no useful info
@@ -2671,7 +2671,7 @@ dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid,"\n")
 			
 --			dbg("Video not embededable\n")
 			
-			gtab.vid_infos[utvid]={title="noembed",duration=0,stamp=os.time()} -- mark this id as dead from youtubes point of view
+			gtab.vid_infos[utvid]={title="noembed",duration=0,stamp=os.time()+(60*60*24*28)} -- mark this id as dead from youtubes point of view
 
 dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid.." NOEMBED","\n")
 
@@ -2712,7 +2712,7 @@ dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid.." NOEMBED","\n")
 					tab.title=info["entry"]["title"]["$t"]
 					tab.duration=tonumber(info["entry"]["media$group"]["yt$duration"]["seconds"])
 					if tab.duration==0 then tab.duration=60*60*3 end -- hack fix
-					tab.stamp=os.time()
+					tab.stamp=os.time()+(60*60*24*28) -- remember long time
 				
 				end
 			
@@ -2919,9 +2919,9 @@ loglast("","topvid",id,v.score,title)
 		v.score=0 -- reset scores after logging them
 		v.failcost=nil -- clear failcost every day
 		
-		if v.stamp+(60*60*48)<os.time() then -- old, kill it
-			gtab.vid_infos[id]=nil
-		end
+--		if v.stamp+(60*60*48)<os.time() then -- old, kill it
+--			gtab.vid_infos[id]=nil
+--		end
 	end
 
 end
