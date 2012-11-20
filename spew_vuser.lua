@@ -249,28 +249,21 @@ local name=string.lower(user.name)
 local tab
 local vuser
 
-dbg("vuser_obtain ",name,"\n")
-print("this is another test \n")
+--dbg("vuser_obtain ",name,"\n")
 
 	vuser=data.ville.users[name]
 	
 	if not vuser then -- need to create
-
-dbg("vuser_obtain01 ",name,"\n")
 
 		if user_confirmed(user) then -- load from data base
 
 			tab=vobj_data_load({owner=user.fud.id,type=data.ville.types.user}) -- grab player vobj, there should only be one
 			
 		end
-		
-dbg("vuser_obtain02 ",name,"\n")
 
 		if tab then -- we loaded an old saved data in
 
 		else -- need to make new
-		
-dbg("vuser_obtain1 ",name,"\n")
 
 			if user_confirmed(user) then -- load from data base
 			
@@ -282,12 +275,8 @@ dbg("vuser_obtain1 ",name,"\n")
 				
 			end
 		end
-
-dbg("vuser_obtain2 ",name,"\n")
 		
 		if tab then -- create the player data locally
-		
-dbg("vuser_obtain3 ",name,"\n")
 
 			tab.type=data.ville.types[tab.type]
 			tab.owner=name
@@ -298,8 +287,6 @@ dbg("vuser_obtain3 ",name,"\n")
 			tab.props={ xyz="0:0:0" , anim="idle" , speed="100" }
 			
 			vuser=vuser_create(tab)
-			
-dbg("new vuser ",tab.owner,"\n")
 
 		end
 	
@@ -328,8 +315,6 @@ dbg("new vuser ",tab.owner,"\n")
 		vuser.url=vuser_avatar_url(name) --vuser_urls[name] or cfg.base_data_url.."/game/s/ville/test/vtard/me.xml"
 		
 	end
-
---dbg("vuser_obtain done \n")
 
 	return vuser
 		
