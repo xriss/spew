@@ -307,7 +307,12 @@ dbg("new vuser ",tab.owner,"\n")
 dbg("vuser,tab,owner==",tostring(vuser),tostring(tab),tostring(tab and tab.owner),"\n")
 
 
+
 	if vuser then -- force url update
+
+for i,v in pairs(vuser) do
+	dbg(tostring(i),"=",tostring(v),"\n")
+end
 	
 		local ville_size=day_flag_get("*","ville_size")
 		
