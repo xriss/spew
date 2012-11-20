@@ -286,12 +286,15 @@ local vuser
 			
 			vuser=vuser_create(tab)
 			
---dbg("new vuser ",tab.owner,"\n")
+dbg("new vuser ",tab.owner,"\n")
 
 		end
 	
 	end
 	
+dbg("vuser,tab,owner==",vuser,tab,tab.owner,"\n")
+
+
 	if vuser then -- force url update
 	
 		local ville_size=day_flag_get("*","ville_size")
