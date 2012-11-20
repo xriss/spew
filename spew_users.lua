@@ -897,14 +897,6 @@ local ip=user_ip(user)
 --dbg(ip,"\n")
 
 	if cfg.blocked and cfg.blocked[ip] then return end
-	if cfg.cockblocked and type(ip)=="string" then -- sanity
-		for i,v in ipairs(cfg.cockblocked) do
-			if ip:sub(1,#v) == v then -- string must begin with
-dbg("cock blocked "..ip.."\n")
-				return
-			end
-		end
-	end
 	
 	if data.last_seen then data.last_seen[string.lower(user.name)]=os.time() end
 
@@ -3330,10 +3322,11 @@ log(user.name,"guest")
 		
 -- if this ip has been used by a mud, add this user to the mudlist...
 		
-		if is_mudip(user.name) then
+		local days=is_mudip(user.name)
+		if days then
 			if not data.mud_names[ string.lower(user.name) ] then -- if not already set
-				data.mud_names[ string.lower(user.name) ]=true
-log(v,"mud",user.name) -- log the mudding of
+				data.mud_names[ string.lower(user.name) ]=days
+log(v,"mud",user.name,days) -- log the mudding of
 			end
 		end
 	
