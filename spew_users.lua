@@ -916,12 +916,12 @@ dbg("cock blocked "..ip.."\n")
 
 	
 	local ctab=data.clients_tab[user.client]
-	if ctab.telnet then -- telnet stuff is special text only conversion to msgs
+	if ctab and ctab.telnet then -- telnet stuff is special text only conversion to msgs
 
 		msg.cmd="cmd"
 		msg.txt=line
 
-	elseif ctab.irc then -- irc stuff is special text only conversion to msgs
+	elseif ctab and ctab.irc then -- irc stuff is special text only conversion to msgs
 	
 		local r=irc_str_to_msg(user,line,msg)
 		
