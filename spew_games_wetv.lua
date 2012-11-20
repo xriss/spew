@@ -8,11 +8,15 @@ data.gametypes["tv"]=gtab -- shorter name
 gtab.name="wetv"
 
 local noir_cats={
+--[[
+
 		horror="http://www.youtube.com/channel/SBkqDlG0PHTIA/videos?flow=grid&view=11",
 		scifi="http://www.youtube.com/channel/SBpDoh20iB9Ck/videos?flow=grid&view=11",
 		comedy="http://www.youtube.com/channel/SBNsxfepiAWGo/videos?flow=grid&view=11",
 		classic="http://www.youtube.com/channel/SB3w5c6v0vLX0/videos?flow=grid&view=11",
 		toons="http://www.youtube.com/channel/SBTv6ixmnVooo/videos?flow=grid&view=11",
+]]
+
 --		uk="http://www.youtube.com/user/YouTubeMoviesGB/videos?flow=grid&view=26",
 --[[
 		horror="horror",
