@@ -294,7 +294,7 @@ dbg("new vuser ",tab.owner,"\n")
 	
 	end
 	
-dbg("vuser,tab,owner==",vuser,tab,tab.owner,"\n")
+dbg("vuser,tab,owner==",tostring(vuser),tostring(tab),tab.owner,"\n")
 
 
 	if vuser then -- force url update
@@ -312,7 +312,9 @@ dbg("vuser,tab,owner==",vuser,tab,tab.owner,"\n")
 		vuser.url=vuser_avatar_url(name) --vuser_urls[name] or cfg.base_data_url.."/game/s/ville/test/vtard/me.xml"
 		
 	end
-	
+
+dbg("vuser_obtain done \n")
+
 	return vuser
 		
 end
