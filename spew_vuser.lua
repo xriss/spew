@@ -304,7 +304,7 @@ dbg("new vuser ",tab.owner,"\n")
 	
 	end
 	
-dbg("vuser,tab,owner==",tostring(vuser),tostring(tab),tab.owner,"\n")
+dbg("vuser,tab,owner==",tostring(vuser),tostring(tab),tostring(tab and tab.owner),"\n")
 
 
 	if vuser then -- force url update
