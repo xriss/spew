@@ -3549,7 +3549,7 @@ local smud=" mudded"
 	
 	
 	if gotmud then
-		for i=10,1,-1 do
+		for i=100,1,-1 do
 			if tab[i] then
 				noir_say(brain,string.sub(str_join_english_list(tab[i]),1,2048).." "..((tab[i][2] and "are") or "is")..smud..i,user)
 			end
