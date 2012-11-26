@@ -159,8 +159,8 @@ end
 -- selected users can not talk unless their butt buddie is also online.
 	data.butt_names=
 	{
-		["Taokaka"]="DROSS",
-		["DROSS"]="Taokaka",
+--		["Taokaka"]="DROSS",
+--		["DROSS"]="Taokaka",
 	}
 
 
