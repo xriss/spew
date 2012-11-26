@@ -728,6 +728,8 @@ end
 -----------------------------------------------------------------------------
 function join_room_str(user,room_name)
 
+	if not room_name then return end -- sometimes called with nil ?
+
 --dbg("join\n"..user.room.name.."\n"..room_name.."\n")
 
 -- expand names that begin with . into public.
