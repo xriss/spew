@@ -595,9 +595,9 @@ dbg("read data from twitter\n")
 
 	local tab={}
 	for u,b in pairs(data.brains) do
-		if (not u.room) or (u.room.brain~=u.brain) then -- ignore room bots
+--		if (not u.room) or (u.room.brain~=u.brain) then -- ignore room bots
 			table.insert(tab,u.name)
-		end
+--		end
 	end
 	dbg( "BRAINS:",str_join_english_list(tab),"\n" )
 	
