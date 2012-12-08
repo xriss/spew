@@ -2189,13 +2189,18 @@ local function noir_say_ban(brain,user,aa)
 
 local name=aa[3] or ""
 local tim=(60*5)
+local own=is_room_owner(user.room,user.name) or is_god(user.name)
+
+	if ( user_bankrank(user) <= 5 ) and not own then -- totall ignore low levels
+		return
+	end
 
 	if is_mod(name) then return end -- can never attack owners of rooms
 	
 	if is_mudip(name) then -- the victim must be mud or on a mudded ip
 		tim=(60*60)
 	else
-		if not ( is_room_owner(user.room,user.name) or is_god(user.name) ) then -- you must own the room
+		if not ( own ) then -- you must own the room
 				noir_say(brain,"I'm sorry, "..user.name..", I'm afraid I can't do that.",user)
 				return
 		end
