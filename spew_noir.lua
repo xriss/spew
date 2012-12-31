@@ -3503,6 +3503,7 @@ local function noir_say_mud(brain,user,aa)
 	if not is_admin(user.name) then return end -- must be admin
 	
 local n=aa[3]
+local mnum=tonumber(aa[4] or 10) or 10 -- set duration
 
 local mudtype="mud_names"
 local smud=" mudded"
@@ -3521,7 +3522,7 @@ local smud=" mudded"
 			if count==1 then tab={n} end -- just change this one user
 			for i,v in ipairs(tab) do
 		
-				data[mudtype][ string.lower(v) ]=true
+				data[mudtype][ string.lower(v) ]=mnum
 			
 			end			
 			
