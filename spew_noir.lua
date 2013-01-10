@@ -3555,7 +3555,7 @@ local smud=" mudded"
 	
 	
 	if gotmud then
-		for i=100,1,-1 do
+		for i=1000,1,-1 do
 			if tab[i] then
 				noir_say(brain,string.sub(str_join_english_list(tab[i]),1,2048).." "..((tab[i][2] and "are") or "is")..smud..i,user)
 			end
@@ -3569,6 +3569,35 @@ end
 for i,v in ipairs{"mud","notmud","hardmud","nothardmud","cake","notcake"} do
 	noir_triggers[v]=noir_say_mud
 end
+
+local function noir_say_ipmud(brain,user,aa)
+
+	if not is_admin(user.name) then return end -- must be admin
+	
+local n=aa[3] or ""
+
+	local ipnum=data.ipmap[string.lower(n)]
+	if type(ipnum)=="string" then
+		data.ipmud[ipnum]=true
+	end
+	
+	if n="*" then --unset
+		data.ipmud={}
+	end
+	
+	local t={}
+	for n,v in pairs(data.ipmud) do
+		t[#t+1]=n
+	end
+
+	noir_say(brain, "ipmuds : ".. string.sub( str_join_english_list(t) or "none",1,2048 ) )
+
+end
+
+for i,v in ipairs{"ipmud"} do
+	noir_triggers[v]=noir_say_ipmud
+end
+
 -----------------------------------------------------------------------------
 --
 -- lock or unlock room

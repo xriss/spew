@@ -251,15 +251,19 @@ function is_mudip(name)
 	end
 
 	local ipnum=data.ipmap[string.lower(name)]
-	if cfg.cockblocked and type(ipnum)=="string" then -- sanity
-		for i,v in ipairs(cfg.cockblocked) do
-			if ip:sub(1,#v) == v then -- string must begin with
---dbg("cock blocked "..ip.."\n")
-				return 10
+	if type(ipnum)=="string" then
+		if data.ipmud[ipnum] then
+			return 100
+		end
+		if cfg.cockblocked then -- sanity
+			for i,v in ipairs(cfg.cockblocked) do
+				if ip:sub(1,#v) == v then -- string must begin with
+	--dbg("cock blocked "..ip.."\n")
+					return 10
+				end
 			end
 		end
 	end
-	
 		
 	return false
 end
