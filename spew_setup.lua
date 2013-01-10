@@ -77,6 +77,8 @@ end
 
 	dd("saved_pet_cookies",{}) -- remember accumalative cookies earned by any pets
 	dd("saved_pet_cookies_yesterday",{}) -- remember yesterdays rewards, to give the owner a chance to claim them
+
+	dd("ipmud",{}) -- naughty ips
 	
 	dd("ipmap",{}) -- match ips to registered users
 	dd("ipwho",{}) -- match ips to registered users
@@ -731,7 +733,7 @@ function save_data()
 	allcast( {cmd="note",note="notice",arg1="saving state data"} )
 
 	for i,v in ipairs({	"saved_cookies","saved_color","day_flags","drama_names",
-						"drama_ips","hardmud_names","mud_names","dum_names","ipmap","ipwho","ipsux"}) do
+						"drama_ips","hardmud_names","mud_names","dum_names","ipmap","ipwho","ipsux","ipmud"}) do
 	
 		fout("function data.f()\ndata."..v.."=")
 		serialize(data[v],fout)
