@@ -3581,7 +3581,7 @@ local n=aa[3] or ""
 		data.ipmud[ipnum]=true
 	end
 	
-	if n="*" then --unset
+	if n=="*" then --unset
 		data.ipmud={}
 	end
 	
