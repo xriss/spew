@@ -735,9 +735,11 @@ function save_data()
 	for i,v in ipairs({	"saved_cookies","saved_color","day_flags","drama_names",
 						"drama_ips","hardmud_names","mud_names","dum_names","ipmap","ipwho","ipsux","ipmud"}) do
 	
-		fout("function data.f()\ndata."..v.."=")
-		serialize(data[v],fout)
-		fout("end\ndata.f()\n\n")
+		if data[v] then
+			fout("function data.f()\ndata."..v.."=")
+			serialize(data[v],fout)
+			fout("end\ndata.f()\n\n")
+		end
 	
 	end
 	
