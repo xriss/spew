@@ -135,7 +135,7 @@ local user={}
 	
 	join_room(user,data.rooms.limbo)
 	
-	user.ip=user_ipnum(user)
+	user.ip=user_ip(user)
 	
 -- limit guests or users on same ip
 	
@@ -2588,17 +2588,17 @@ end
 -----------------------------------------------------------------------------
 function user_ipnum(user)
 
-	if user.ip then return user.ip end
+	if user.ipnum then return user.ipnum end
 
 local ipstr=user_ip(user)
 
 	if ipstr=="*" then
-		user.ip=0
+		user.ipnum=0
 	else
-		user.ip=ipstr_to_number(ipstr)
+		user.ipnum=ipstr_to_number(ipstr)
 	end
 	
-	return user.ip
+	return user.ipnum
 	
 end
 
@@ -2616,13 +2616,13 @@ function remember_idstring(user)
 	
 		data.idstrings[ string.lower(user.name) ]=user_idstring(user)
 		
-		local ipnum=user_ipnum(user)			
-		data.ipmap[string.lower(user.name)]=ipnum -- map name to ipnum, you should now be able to attack guests and hit their real accounts... Less places to hide.
+		local ip=user_ip(user)			
+		data.ipmap[string.lower(user.name)]=ip -- map name to ipnum, you should now be able to attack guests and hit their real accounts... Less places to hide.
 		
 		if user_signedup(user) then -- track who uses an IP but only of registered users, ignore guests
 		
-			local tab=data.ipwho[ipnum] or {} -- get or create table for this ip
-			data.ipwho[ipnum]=tab
+			local tab=data.ipwho[ip] or {} -- get or create table for this ip
+			data.ipwho[ip]=tab
 			
 			tab[user.name]=true -- fill table with names
 		
@@ -3132,20 +3132,6 @@ log(user.name,"guest")
 		local ipnum=user_ipnum(user)
 		
 		if ipnum~=0 then -- bots have a 0 ip
-		
-			local shared=data.alt_names[string.lower(name)] or 1 -- allow two logind per IP by default
-			if shared<0 then shared=0 end
-			
---[[
-			if shared>1 then -- remember ip
-				if ( not data.alt_ips[ipnum] ) or ( shared > data.alt_ips[ipnum] ) then
-					data.alt_ips[ipnum]=shared
-				end
-			end
-			
-			shared=data.alt_ips[ipnum] or 0
-			if shared<0 then shared=0 end
-]]
 			
 			-- now kill any conections over the allowed amount
 			
@@ -3160,6 +3146,7 @@ log(user.name,"guest")
 						table.insert(names,u.name)
 						count=count+1
 						
+						local shared=data.alt_names[string.lower(u.name)] or 1 -- check shared per user so we never kill gods
 						if count>shared then -- tomany people from this ip, kill this user
 						
 							user_save_data(u) -- save what user data we have on file

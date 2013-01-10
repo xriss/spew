@@ -3574,11 +3574,12 @@ local function noir_say_ipmud(brain,user,aa)
 
 	if not is_admin(user.name) then return end -- must be admin
 	
-local name=aa[2] or ""
+local name=aa[3] or ""
 
-	local ipnum=data.ipmap[string.lower(name)]
-	if type(ipnum)=="string" then
-		data.ipmud[ipnum]=true
+
+	local ip=data.ipmap[string.lower(name)]
+	if type(ip)=="string" then
+		data.ipmud[ip]=true
 	end
 	
 	if name=="*" then --unset
