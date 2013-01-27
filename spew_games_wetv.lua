@@ -110,7 +110,7 @@ local vid_blip_ids=
 "GGGnKEddB_4", -- blip : max2
 "BmyBIq60DoY", -- blip : max7
 
-"J7f9zWBnaBM", -- blip : vert
+--"J7f9zWBnaBM", -- blip : vert
 
 "GoefEAtidPs", -- blip : bollox
 "HNM2H0YDwOQ", -- blip : buttox
@@ -182,6 +182,12 @@ local vid_blip_ids=
 
 "LmIBBUSrjw4", -- blipuser : we tv
 }
+
+-- online blips playlist
+-- https://gdata.youtube.com/feeds/api/playlists/PL30Cmb00CTy1UheoL5mtYsvLoAspO2PaQ?alt=jsonc&v=2&max-results=50&start-index=1
+-- https://gdata.youtube.com/feeds/api/playlists/PL30Cmb00CTy1UheoL5mtYsvLoAspO2PaQ?alt=jsonc&v=2&max-results=50&start-index=51
+-- https://gdata.youtube.com/feeds/api/playlists/PL30Cmb00CTy1UheoL5mtYsvLoAspO2PaQ?alt=jsonc&v=2&max-results=50&start-index=101
+-- ...
 
 
 --"tv add max 6uGD5Lf3YXU ftkmoA-HVg0 ZRuV4_4ahjA w6yt0db89O4 rysRLBQtDE0 6MDz2r_Quko"
