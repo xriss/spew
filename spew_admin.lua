@@ -257,7 +257,7 @@ function is_mudip(name)
 		end
 		if cfg.cockblocked then -- sanity
 			for i,v in ipairs(cfg.cockblocked) do
-				if ip:sub(1,#v) == v then -- string must begin with
+				if ipnum:sub(1,#v) == v then -- string must begin with
 	--dbg("cock blocked "..ip.."\n")
 					return 10
 				end
