@@ -3414,8 +3414,8 @@ end
 function login_pass(user,msg)
 --dbg("login_pass ",user.name," ",msg_to_str(msg),"\n")
 
-local name=string.gsub(msg.name or "", "[^0-9a-zA-Z%-_]+", "" )
-local pass=string.gsub(msg.pass or "", "[^0-9a-zA-Z%-_]+", "" )
+local name=string.gsub(msg.name or "", "[^0-9a-zA-Z_]+", "" )
+local pass=string.gsub(msg.pass or "", "[^0-9a-zA-Z_]+", "" )
 
 local ip=user_ipnum(user)
 
