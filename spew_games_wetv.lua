@@ -2624,10 +2624,15 @@ dbg("fetching playlist "..i.." page "..p.."\n")
 					
 					if v.video and v.video.accessControl and v.video.accessControl.embed=="allowed" then embed=true end
 					
+					if v.video and v.video.status and v.video.status.value and v.video.status.value=="restricted" then
+						embed=false end -- not available (probably server location) so kill it
+						
 					if not embed then
 					
 dbg("noembed "..(v.video.id).." : "..(v.video.title).."\n")
 
+						gtab.vid_infos[v.video.id]=nil
+						
 					else
 					
 dbg("video "..(v.video.id).." : "..(v.video.title).."\n")
