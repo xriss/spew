@@ -7,6 +7,18 @@ data.gametypes["tv"]=gtab -- shorter name
 
 gtab.name="wetv"
 
+local playlists={
+	blips=  {cat="blips", id="PL30Cmb00CTy1UheoL5mtYsvLoAspO2PaQ"},
+	horror= {cat="horror",id="PL9D3B08D539EDDCCA"},
+	horror2={cat="horror",id="PL129A76A710B5C5C9"},
+	comedy= {cat="comedy",id="PL940038B8C37BC2BF"},
+	movies1={cat="movies",id="PLD3363FF38E2801F2"},
+	movies2={cat="movies",id="PLEE54950D026DAC24"},
+	movies4={cat="movies",id="PL4CC4A2717485647E"},
+	movies5={cat="movies",id="PLF435D6FFBD0302B3"},
+	music={cat="music",id="PL30Cmb00CTy0ZNLzv6Xtou4Zr-nUJally"},
+}
+
 local noir_cats={
 --[[
 
@@ -197,67 +209,71 @@ for i,v in ipairs(vid_blip_ids) do vid_blip_ids[v]=i end
 
 local vid_ids=
 {
-"SWmwDy6wr8Y", -- HIM -  In Joy and Sorrow
-"wzVuVtq2bJs", -- HIM - Buried Alive by Love
+"g82A7F39JqE", -- Little miss irony - Hope
+"1AUhtoJXTTs", -- Little miss irony - No way to apologise
+"ttmLeE0R-jU", -- Little miss irony- du reich so gut (Rammstein cover)
+
+--"SWmwDy6wr8Y", -- HIM -  In Joy and Sorrow
+--"wzVuVtq2bJs", -- HIM - Buried Alive by Love
 --"LU2hw4HlZWI", -- HIM - The Sacrament
 --"ohrvYiJmvko", -- HIM - And Love said No
 --"109B0DYLa7E", -- HIM - The Funeral of Hearts
 --"5_9bNx3Kyc8", -- HIM - Gone With The Sin
-"WD_2ebTYZNw", -- HIM - Wings of a Butterfly
-"StrJdI5cfUk", -- HIM - Right here in my Arms
+--"WD_2ebTYZNw", -- HIM - Wings of a Butterfly
+--"StrJdI5cfUk", -- HIM - Right here in my Arms
 --"bUQeU9Ezrhw", -- HIM - Join me in Death
-"23eZMdixAuk", -- APC - Judith
+--"23eZMdixAuk", -- APC - Judith
 "tWFv5ZoVET8", -- APC - 3 Libras
-"Qn0G0NPmKpo", -- APC - The Outsider
-"OiNczmhgBZE", -- APC - Weak and Powerless
+--"Qn0G0NPmKpo", -- APC - The Outsider
+--"OiNczmhgBZE", -- APC - Weak and Powerless
 "0aKBuEt-xj4", -- Morning Musume
-"i4Zaqzb5if0", -- Morning Musume - Ai Araba
+--"i4Zaqzb5if0", -- Morning Musume - Ai Araba
 "Yz7TD9FpRTw", -- Mini Moni - Terephon Ring Ring
 "QFFo7-huDko", -- Mini Moni - Okashi Tsukutte Okasui
-"tzOWMGfpMXM", -- Namie Amuro - Suite Chic
+--"tzOWMGfpMXM", -- Namie Amuro - Suite Chic
 --"D_Klhcr4O1M", -- Utada Hikaru - Colours
 --"2U0myXslSng", -- Utada Hikaru - Travelling
 --"6SQD4yDHaJ0", -- Shina Ringo - Keikoku
-"VEnM9Y8h7PM", -- Shina Ringo - Shounan
-"KG3hVYGjjGg", -- Shina Ringo - Yami ni Furu Ame
-"2SdQGYHOFu8", -- Marilyn Manson - The Nobodies
-"KAg0kzKJJEs", -- MM - This is the new shit
-"3iuve2OjY_8", -- MM -Sweet Dreams
-"lykzEEAohJY", -- MM -Tainted Love
-"Q3G2BQVrcOs", -- MM - Personal Jebus
-"JFq2YJKYa-k", -- Amon Amarth - Runes to my memory
-"Wu8LpalUelY", -- Tricky -Black Steel
-"jiwmdhNuyqo", -- Tricky - Makes me Wanna die
-"6V26zxH_JMk", -- Tricky - Overcome
+--"VEnM9Y8h7PM", -- Shina Ringo - Shounan
+--"KG3hVYGjjGg", -- Shina Ringo - Yami ni Furu Ame
+--"2SdQGYHOFu8", -- Marilyn Manson - The Nobodies
+--"KAg0kzKJJEs", -- MM - This is the new shit
+--"3iuve2OjY_8", -- MM -Sweet Dreams
+--"lykzEEAohJY", -- MM -Tainted Love
+--"Q3G2BQVrcOs", -- MM - Personal Jebus
+--"JFq2YJKYa-k", -- Amon Amarth - Runes to my memory
+--"Wu8LpalUelY", -- Tricky -Black Steel
+--"jiwmdhNuyqo", -- Tricky - Makes me Wanna die
+--"6V26zxH_JMk", -- Tricky - Overcome
 "aVjgRlto8PI", -- Krush -Kemuri
 "vwgbe9gK6Zk", -- Krush - Journey of Time
 "tOeL-BEgGFw", -- Krush - Only the strong Survive
-"eTs0lDbeB_k", -- Krush - Sun is shining
+--"eTs0lDbeB_k", -- Krush - Sun is shining
 --"Jw8tL8PeD1Y", -- Shadow - Midnight in a Perfect World
-"bDhsn3jwHFc", -- Type O - Love you to death
-"8bvgy08jPf4", -- Ministry - Land of rape and honey
-"K0dfd_L4tDk", -- Joy Division - Love will tear us apart
-"d6PGzC6_WMw", -- Aphex Twin - Window Licker
+--"bDhsn3jwHFc", -- Type O - Love you to death
+--"8bvgy08jPf4", -- Ministry - Land of rape and honey
+--"K0dfd_L4tDk", -- Joy Division - Love will tear us apart
+--"d6PGzC6_WMw", -- Aphex Twin - Window Licker
 "5Az_7U0-cK0", -- Aphex Twin - Come to Daddy
-"3kbW4ibIF8U", -- Prodigy -  Breathe
+--"3kbW4ibIF8U", -- Prodigy -  Breathe
 --"28ow4TLMTqM", -- Prodigy - Firestarter
 --"1ZlLxYnDlYk", -- Prodigy - Baby's got a temper
-"FDO--nCQE_g", -- Prodigy - Spitfire
+--"FDO--nCQE_g", -- Prodigy - Spitfire
 "-Fz85FE0KtQ", -- Prodigy - Voodoo People
-"jQxgvDn0Iko", -- Prodigy - Smack my bitch up
+--"jQxgvDn0Iko", -- Prodigy - Smack my bitch up
 --"QWncI51ggH8", -- NIN - Closer
-"kk7SKP4PJ2w", -- NIN -Hand that feeds
-"l0s5UOVsMDg", -- NIN - The pErfect Drug
-"pOBV2Zl2cNs", -- NIN - Dead Souls
+--"kk7SKP4PJ2w", -- NIN -Hand that feeds
+--"l0s5UOVsMDg", -- NIN - The pErfect Drug
+--"pOBV2Zl2cNs", -- NIN - Dead Souls
 "DMZnaUMepFw", -- Cure - Burn
 --"lyCAhpNJYA0", -- MM - Long hard roal outta Hell
-"LOK2dWcGuDI",
-"o4VMDxSyLAU",
-"X6aimibFW3U",
-"e01C3AqzjlE",
-"mhXOrCoSnLs",
-"UK-IOzJjm-Y",
-"c-iYsLRa7tg", -- Make Money Make More Money - El Queso Allstars
+"LOK2dWcGuDI", -- Brother Machine - Driving
+"o4VMDxSyLAU", -- Laibach - Final Countdown
+"X6aimibFW3U", -- Revolting Cocks - Do Ya Think I'm Sexy.
+--"e01C3AqzjlE",
+"mhXOrCoSnLs", -- Negativland - Time Zones, Miguel Soares, 2003
+"UK-IOzJjm-Y", --Corporate Avenger - Fault The Police Music Video
+--"c-iYsLRa7tg", -- Make Money Make More Money - El Queso Allstars
 "Qt9MP70ODNw", -- SubGenius Commercial
 "74XranJcH6s", -- Alec Empire. " Addicted to you "
 "tqWP1rsAMrw", -- Rage Against the Machine - Renegades of Funk
@@ -268,22 +284,22 @@ local vid_ids=
 "_VJFSz5p5Ao", -- 64revolt - hurricane
 "FBxJqcX8ErU", -- rabbit junk - In Your Head No One Can Hear You Scream
 "PJQVlVHsFF8", -- David Hasselhoff - Hooked on a Feeling
-"EsZYqaSc4cU", -- Tonight, Tonight - The Smashing Pumpkins
-"dxNX_PRqhCQ", -- The Smashing Pumpkins - Bullet With Butterfly Wings
-"RHUd896Sur0", -- the smashing pumpkins - Today
-"wrivjzw0RlI", -- Smashing Pumpkins 1979 video
+--"EsZYqaSc4cU", -- Tonight, Tonight - The Smashing Pumpkins
+--"dxNX_PRqhCQ", -- The Smashing Pumpkins - Bullet With Butterfly Wings
+--"RHUd896Sur0", -- the smashing pumpkins - Today
+--"wrivjzw0RlI", -- Smashing Pumpkins 1979 video
 "QQtLoJlQD6E", -- Smashing Pumpkins Disarm video
-"Jdgj0cSgPLo", -- Smashing Pumpkins - Rocket
-"xJOGq5XTojo", -- The Smashing Pumkins "Zero"
-"qiSkyEyBczU", -- Soundgarden - Black Hole Sun
-"nxpblnsJEWM", -- Radiohead - Creep
-"sUUHNf0S5cA", -- Nirvana- Lithium
-"wY3oEvaq71A", -- Nirvana-In Bloom
-"SK7Ai9dWrRQ", -- Nirvana - Heart Shaped Box
-"ncl7New1czM", -- ladytron-seventeen
+--"Jdgj0cSgPLo", -- Smashing Pumpkins - Rocket
+--"xJOGq5XTojo", -- The Smashing Pumkins "Zero"
+--"qiSkyEyBczU", -- Soundgarden - Black Hole Sun
+--"nxpblnsJEWM", -- Radiohead - Creep
+--"sUUHNf0S5cA", -- Nirvana- Lithium
+--"wY3oEvaq71A", -- Nirvana-In Bloom
+--"SK7Ai9dWrRQ", -- Nirvana - Heart Shaped Box
+--"ncl7New1czM", -- ladytron-seventeen
 "sGcdcVblZ-8", -- Pitchshifter - Genius
-"bOL5cpwTkes", -- Nirvana - Come As You Are
-"kPQR-OsH0RQ", -- nirvana - smells like teen spirit
+--"bOL5cpwTkes", -- Nirvana - Come As You Are
+--"kPQR-OsH0RQ", -- nirvana - smells like teen spirit
 "U8BWBn26bX0", -- The Avalanches - Frontier Psychiatrist (Good Quality)
 --"wouKI_myXxk", -- Air - Sexy Boy video
 --"LwC1swvlBPs", -- Air - Kelly watch the stars video
@@ -293,7 +309,7 @@ local vid_ids=
 --"lHY5L47tcHk", -- Tenacious D - wonder boy
 "ygN8H3kI1qE", -- GLC - Half Man Half Machine
 "5SAYlRf_6bQ", -- Goldie Lookin' Chain - Your Missus Is A Nutter
-"xv-2XYOtgCg", -- Goldie Lookin Chain - Guns don't kill people
+--"xv-2XYOtgCg", -- Goldie Lookin Chain - Guns don't kill people
 "botnsA3KOWI", -- Goldie Lookin Chain - You knows I love you
 "wAZTLVJSlNw", -- your mothers got a penis
 "hkb3r9filcM", -- Atari Teenage Riot - Revolution Action (Banned Version)
@@ -301,7 +317,7 @@ local vid_ids=
 "QenJDBmxi1E", -- Body Count's In the House
 "pfFD709OtFM", -- Onyx ft. Biohazard - Judgement Night
 "YfTg4Fcza58", -- Faith No More/Boo-Ya Tribe - Another Body Murdered
-"2kIZeVoRBuU", -- The Offspring - Self Esteem
+--"2kIZeVoRBuU", -- The Offspring - Self Esteem
 --"f7-E1qTVJgE", -- The Offspring - Pretty Fly (For A White Guy)
 --"yJQFf0qj9Nk", -- The Offspring - Come Out and Play (Keep 'Em Separated)
 "AMnLIJSY1vY", -- Mad Capsule Markets - Pulse
@@ -310,22 +326,22 @@ local vid_ids=
 "mg-hh7XGw78", -- The Mad Capsule Markets - Midi Surf
 "kfy2MbVqrWI", -- The Mad Capsule Markets - Systematic
 "88slxSc5N8Q", -- The Mad Capsule Markets - good girl
-"uhSYbRiYwTY", -- David Bowie's "Space Oddity"
+--"uhSYbRiYwTY", -- David Bowie's "Space Oddity"
 "slKNd22GGaQ", -- David Bowie (feat Nine Inch Nails) - I'm Afraid Of Americans
-"Rqs88oCYznI", -- Starfuckers inc. - Nine Inch Nails
-"irp8CNj9qBI", -- Queen - Bohemian Rhapsody
+--"Rqs88oCYznI", -- Starfuckers inc. - Nine Inch Nails
+--"irp8CNj9qBI", -- Queen - Bohemian Rhapsody
 "3XwLxNT8svk", -- Stephen Malkmus -- Jojos jacket
-"LXpbrGBIGxw", -- White Zombie - More Human Than Human
-"N1MQW5e6KcE", -- Rob Zombie - Dragula
-"Ezcoy-Lz8p4", -- Rob Zombie - Living Dead Girl
+--"LXpbrGBIGxw", -- White Zombie - More Human Than Human
+--"N1MQW5e6KcE", -- Rob Zombie - Dragula
+--"Ezcoy-Lz8p4", -- Rob Zombie - Living Dead Girl
 --"b5HCFRhtmgc", -- Rob Zombie - Superbeast
-"kBteY3qaBSw", -- Rob Zombie - Return Of The Phantom Stranger
+--"kBteY3qaBSw", -- Rob Zombie - Return Of The Phantom Stranger
 --"bJ9RrHMTTbw", -- White Zombie - Black Sunshine
-"fF7fRwVZQsE", -- Filter "Hey Man, Nice Shot"
-"1FV8TVe_JN8", -- Filter trip like i do
+--"fF7fRwVZQsE", -- Filter "Hey Man, Nice Shot"
+--"1FV8TVe_JN8", -- Filter trip like i do
 "fxrd_jZJxkg", -- henry liar
-"RzIQPBVQm_k", -- you suck
-"d_3g4QPojMc", -- how not to interview henry
+--"RzIQPBVQm_k", -- you suck
+--"d_3g4QPojMc", -- how not to interview henry
 "6Afjo0ICoT0", -- old manga trailer
 
 "eBShN8qT4lk", -- (You Gotta) Fight For Your Right (To Party) (Which sux, muchly)
@@ -348,9 +364,10 @@ local vid_ids=
 gtab.vid_ids=gtab.vid_ids or vid_ids -- keep in gtab
 
 gtab.movie_ids=gtab.movie_ids or {}
-
 for i,v in pairs(noir_cats) do gtab.movie_ids[i]=gtab.movie_ids[i] or {} end -- need perma table for each
 
+gtab.playlists=gtab.playlists or {}
+for i,v in pairs(playlists) do gtab.playlists[v.cat]=gtab.playlists[v.cat] or {} end -- perma tables for playlists cats?
 
 local tv_add_lines=
 {
@@ -2588,6 +2605,100 @@ dbg("movie loading\n")
 		} do
 ]]
 
+	for i,v in pairs(playlists) do
+
+		local vids={}
+		v.vids=vids -- remember playlist result
+		
+		for p=1,10 do
+
+dbg("fetching playlist "..i.." page "..p.."\n")
+
+			local url="http://gdata.youtube.com/feeds/api/playlists/"..v.id.."?v=2&alt=jsonc&max-results=50&start-index="..(1+((p-1)*50))
+			
+			local ret=lanes_url(url) -- pull in video info source
+			
+			if ret and ret.body and type(ret.body)=="string" and ret.body~="" then -- got some movies
+			
+				local j=Json.Decode(ret.body)
+				if j and j.data and j.data.items then else break end
+				
+--dbg("got some data "..#ret.body.." #"..(#j.data.items).."\n")
+
+				for i,v in ipairs(j.data.items) do
+				
+					local embed=false
+					
+					if v.video and v.video.accessControl and v.video.accessControl.embed=="allowed" then embed=true end
+					
+					if not embed then
+					
+dbg("noembed "..(v.video.id).." : "..(v.video.title).."\n")
+
+					else
+					
+dbg("video "..(v.video.id).." : "..(v.video.title).."\n")
+
+						local tab={}
+						
+						tab.id=v.video.id
+						tab.title=(v.video.title)
+
+						tab.duration=tonumber(v.video.duration)
+						if tab.duration==0 then tab.duration=60*60*3 end -- hack fix
+
+						tab.stamp=os.time()+(60*60*24*28) -- remember long time
+
+						if tab.title and tab.duration then
+							gtab.vid_infos[tab.id]=tab
+							
+							vids[#vids+1]=tab -- save in list as well
+						end
+					
+					end
+				end
+			end
+
+		end
+	end
+
+-- handle playlist results
+
+	for _,pl in pairs(playlists) do -- clean out all cats
+		gtab.playlists[pl.cat]={}
+	end
+
+	for _,pl in pairs(playlists) do
+		local c=gtab.playlists[pl.cat]
+		
+		for _,vid in pairs(pl.vids) do -- merge cats
+			c[#c+1]=vid
+		end
+		
+	end
+	
+	if gtab.playlists.blips and gtab.playlists.blips[1] then -- replace blips
+		vid_blip_ids={}
+		for i,vid in pairs( gtab.playlists.blips ) do
+			vid_blip_ids[ vid.id ] = vid.id
+			vid_blip_ids[ #vid_blip_ids+1 ] = vid.id
+		end
+dbg("inserted blips "..#vid_blip_ids.."\n")
+	end
+	
+	
+	if gtab.playlists.music and gtab.playlists.music[1] then -- replace music
+		while #gtab.vid_ids > 1 do -- clean
+			table.remove(gtab.vid_ids,1)
+		end
+		for i,vid in pairs( gtab.playlists.music ) do
+			gtab.vid_ids[ #gtab.vid_ids+1 ] = vid.id
+		end
+dbg("inserted default vids "..#gtab.vid_ids.."\n")
+	end
+
+--[[
+
 	for i,v in pairs(noir_cats) do
 	
 		local vids={}
@@ -2648,7 +2759,7 @@ dbg("movie loading\n")
 
 dbg(i.." movies found "..(#gtab.movie_ids[i]).."\n")
 	end
-	
+]]	
 	
 
 
@@ -2696,26 +2807,6 @@ dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid,"\n")
 
 dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid.." NOEMBED","\n")
 
-
--- fuckit, lets just say learn to proxy is the new motto
--- try http://www.tunnelbear.com/ for a free taste
---
---		elseif string.find(ret.body,[["media$restriction":{"$t":"US","type":"country","relationship":"allow"}]],1,true) or
---				string.find(ret.body,[["media$restriction":{"$t":"CA","type":"country","relationship":"allow"}]],1,true) or
---				string.find(ret.body,[["media$restriction":{"$t":"CA US","type":"country","relationship":"allow"}]],1,true) then
--- restricted to US/CA only, which is generally the worst possible case (fucking americans)
-
---				gtab.vid_infos[utvid]={title="restricted",duration=0,stamp=os.time()} -- mark this id as dead
--- refuse to play *any* region restricted videos, one for all and all for one as they say	
---dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid.." REGION","\n")
-
--- so many restrictions this just censors everything I am afraid...
---			
---			elseif string.find(ret.body, "media$restriction", 1, true) then -- if you restrict media to anyone...
---				gtab.vid_infos[utvid]={title="restricted",duration=0,stamp=os.time()} -- mark this id as dead
--- refuse to play *any* region restricted videos, one for all and all for one as they say	
---dbg("bad video id "..utvid.." REGION","\n")
-
 			else
 	
 			local info=Json.Decode(ret.body)
@@ -2734,7 +2825,8 @@ dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid.." NOEMBED","\n")
 					tab.duration=tonumber(info["entry"]["media$group"]["yt$duration"]["seconds"])
 					if tab.duration==0 then tab.duration=60*60*3 end -- hack fix
 					tab.stamp=os.time()+(60*60*24*28) -- remember long time
-				
+					tab.id=utvid
+
 				end
 			
 			
