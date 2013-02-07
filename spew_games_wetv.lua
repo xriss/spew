@@ -348,18 +348,6 @@ local vid_ids=
 
 "eBShN8qT4lk", -- (You Gotta) Fight For Your Right (To Party) (Which sux, muchly)
 
---[[
-"", -- 
-"", -- 
-"", -- 
-"", -- 
-"", -- 
-"", -- 
-"", -- 
-"", -- 
-"", -- 
-"", -- 
-]]
 
 }
 ]]
