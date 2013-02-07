@@ -364,10 +364,12 @@ local vid_ids=
 gtab.vid_ids=gtab.vid_ids or vid_ids -- keep in gtab
 
 gtab.movie_ids=gtab.movie_ids or {}
-for i,v in pairs(noir_cats) do gtab.movie_ids[i]=gtab.movie_ids[i] or {} end -- need perma table for each
-
 gtab.playlists=gtab.playlists or {}
-for i,v in pairs(playlists) do gtab.playlists[v.cat]=gtab.playlists[v.cat] or {} end -- perma tables for playlists cats?
+for i,v in pairs(playlists) do
+	gtab.playlists[v.cat]=gtab.playlists[v.cat] or {} -- perma tables for playlists cats?
+	gtab.movie_ids[v.cat]=gtab.movie_ids[v.cat] or {} -- need a perma table for each
+	noir_cats[v.cat]=true -- remember list so we can add special tv rooms
+end
 
 local tv_add_lines=
 {
@@ -2695,6 +2697,20 @@ dbg("inserted blips "..#vid_blip_ids.."\n")
 			gtab.vid_ids[ #gtab.vid_ids+1 ] = vid.id
 		end
 dbg("inserted default vids "..#gtab.vid_ids.."\n")
+	end
+	
+	for n,b in pairs(noir_cats) do
+	
+		local t=gtab.movie_ids[n]
+		
+		while #t > 1 do -- clean
+			table.remove(t,1)
+		end
+
+		for i,vid in pairs( gtab.playlists[n] or {} ) do -- fill in 
+			t[ #t+1 ] = vid.id
+		end
+
 	end
 
 --[[
