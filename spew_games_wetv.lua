@@ -212,6 +212,8 @@ local vid_ids=
 "g82A7F39JqE", -- Little miss irony - Hope
 "1AUhtoJXTTs", -- Little miss irony - No way to apologise
 "ttmLeE0R-jU", -- Little miss irony- du reich so gut (Rammstein cover)
+}
+--[[
 
 --"SWmwDy6wr8Y", -- HIM -  In Joy and Sorrow
 --"wzVuVtq2bJs", -- HIM - Buried Alive by Love
@@ -360,6 +362,7 @@ local vid_ids=
 ]]
 
 }
+]]
 
 gtab.vid_ids=gtab.vid_ids or vid_ids -- keep in gtab
 
@@ -2690,13 +2693,16 @@ dbg("inserted blips "..#vid_blip_ids.."\n")
 	
 	
 	if gtab.playlists.music and gtab.playlists.music[1] then -- replace music
-		while #gtab.vid_ids > 1 do -- clean
-			table.remove(gtab.vid_ids,1)
-		end
-		for i,vid in pairs( gtab.playlists.music ) do
-			gtab.vid_ids[ #gtab.vid_ids+1 ] = vid.id
-		end
+		if #gtab.vid_ids<30 then -- needs to be filled
+		
+			while #gtab.vid_ids > 1 do -- clean
+				table.remove(gtab.vid_ids,1)
+			end
+			for i,vid in pairs( gtab.playlists.music ) do
+				gtab.vid_ids[ #gtab.vid_ids+1 ] = vid.id
+			end
 dbg("inserted default vids "..#gtab.vid_ids.."\n")
+		end
 	end
 	
 	for n,b in pairs(noir_cats) do
