@@ -90,7 +90,7 @@ local item={}
 
 	data.items.home[ item.home ]=item.id -- so we can find objects that have unique locations, no need to clean this up since it is just weak linked by id
 	
-dbg("new item ",item.home,"\n")
+--dbg("new item ",item.home,"\n")
 	
 	return item
 		
