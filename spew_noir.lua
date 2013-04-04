@@ -3273,7 +3273,6 @@ local function noir_say_oap(brain,user,aa)
 		noir_say("You may not become an OAP on a day that you have done any banking!")
 		return
 	end
-	end
 
 	day_flag_set(user.name,"oap") -- set oap flag
 	
