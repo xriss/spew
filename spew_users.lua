@@ -1904,7 +1904,19 @@ function user_rank_bank(user,form)
 		
 		num=num+c
 
+		if day_flag_get(user.name,"oap") then
+			if user.fud and user.fud.join_date then
+				local t=os.time() - user.fud.join_date
+				
+				t=math.floor( ( t/(60*60*24) ) * 8000 ) -- full bank of 8000 a day (investing)
+
+				c=t-num
+				num=t
+			end
+		end
+		
 	end
+	
 
 	return num,c
 end
@@ -3850,7 +3862,7 @@ end
 function user_count_invokes(name)
 	local ret=0
 
-	for _,f in pairs{"man","chav","vamp","zom","wolf"} do
+	for _,f in ipairs({"wolf","vamp","zom","chav","man"}) do
 
 		local invokes_flag ="invokes_"..f	
 		local invokes_used =day_flag_get_num(name,invokes_flag) or 0
@@ -3859,6 +3871,21 @@ function user_count_invokes(name)
 		
 	return ret
 end
+
+--
+-- Count banking done today, for OAP check
+--
+function user_count_banks(name)
+	local given_total=0
+	for _,f in ipairs({"wolf","vamp","zom","chav","man"}) do
+	
+		local given_max,given=username_given_cookies_max(name,f)
+		given_total = given_total + given
+	end
+	return given_total
+end
+
+
 -----------------------------------------------------------------------------
 --
 -- check a user action and apply a real effect if we should
@@ -4129,6 +4156,11 @@ tlog_chance(0.01,user.name, user.name.." called cthulhu to "..dothis.." "..vic_s
 		
 		-- return true if a basic check failed
 		local function invoke_check( invoke_name , need_form , cost , flags )
+		
+			if day_flag_get(user.name,"oap") then
+				userqueue(user,{cmd="note",note="act",arg1="OAPs may not invoke."})
+				return true
+			end
 				
 			if form_str~=need_form and not is_admin(user.name) then
 			
@@ -5479,6 +5511,11 @@ dbg(user.name.." : "..s.."\n")
 		
 		if vic_str==user.room.addnoir or ( vic_str==user.room.retain_noir_name and user.room.brain ) then
 		
+			if day_flag_get(user.name,"oap") then
+				userqueue(user,{cmd="note",note="error",arg1="OAPs may not bank"})
+				return nil
+			end
+
 			if num<=0 then
 				userqueue(user,{cmd="note",note="error",arg1="sorry but "..num_str.." is not a valid quantity of cookies"})
 				return nil

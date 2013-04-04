@@ -3259,6 +3259,36 @@ end
 
 -----------------------------------------------------------------------------
 --
+-- enable oap mode
+--
+-----------------------------------------------------------------------------
+local function noir_say_oap(brain,user,aa)
+
+	if user_count_invokes(user.name) > 0 then
+		noir_say("You may not become an OAP on a day that you have used any invoke!")
+	end
+
+	if user_count_banks(user.name) > 0 then
+		noir_say("You may not become an OAP on a day that you have done any banking!")
+	end
+
+	day_flag_set(user.name,"oap") -- set oap flag
+	
+	if user.form then
+		user.form=nil
+		noir_say(user,name.." is now an OAP.")
+	end
+
+end
+
+
+for i,v in ipairs{"oap"} do
+	noir_triggers[v]=noir_say_oap
+end
+
+
+-----------------------------------------------------------------------------
+--
 -- lock or unlock room
 --
 -----------------------------------------------------------------------------
@@ -3732,7 +3762,8 @@ end
 				if aa[3] == "defenestrate" then -- if they wish to
 				
 					room.retain_noir=0
-					brain:delete()
+--danger?
+--					brain:delete()
 					return
 				end
 			
