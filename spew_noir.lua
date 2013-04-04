@@ -3697,16 +3697,16 @@ local num=force_floor(tonumber(aa[3] or "") or 0)
 local room=get_room(user.name)
 local max_time=username_given_cookies_max(user.name)
 
-local pub_names={["emo"]=true,["pool"]=true,["inuyasha"]=true,["gaybar"]=true,["butterfly"]=true,["revoltion"]=true,["iceberg"]=true,["pants"]=true}
+--local pub_names={["emo"]=true,["pool"]=true,["inuyasha"]=true,["gaybar"]=true,["butterfly"]=true,["revoltion"]=true,["iceberg"]=true,["pants"]=true}
 
 local private_names={["tv"]=true,["zeegrind"]=true,["pokr"]=true}
 
-local pub_room=string.lower(aa[4] or "")
+local pub_room=nil -- string.lower(aa[4] or "")
 local private_room=string.lower(aa[4] or "")
 
 -- pub_name must be allowed here first
 
-	if not pub_names[pub_room] then pub_room=nil end
+--	if not pub_names[pub_room] then pub_room=nil end
 	
 	if not private_names[private_room] then private_room=nil end
 
@@ -3716,26 +3716,28 @@ local function saytime()
 	if room then
 	
 		local minutes=math.ceil((room.retain_noir-os.time())/60)
+		if minutes<0 then minutes=0 end
 		noir_say(brain,"I have been paid to look after room "..room.name.." for another "..minutes.." minutes.",user)
 	
 	end
 
 end
 	
-	if brain.user.room.retain_noir and brain.user.room.retain_noir>os.time() then -- we are a retained bot so any retaining pertains to this room
+	if brain.user.room.retain_noir --[[and brain.user.room.retain_noir>os.time()]] then -- we are a retained bot so any retaining pertains to this room
 	
 		room=brain.user.room
-		
-		if is_room_owner(room,user.name) then -- room owner may fire this bot
-		
-			if aa[3] == "defenestrate" then -- if they wish to
+		if room.brain==brain then
+			if is_room_owner(room,user.name) then -- room owner may fire this bot
 			
-				room.retain_noir=os.time()
-				return
+				if aa[3] == "defenestrate" then -- if they wish to
+				
+					room.retain_noir=0
+					brain:delete()
+					return
+				end
+			
 			end
-		
 		end
-	
 	end
 	
 	if private_room then -- building a private room
@@ -3974,6 +3976,8 @@ local function brain_update(brain)
 
 	if brain.user and brain.user.room and brain.user.room.game then game_room_brain_update(brain.user.room.game,brain) end
 
+
+--[[
 	if brain.user and brain.user.room and brain.user.room.retain_noir then -- we are a retainer bot, so we leave when the time is up
 
 		if brain.user.room.retain_noir<os.time() then -- time up
@@ -3994,6 +3998,7 @@ local function brain_update(brain)
 		end
 	
 	end
+]]
 
 end
 

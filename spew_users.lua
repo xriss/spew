@@ -3844,6 +3844,21 @@ function user_say_check(user,aa)
 
 end
 
+--
+-- Count invokes used today, for OAP check
+--
+function user_count_invokes(name)
+	local ret=0
+
+	for _,f in pairs{"man","chav","vamp","zom","wolf"} do
+
+		local invokes_flag ="invokes_"..f	
+		local invokes_used =day_flag_get_num(name,invokes_flag) or 0
+		ret=ret+invokes_used
+	end
+		
+	return ret
+end
 -----------------------------------------------------------------------------
 --
 -- check a user action and apply a real effect if we should
