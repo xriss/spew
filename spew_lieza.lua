@@ -504,6 +504,8 @@ local function del_brain(brain)
 
 			data.brains[brain.user]=nil
 
+			brain.user.room.brain=nil
+			
 			brain.user.brain=nil
 			del_user(brain.user)
 			brain.user=nil
