@@ -3264,13 +3264,26 @@ end
 -----------------------------------------------------------------------------
 local function noir_say_oap(brain,user,aa)
 
+	local age=0
+	
+	if user.fud and user.fud.join_date then
+		local t=os.time() - user.fud.join_date
+		age=math.floor(t/(60*60*24))
+		if age<0 then age=0 end
+	end
+
+	if age < 365 then -- must be one year old at least
+		noir_say(brain,"You are too young to become an OAP!",user)
+		return
+	end
+
 	if user_count_invokes(user.name) > 0 then
-		noir_say("You may not become an OAP on a day that you have used any invoke!")
+		noir_say(brain,"You may not become an OAP on a day that you have used any invoke!",user)
 		return
 	end
 
 	if user_count_banks(user.name) > 0 then
-		noir_say("You may not become an OAP on a day that you have done any banking!")
+		noir_say(brain,"You may not become an OAP on a day that you have done any banking!",user)
 		return
 	end
 
@@ -3278,7 +3291,7 @@ local function noir_say_oap(brain,user,aa)
 	
 	user.form=nil
 
-	noir_say(user,name.." is now an OAP.")
+	noir_say(brain,user.name.." is now an OAP.",user)
 
 end
 
