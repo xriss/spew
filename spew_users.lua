@@ -1909,7 +1909,8 @@ function user_rank_bank(user,form)
 				local t=os.time() - user.fud.join_date
 				
 				t=math.floor( ( t/(60*60*24) ) * 8000 ) -- full bank of 8000 a day (investing)
-
+				if t<0 then t=0 end
+				
 				c=t-num
 				num=t
 			end
