@@ -3266,12 +3266,15 @@ end
 -----------------------------------------------------------------------------
 local function noir_say_oap(brain,user,aa)
 
-	local age=0
+--	local age=0
 	
 --	user.fud={}
 --	user.fud.join_date=os.time() - (365*24*60*60)*5
 --	user.fud.users_opt=131072
 		
+	local num=( user["cookies_".."man"] ) or 0
+
+--[[
 	if user.fud and user.fud.join_date then
 		local t=os.time() - user.fud.join_date
 		age=math.floor(t/(60*60*24))
@@ -3280,6 +3283,12 @@ local function noir_say_oap(brain,user,aa)
 
 	if age < 365 then -- must be one year old at least
 		noir_say(brain,"You are too young to become an OAP!",user)
+		return
+	end
+]]
+
+	if num < 365*4000 then -- you must fully bank one year as human
+		noir_say(brain,"You must manbank "..( (365*4000) - num ).." more cookies before you can become an OAP!",user)
 		return
 	end
 
