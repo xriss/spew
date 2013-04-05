@@ -3268,9 +3268,9 @@ local function noir_say_oap(brain,user,aa)
 
 	local age=0
 	
-	user.fud={}
-	user.fud.join_date=os.time() - (365*24*60*60)*5
-	user.fud.users_opt=131072
+--	user.fud={}
+--	user.fud.join_date=os.time() - (365*24*60*60)*5
+--	user.fud.users_opt=131072
 		
 	if user.fud and user.fud.join_date then
 		local t=os.time() - user.fud.join_date
