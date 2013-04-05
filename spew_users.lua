@@ -1936,20 +1936,24 @@ function user_rank_need(user)
 	
 		local num=user_rank_bank(user)
 
-		if     num<    500 then return      500-num
-		elseif num<   1000 then return     1000-num
-		elseif num<   2000 then return     2000-num
-		elseif num<   4000 then return     4000-num
-		elseif num<   8000 then return     8000-num
-		elseif num<  16000 then return    16000-num
-		elseif num<  32000 then return    32000-num
-		elseif num<  64000 then return    64000-num
-		elseif num< 128000 then return   128000-num
-		elseif num< 256000 then return   256000-num
-		elseif num< 512000 then return   512000-num
-		elseif num<1024000 then return  1024000-num
-		elseif num<2048000 then return  2048000-num
-		elseif num<4096000 then return  4096000-num
+		if     num<     500 then return       500-num
+		elseif num<    1000 then return      1000-num
+		elseif num<    2000 then return      2000-num
+		elseif num<    4000 then return      4000-num
+		elseif num<    8000 then return      8000-num
+		elseif num<   16000 then return     16000-num
+		elseif num<   32000 then return     32000-num
+		elseif num<   64000 then return     64000-num
+		elseif num<  128000 then return    128000-num
+		elseif num<  256000 then return    256000-num
+		elseif num<  512000 then return    512000-num
+		elseif num< 1024000 then return   1024000-num
+		elseif num< 2048000 then return   2048000-num
+		elseif num< 4096000 then return   4096000-num
+		elseif num< 8192000 then return   8192000-num
+		elseif num<16384000 then return  16384000-num
+		elseif num<32768000 then return  32768000-num
+		elseif num<65536000 then return  65536000-num
 		end
 
 		return 0
@@ -2010,21 +2014,25 @@ local name=string.lower(user.name)
 	
 	local ret=0
 	
-	if     num<    500 then ret=1
-	elseif num<   1000 then ret=2
-	elseif num<   2000 then ret=3
-	elseif num<   4000 then ret=4
-	elseif num<   8000 then ret=5
-	elseif num<  16000 then ret=6
-	elseif num<  32000 then ret=7
-	elseif num<  64000 then ret=8
-	elseif num< 128000 then ret=9
-	elseif num< 256000 then ret=10
-	elseif num< 512000 then ret=11
-	elseif num<1024000 then ret=12
-	elseif num<2048000 then ret=13
-	elseif num<4096000 then ret=14
-	else                    ret=15
+	if     num<     500 then ret=1
+	elseif num<    1000 then ret=2
+	elseif num<    2000 then ret=3
+	elseif num<    4000 then ret=4
+	elseif num<    8000 then ret=5
+	elseif num<   16000 then ret=6
+	elseif num<   32000 then ret=7
+	elseif num<   64000 then ret=8
+	elseif num<  128000 then ret=9
+	elseif num<  256000 then ret=10
+	elseif num<  512000 then ret=11
+	elseif num< 1024000 then ret=12
+	elseif num< 2048000 then ret=13
+	elseif num< 4096000 then ret=14
+	elseif num< 8192000 then ret=15
+	elseif num<16384000 then ret=16
+	elseif num<32768000 then ret=17
+	elseif num<65536000 then ret=18
+	else                     ret=19
 	end
 	
 	return ret
@@ -2053,21 +2061,25 @@ local name=string.lower(user.name)
 		
 	local ret=0
 	
-	if     num<    500 then ret=1
-	elseif num<   1000 then ret=2
-	elseif num<   2000 then ret=3
-	elseif num<   4000 then ret=4
-	elseif num<   8000 then ret=5
-	elseif num<  16000 then ret=6
-	elseif num<  32000 then ret=7
-	elseif num<  64000 then ret=8
-	elseif num< 128000 then ret=9
-	elseif num< 256000 then ret=10
-	elseif num< 512000 then ret=11
-	elseif num<1024000 then ret=12
-	elseif num<2048000 then ret=13
-	elseif num<4096000 then ret=14
-	else                    ret=15
+	if     num<     500 then ret=1
+	elseif num<    1000 then ret=2
+	elseif num<    2000 then ret=3
+	elseif num<    4000 then ret=4
+	elseif num<    8000 then ret=5
+	elseif num<   16000 then ret=6
+	elseif num<   32000 then ret=7
+	elseif num<   64000 then ret=8
+	elseif num<  128000 then ret=9
+	elseif num<  256000 then ret=10
+	elseif num<  512000 then ret=11
+	elseif num< 1024000 then ret=12
+	elseif num< 2048000 then ret=13
+	elseif num< 4096000 then ret=14
+	elseif num< 8192000 then ret=15
+	elseif num<16384000 then ret=16
+	elseif num<32768000 then ret=17
+	elseif num<65536000 then ret=18
+	else                     ret=19
 	end
 	
 -- crowns before furrys	
@@ -2205,6 +2217,12 @@ function user_rank_name(user)
 
 local num=user_rank(user)
 local str
+
+	if not user.form and day_flag_get(user.name,"oap") then
+		user.titleid=nil
+		user.title="OAP"
+		return "OAP ("..num..")"
+	end
 
 	if user.title then
 		if user.titleid then
