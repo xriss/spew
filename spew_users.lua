@@ -1900,21 +1900,21 @@ function user_rank_bank(user,form)
 	
 	if form=="man" then -- add the vest to your man bank
 	
-		c=force_floor(vest_convert(user.vest , user.vestid , "EUR" ))
-		
-		num=num+c
-
 		if day_flag_get(user.name,"oap") then
 			if user.fud and user.fud.join_date then
 				local t=os.time() - user.fud.join_date
 				
-				t=math.floor( ( t/(60*60*24) ) * 8000 ) -- full bank of 8000 a day (investing)
+				t=math.floor( ( t/(60*60*24) ) * 4000 ) -- full bank of 4000 a day (investing still helps)
 				if t<0 then t=0 end
 				
-				c=t-num
 				num=t
 			end
 		end
+
+		c=force_floor(vest_convert(user.vest , user.vestid , "EUR" ))
+		
+		num=num+c
+
 		
 	end
 	
