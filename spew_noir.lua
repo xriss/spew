@@ -3150,7 +3150,9 @@ end
 --
 -----------------------------------------------------------------------------
 function noir_say_title(brain,user,aa)
-	
+
+	if day_flag_get(user.name,"oap") then return end -- oaps are stuck
+
 local num=tonumber(aa[3] or -1) or -1
 
 local custom
