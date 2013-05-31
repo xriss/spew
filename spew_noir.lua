@@ -3580,7 +3580,7 @@ local smud=" mudded"
 	
 			local tab=get_shared_names_by_ip(n) -- hit all people of the same ip
 			if not tab then tab={n} end
-			if count==1 then tab={n} end -- just change this one user
+--			if count==1 then tab={n} end -- just change this one user
 			for i,v in ipairs(tab) do
 		
 				data[mudtype][ string.lower(v) ]=mnum
@@ -3593,7 +3593,7 @@ local smud=" mudded"
 		
 			local tab=get_shared_names_by_ip(n) -- hit all people of the same ip
 			if not tab then tab={n} end
-			if count==1 then tab={n} end -- just change this one user
+--			if count==1 then tab={n} end -- just change this one user
 			for i,v in ipairs(tab) do
 		
 				data[mudtype][ string.lower(v) ]=nil
