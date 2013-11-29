@@ -4350,7 +4350,7 @@ tlog_chance(0.1,user.name, user.name.." had a private dance with "..vic.name.." 
 			else -- victim stays put
 			
 				roomqueue(user.room,{cmd="act",frm=user.name,txt="dances for "..vic.name})
-				roomqueue(vic.room,{cmd="act",frm=vic.name,txt="denies "..user.name})
+				roomqueue(vic.room,{cmd="act",frm=vic.name,txt="denies "..user.name},user) -- fix gimphack?
 				
 			end
 			
