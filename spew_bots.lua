@@ -45,10 +45,9 @@ local function kicked(spam)
 	
 	local s=""
 	if count*count>1 then s="s" end
-	return {cmd="act",frm=name,txt="shows "..msg.frm.." where the spambox is for "..(count*count).." minute"..(s).."."}
+	return {cmd="act",frm=name,txt="shows "..(msg.frm or "?").." where the spambox is for "..(count*count).." minute"..(s).."."}
 
 end
-
 
 	if user and ( not user.brain ) and brain and ( brain.user ) then -- check for brain so we dont ban ourselves, duh :)
 	
