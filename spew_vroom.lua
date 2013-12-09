@@ -222,6 +222,7 @@ local aa=str_split(".",name_parts[1])
 end
 
 function vroom_obtain(room)
+	if not room then return nil end -- no room?
 
 local name=string.lower(room.name)
 	
