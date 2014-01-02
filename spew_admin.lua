@@ -474,7 +474,9 @@ local guest_filter_strings=
 -----------------------------------------------------------------------------
 function guest_filter(s)
 
-	return string.gsub(s, "%a+", guest_filter_strings)
+	local s=string.gsub(s, "%a+", guest_filter_strings)	
+	if string.len(s)>1024 then s="bork" end
+	return s
 
 end
 

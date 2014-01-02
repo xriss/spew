@@ -753,17 +753,22 @@ end
 dbg("Booting "..os.date().."\n")
 copcall(function() error("Booting "..os.date().."\n") end ) -- also log a boot up msg with time into the error stream
 
+--[[
+
+-- temporary disable telnet to make the kids smarter.
+
 	global.server_telnet = assert(socket.bind(host, port_telnet))
 	server_telnet:settimeout(0.001) -- make sure we don't block in accept	
 dbg("Servers bound telnet "..host.." "..port_telnet.."\n")
 	connections:insert(server_telnet)
+]]
 
-	
+--[[
 	global.server_irc = assert(socket.bind(host, port_irc))
 	server_irc:settimeout(0.001) -- make sure we don't block in accept	
 dbg("Servers bound irc "..host.." "..port_irc.."\n")
 	connections:insert(server_irc)
-
+]]
 	
 	global.server1 = assert(socket.bind(host, port1))
 	server1:settimeout(0.001) -- make sure we don't block in accept
