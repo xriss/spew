@@ -3497,7 +3497,7 @@ local ip=user_ipnum(user)
 
 		usercast(user,{cmd="note",note="error",arg1="password login from chat is disabled, please use /session instead"})
 	
---[[
+--[=[
 		local passOK=false
 		
 --dbg("SALT : ",tab.salt or "NONE","\n")
@@ -3538,7 +3538,7 @@ dbg("login failed password ",name," : ",ip,"\n")
 			
 --			data.last_login_time[ip]=os.time() -- can only force check one password per sec
 		end
-]]
+]=]
 		
 	else -- user does not exist, logon as guest
 	
