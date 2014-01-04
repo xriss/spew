@@ -297,6 +297,12 @@ function telnet_str_to_msg(user,_line,msg)
 			msg.pass=aa[3]
 			return
 			
+		elseif cmd=="/session" then
+		
+			msg.cmd="session"
+			msg.sess=aa[2]
+			return
+
 		elseif cmd=="connect" and user.room.name=="limbo" then
 		
 			msg.cmd="login"
