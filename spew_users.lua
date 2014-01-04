@@ -3494,7 +3494,10 @@ local ip=user_ipnum(user)
 	local tab=sql_named_tab(ret,1)
 	
 	if tab then -- user exists, verify pass
+
+		usercast(user,{cmd="note",note="error",arg1="password login from chat is disabled, please use /session instead"})
 	
+--[[
 		local passOK=false
 		
 --dbg("SALT : ",tab.salt or "NONE","\n")
@@ -3535,6 +3538,7 @@ dbg("login failed password ",name," : ",ip,"\n")
 			
 --			data.last_login_time[ip]=os.time() -- can only force check one password per sec
 		end
+]]
 		
 	else -- user does not exist, logon as guest
 	
@@ -3600,6 +3604,8 @@ local ip=user_ipnum(user)
 		if user_ip(user)==tab.sys_id then -- mild security fix, session is locked to ip
 		
 			login_newname(user,tab.login,tab)
+
+			usercast(user,{cmd="note",note="error",arg1="You may login again from this IP by typing /session "..sess.." as password logins are now disabled in chat."})
 			
 		else
 		
