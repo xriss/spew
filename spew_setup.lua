@@ -278,8 +278,14 @@ end
 	addacrown("poet","riceguy",1)
 	addacrown("putty","lunboks",1)
 	
+	addacrown("notkam","desu_boku",1)
+	addacrown("notkam","rockgvmt",1)
+	addacrown("notkam","big_al",1)
+	addacrown("notkam","crowd",1)
+	addacrown("notkam","darkaruki",1)
 	
-	
+	addacrown("kam","kam",-1)	
+
 -- the ips these people login from are allowed multiple extra logins
 
 	data.alt_names["xix"]=100
