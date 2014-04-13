@@ -284,6 +284,8 @@ end
 	addacrown("notkam","crowd",1)
 	addacrown("notkam","darkaruki",1)
 	addacrown("notkam","ninjakitty",1)
+	addacrown("notkam","princess",1)
+	addacrown("notkam","dross",1)
 	
 	addacrown("kam","kam",-1)	
 
