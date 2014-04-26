@@ -287,6 +287,11 @@ end
 	addacrown("notkam","princess",1)
 	addacrown("notkam","dross",1)
 	addacrown("notkam","jellybean",1)
+	addacrown("notkam","zeeky4",1)
+	addacrown("notkam","bindmind",1)
+	addacrown("notkam","qata",1)
+	addacrown("notkam","traces",1)
+	addacrown("notkam","coal_bear",2)
 	
 	addacrown("kam","kam",-1)	
 
