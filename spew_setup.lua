@@ -283,7 +283,7 @@ end
 	addacrown("notkam","big_al",1)
 	addacrown("notkam","crowd",1)
 	addacrown("notkam","darkaruki",1)
-	addacrown("notkam","ninjakitty",1)
+	addacrown("notkam","abraxas",1)
 	addacrown("notkam","princess",1)
 	addacrown("notkam","dross",1)
 	addacrown("notkam","jellybean",1)
