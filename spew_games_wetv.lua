@@ -1478,7 +1478,7 @@ tv_trigger=function(game,user,aa)
 					n=v
 --					table.insert(tab,v)
 				end
-				userqueue(user,{cmd="note",note="notice",arg1="( "..t.." ) : "..n})
+				userqueue(user,{cmd="note",note="notice",arg1=" "..t.." : "..n})
 			end
 			return
 		else
@@ -1488,7 +1488,7 @@ tv_trigger=function(game,user,aa)
 				if type(n)~="number" then
 				end
 --				table.insert(tab,n)		
-				userqueue(user,{cmd="note",note="notice",arg1="( "..t.." ) : "..n})
+				userqueue(user,{cmd="note",note="notice",arg1=" "..t.." : "..n})
 			end			
 			return
 			
