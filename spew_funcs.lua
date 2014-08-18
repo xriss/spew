@@ -453,7 +453,7 @@ function clean_utf8(s)
 					end
 					
 					if utf8_len then -- valid code, otherwise we ignore it
-						utf8_start=#t
+						utf8_start=#t+1
 						t[#t+1]=c
 					end
 				end
