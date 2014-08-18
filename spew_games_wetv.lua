@@ -1467,15 +1467,20 @@ tv_trigger=function(game,user,aa)
 			name="playing"
 
 			for i,v in ipairs(game.vid_ids) do
-				
+				local t,n
 				local vi=gtab.vid_infos[v]
 				if vi then
-					table.insert(tab,vi.title)
+					t=v
+					n=vi.title
+--					table.insert(tab,vi.title)
 				else
-					table.insert(tab,v)
+					t=i
+					n=v
+--					table.insert(tab,v)
 				end
+				userqueue(user,{cmd="note",note="notice",arg1="( "..t.." ) : "..n})
 			end
-		
+			return
 		else
 	
 			name="Videos"
@@ -1483,7 +1488,7 @@ tv_trigger=function(game,user,aa)
 				if type(n)~="number" then
 				end
 --				table.insert(tab,n)		
-				userqueue(user,{cmd="note",note="notice",arg1="( "..t.." )"..n})
+				userqueue(user,{cmd="note",note="notice",arg1="( "..t.." ) : "..n})
 			end			
 			return
 			
