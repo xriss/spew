@@ -9,14 +9,15 @@ gtab.name="wetv"
 
 local playlists={
 	blips=  {cat="blips", id="PL30Cmb00CTy1UheoL5mtYsvLoAspO2PaQ"},
-	horror= {cat="horror",id="PL9D3B08D539EDDCCA"},
+	music=  {cat="music", id="PL30Cmb00CTy0ZNLzv6Xtou4Zr-nUJally"},
+	horror1={cat="horror",id="PL9D3B08D539EDDCCA"},
 	horror2={cat="horror",id="PL129A76A710B5C5C9"},
-	comedy= {cat="comedy",id="PL940038B8C37BC2BF"},
+	comedy1={cat="comedy",id="PL940038B8C37BC2BF"},
+	comedy2={cat="comedy",id="PL40847C47E99D785B"},
 	movies1={cat="movies",id="PLD3363FF38E2801F2"},
 	movies2={cat="movies",id="PLEE54950D026DAC24"},
 	movies4={cat="movies",id="PL4CC4A2717485647E"},
 	movies5={cat="movies",id="PLF435D6FFBD0302B3"},
-	music={cat="music",id="PL30Cmb00CTy0ZNLzv6Xtou4Zr-nUJally"},
 }
 
 local noir_cats={
