@@ -1,2 +1,2 @@
-ssh web "tail -f hg/spew/spew.log -n $1"
+ssh web "tail -f -n $1 hg/spew/spew.log"
 

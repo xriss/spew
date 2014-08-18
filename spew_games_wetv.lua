@@ -1479,12 +1479,13 @@ tv_trigger=function(game,user,aa)
 		else
 	
 			name="Videos"
-
 			for n,t in pairs(game.vidlists) do -- get all possible names
-			
-				table.insert(tab,n)
-				
-			end
+				if type(n)~="number" then
+				end
+--				table.insert(tab,n)		
+				userqueue(user,{cmd="note",note="notice",arg1="( "..t.." )"..n})
+			end			
+			return
 			
 		end
 		
