@@ -1500,7 +1500,12 @@ function user_update(user)
 	
 	end
 	
-	if #user.linein>50 then del_user(user) return end -- very very nasty anti spam, if things clog up
+	if #user.linein>50 then -- very very nasty anti spam, if things clog up
+	
+		dbg("spamdrop 50 "..user.name,#user.linein)
+		del_user(user)
+		return
+	end
 	
 	local t=os.time()
 	
