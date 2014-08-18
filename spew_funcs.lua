@@ -404,6 +404,7 @@ function clean_utf8(s)
 		local buff_len=0
 		local sb=string.byte
 		local mf=math.floor
+		local ut=0
 		s:gsub(".", function(c)
 		
 			local n=sb(c)
@@ -411,9 +412,15 @@ function clean_utf8(s)
 			if utf8_len then
 			
 				if mf(n/64)==2 then -- a valid continue byte
+					ut=(ut*64)+(n%64)
 					t[#t+1]=c
 					utf8_len=utf8_len-1
 					if utf8_len==1 then -- this was the last one we where looking for
+						if ut>=0xd800 and ut<=0xdfff then -- unicode fuckup, kill it
+							for i=#t,utf8_start,-1 do
+								t[i]=nil
+							end
+						end
 						utf8_len=nil
 					end
 				else -- invalid, roll back
@@ -430,14 +437,19 @@ function clean_utf8(s)
 					utf8_len=nil
 					if mf(n/32)==6 then -- 2 bytes
 						utf8_len=2
+						ut=n%32
 					elseif mf(n/16)==14 then -- 3 bytes
 						utf8_len=3
+						ut=n%16
 					elseif mf(n/8)==30 then -- 4 bytes
 						utf8_len=4
+						ut=n%8
 					elseif mf(n/4)==62 then -- 5 bytes
 						utf8_len=5
+						ut=n%4
 					elseif mf(n/2)==126 then -- 6 bytes
 						utf8_len=6
+						ut=n%2
 					end
 					
 					if utf8_len then -- valid code, otherwise we ignore it
