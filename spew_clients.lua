@@ -375,7 +375,12 @@ local line_term="\0"
 		
 	end
 	
-	if string.len(user.lineparts)>4096 then user.lineparts=nil return end -- ignore large packets (we never need to send this much data?)
+	if string.len(user.lineparts)>4096 then
+		dbg("spamdrop 4096 "..user.name,user.lineparts)
+		user.lineparts=nil
+		return
+	end
+	-- ignore large packets (we never need to send this much data?)
 	
 	local zero,linepart
 	
