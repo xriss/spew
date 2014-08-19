@@ -376,7 +376,7 @@ local line_term="\0"
 	end
 	
 	if string.len(user.lineparts)>4096 then
-		dbg("spamdrop 4096 "..user.name,user.lineparts)
+		dbg("spamdrop 4096 "..user.name," : ",user.lineparts,"\n")
 		user.lineparts=nil
 		return
 	end

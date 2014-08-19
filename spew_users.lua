@@ -1502,7 +1502,7 @@ function user_update(user)
 	
 	if #user.linein>50 then -- very very nasty anti spam, if things clog up
 	
-		dbg("spamdrop 50 "..user.name,#user.linein)
+		dbg("spamdrop 50 "..user.name," : ",#user.linein,"\n")
 		del_user(user)
 		return
 	end
