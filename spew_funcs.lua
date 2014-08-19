@@ -395,7 +395,7 @@ function clean_utf8(s)
 	
 -- first check for possible utf8, 7bit clean will have nothing done to it
 	if string.find(s,"[\128-\255]") then
-	
+
 		local t={}
 		local state=nil
 		local utf8_len=nil
@@ -499,3 +499,4 @@ function rough_english_duration(t)
 		return "0 seconds"
 	end	
 end
+
