@@ -52,7 +52,7 @@ function client_disconnected(client,error)
 
 local user=data.clients[client]
 
-dbg("disconnect ",tostring(client)," ",tostring(user and user.name),"\n")
+--dbg("disconnect ",tostring(client)," ",tostring(user and user.name),"\n")
 
 
 	data.clients_tab[client]=nil
