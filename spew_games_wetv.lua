@@ -1455,7 +1455,7 @@ tv_trigger=function(game,user,aa)
 
 	local countup=function()
 		count=count+1
-		if count>50 then
+		if count>10 then
 			userqueue(user,{cmd="note",note="notice",arg1=name.." : ".. (str_join_english_list(tab) or "...")})
 			tab={}
 			count=0
