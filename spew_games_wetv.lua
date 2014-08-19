@@ -1478,7 +1478,7 @@ tv_trigger=function(game,user,aa)
 					n=v
 --					table.insert(tab,v)
 				end
-dbg(n)
+dbg(n,"\n")
 				userqueue(user,{cmd="note",note="notice",arg1=" "..t.." : "..n})
 			end
 			return
