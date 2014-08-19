@@ -1451,13 +1451,23 @@ tv_trigger=function(game,user,aa)
 	local tab={}
 
 	local name=aa[3]
-	
+	local count=0
+
+	local countup=function()
+		count=count+1
+		if count>50 then
+			userqueue(user,{cmd="note",note="notice",arg1=name.." : ".. (str_join_english_list(tab) or "...")})
+			tab={}
+			count=0
+		end
+	end
+
 	if name and game.vidlists[name] then
 
 		for i,n in pairs(game.vidlists[name]) do -- get all possible names
 		
-			table.insert(tab,n)
-			
+			table.insert(tab,i..":"..n)
+			countup()
 		end
 	
 	else
@@ -1472,26 +1482,22 @@ tv_trigger=function(game,user,aa)
 				if vi then
 					t=v
 					n=vi.title
---					table.insert(tab,vi.title)
+					table.insert(tab,t..":"..n)	
 				else
 					t=i
 					n=v
---					table.insert(tab,v)
+					table.insert(tab,t..":"..n)	
 				end
-dbg(n,"\n")
-				userqueue(user,{cmd="note",note="notice",arg1=" "..t.." : "..n})
+			countup()
 			end
-			return
 		else
 	
 			name="Videos"
 			for n,t in pairs(game.vidlists) do -- get all possible names
 				if type(t)=="table" then t=n end
---				table.insert(tab,n)		
-				userqueue(user,{cmd="note",note="notice",arg1=" "..t.." : "..n})
-			end			
-			return
-			
+				table.insert(tab,t..":"..n)		
+			countup()
+			end
 		end
 		
 	end
