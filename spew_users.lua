@@ -3591,7 +3591,7 @@ local ip=user_ipnum(user)
 -- now moved into another task :)
 
 	local info=lanes_sql([[SELECT
-			u.* , s.time_sec , s.sys_id
+			u.* , s.time_sec , s.ip_addr
 		FROM ]]..cfg.fud_prefix..[[ses s
 			INNER JOIN ]]..cfg.fud_prefix..[[users u ON u.id=(CASE WHEN s.user_id>2000000000 THEN 1 ELSE s.user_id END)
 		WHERE ses_id=']]..sess..[[']])
@@ -3610,9 +3610,9 @@ local ip=user_ipnum(user)
 		local funread=lanes_sql([[SELECT count(*) FROM fud26_msg WHERE apr=1 AND post_stamp>]]..lastread )
 		tab.unread_forum_count=tonumber( ( funread[1] and funread[1][1] ) or 0)
 			
---dbg( user_ip(user) , " : " , tab.sys_id , "\n")
+--dbg( user_ip(user) , " : " , tab.ip_addr , "\n")
 
-		if user_ip(user)==tab.sys_id then -- mild security fix, session is locked to ip
+		if user_ip(user)==tab.ip_addr then -- mild security fix, session is locked to ip
 		
 			login_newname(user,tab.login,tab)
 
