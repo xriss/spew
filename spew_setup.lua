@@ -297,6 +297,12 @@ end
 	
 	addacrown("kam","kam",-1)	
 
+
+	addacrown("swanky","crustolio",5)
+	addacrown("swanky","abraxas",2)
+	addacrown("swanky","big_al",2)
+
+
 -- the ips these people login from are allowed multiple extra logins
 
 	data.alt_names["xix"]=100
