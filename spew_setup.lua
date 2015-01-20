@@ -301,6 +301,7 @@ end
 	addacrown("swanky","crustolio",5)
 	addacrown("swanky","abraxas",2)
 	addacrown("swanky","big_al",2)
+	addacrown("swanky","yonderboy",2)
 
 
 -- the ips these people login from are allowed multiple extra logins
