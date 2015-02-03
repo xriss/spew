@@ -293,6 +293,7 @@ end
 	addacrown("notkam","traces",1)
 	addacrown("notkam","coal_bear",2)
 	addacrown("notkam","mawile",1)
+	addacrown("notkam","eskro",1)
 	
 	
 	addacrown("kam","kam",-1)	
