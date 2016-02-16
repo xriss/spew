@@ -1263,7 +1263,7 @@ local vi=game.vidinfo
 	
 	if	not vi.vid_start or
 		not vi.vid_len or
-		( os.time()-vi.vid_start+vi.vid_start_tim >= force_floor(vi.vid_len)+2 ) then -- play next, include a small fudge time
+		( os.time()-vi.vid_start+vi.vid_start_tim >= force_floor(vi.vid_len)+1 ) then -- play next, include a small fudge time
 
 		play_next_vid(game)
 
