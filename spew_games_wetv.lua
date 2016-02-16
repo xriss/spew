@@ -1213,10 +1213,11 @@ local function check_vid_info(game,info)
 			
 				local conflict=vid.conflict
 				if not conflict then -- setup initial conflict data for this video
-					vid.conflict={}					
+					vid.conflict={}			
 --					local s=infostring_encode(vid.duration,vid.title) -- put the last person to report into conflict table
 --					vid.conflict[s]={}
 --					vid.conflict[s][vid.userid]=vid.stamp
+					conflict=vid.conflict
 				end
 				
 				local s=infostring_encode(info.duration,info.title)
