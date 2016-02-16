@@ -1183,15 +1183,13 @@ end
 local function check_vid_info(game,info)
 
 
-print("INFO",info.id,info.duration,info.title)
-
 	if not info then return end
 	if not info.user then return end
 	if not info.id then return end
 	if not info.duration then return end
 	if not info.title then return end
 
-print("INFO",info.id,info.duration,info.title)
+--print("INFO",info.id,info.duration,info.title)
 
 -- convert what we know to a unique string that can be reveresed
 	local infostring_encode=function(duration,title) return duration..":"..title end
