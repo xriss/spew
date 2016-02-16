@@ -1116,6 +1116,29 @@ end
 
 -----------------------------------------------------------------------------
 --
+-- users are now sending back video length/title sooooooo
+-- we need to check who is sending what and if there is conflict then we make a decision about
+-- who is telling the truth...
+--
+-----------------------------------------------------------------------------
+local function check_vid_info(game,info)
+
+	if not info then return end
+	if not info.vid_id then return end
+	if not info.vid_len then return end
+	if not info.vid_title then return end
+
+
+	if gtab.vid_infos then
+
+		local vid=gtab.vid_infos[ info.vid_id ]
+		
+	end
+
+end
+
+-----------------------------------------------------------------------------
+--
 -- check if the current video has ended or is in error
 --
 -----------------------------------------------------------------------------
@@ -2615,12 +2638,25 @@ dbg("movie loading\n")
 
 		local vids={}
 		v.vids=vids -- remember playlist result
-		
+
+-- lets try and pull down a html url and scrape the fuck out of it
+
+dbg("fetching playlist "..i.."\n")
+
+		-- if we use any video id, with a playlist then we get the full? playlist list of videos
+		local url="https://www.youtube.com/watch?v=fdO4ea3oP8Q&list="..v.id
+		local ret=lanes_url(url) -- pull in video info source
+
+
+
+-- this old way no longer works
+--[[
 		for p=1,10 do
 
 dbg("fetching playlist "..i.." page "..p.."\n")
 
 			local url="http://gdata.youtube.com/feeds/api/playlists/"..v.id.."?v=2&alt=jsonc&max-results=50&start-index="..(1+((p-1)*50))
+			
 			
 			local ret=lanes_url(url) -- pull in video info source
 			
@@ -2656,7 +2692,7 @@ dbg("video "..(v.video.id).." : "..(v.video.title).."\n")
 						tab.title=(v.video.title)
 
 						tab.duration=tonumber(v.video.duration)
-						if tab.duration==0 then tab.duration=60*60*3 end -- hack fix
+--						if tab.duration==0 then tab.duration=60*60*3 end -- hack fix
 
 						tab.stamp=os.time()+(60*60*24*28) -- remember long time
 
@@ -2671,6 +2707,7 @@ dbg("video "..(v.video.id).." : "..(v.video.title).."\n")
 			end
 
 		end
+]]
 	end
 
 -- handle playlist results
@@ -2903,6 +2940,7 @@ gtab.update = function()
 			day_flag_set("*","wetv_movies_done")
 		end
 	end
+
 	
 -- WARNING -- this may exit here
 	if not gtab.co and not gtab.vid_reqs[1] then return end -- do nothing else till we have a co or a request
