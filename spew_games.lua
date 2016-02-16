@@ -2173,7 +2173,7 @@ local names={} -- build active names here for update at end of function
 		
 			local ret=lanes_sql("SELECT forum_id FROM wet_beta_scores WHERE forum_id>0 AND game="..gid.." AND seed="..today.." AND audit>=0 ORDER BY score DESC, created DESC LIMIT 1")
 			
-			if ret[1] then -- got a score
+			if ret and ret[1] then -- got a score
 
 				local dat=sql_named_tab(ret,1)
 				
