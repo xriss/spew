@@ -4,6 +4,11 @@ local log_dirname=( cfg and cfg.log_filename ) or "./save/logs/"
 local tlog_filename=( cfg and cfg.tlog_filename ) or "./save/tlog.json"
 
 local json=require("Json")
+-- replace with my json encoder decoder
+--local wjson=require("wjson")
+--local json={}
+--json.Decode=wjson.decode
+--json.Encode=wjson.encode
 
 -----------------------------------------------------------------------------
 --

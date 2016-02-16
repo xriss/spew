@@ -4,6 +4,9 @@ local spew_lanes_version=16 -- bump this version number to make sure threads are
 local spew_lanes_disable=false -- do not use lanes, block the main thread for easier debuging
 
 
+lanes=require("lanes")
+
+
 -----------------------------------------------------------------------------
 --
 -- create data.lanes table and threads if it isnt already setup

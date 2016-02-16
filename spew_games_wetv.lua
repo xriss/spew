@@ -213,8 +213,7 @@ local vid_ids=
 "g82A7F39JqE", -- Little miss irony - Hope
 "1AUhtoJXTTs", -- Little miss irony - No way to apologise
 "ttmLeE0R-jU", -- Little miss irony- du reich so gut (Rammstein cover)
-}
---[[
+
 
 --"SWmwDy6wr8Y", -- HIM -  In Joy and Sorrow
 --"wzVuVtq2bJs", -- HIM - Buried Alive by Love
@@ -351,7 +350,7 @@ local vid_ids=
 
 
 }
-]]
+
 
 gtab.vid_ids=gtab.vid_ids or vid_ids -- keep in gtab
 
@@ -1114,6 +1113,8 @@ local vid_id
 	
 end
 
+
+
 -----------------------------------------------------------------------------
 --
 -- users are now sending back video length/title sooooooo
@@ -1121,18 +1122,119 @@ end
 -- who is telling the truth...
 --
 -----------------------------------------------------------------------------
-local function check_vid_info(game,info)
+local function check_vid_conflict(game,id)
 
-	if not info then return end
-	if not info.vid_id then return end
-	if not info.vid_len then return end
-	if not info.vid_title then return end
-
+	local infostring_decode=function(s)
+		local l=s:find(":")
+		if l then
+		return tonumber(s:sub(1,l-1)),s:sub(l+1)
+	end
 
 	if gtab.vid_infos then
 
-		local vid=gtab.vid_infos[ info.vid_id ]
+		local vid=gtab.vid_infos[ id ]
 		
+		if vid and vid.conflict then
+		
+			local stamp=os.time() - ( 24*60*60 ) -- votes last for 24hours (you may revote)
+
+			local c=0
+			for n,v in pairs(vid.conflict) do
+				local i=0
+				for u,t in pairs(v) do
+					if stamp>t then v[u]=nil else i=i+1 end -- delete old votes , count anything else
+				end
+				if i==0 then
+					vid.conflict[n]=nil -- no more votes for this one so forget it
+				else
+					c=c+1
+				end
+			end
+			if c==0 then -- no more conflict
+				vid.conflict=nil
+			end
+		
+			if vid.conflict then -- pick the best and copy it out of conflict
+
+				local best,count
+				for n,v in pairs(vid.conflict) do -- find the best
+					local i=0
+					for u,t in pairs(v) do i=i+1 end -- count all
+						if not count or count<=i then -- find the best
+							best=n
+							count=i
+						end
+					end
+				end
+				if best and count then -- update video info with the best values we have
+					vid.duration,vid.title=infostring_decode(best)
+					vid.userid="*" -- no longer belongs to a user
+					vid.stamp=os.time() -- stamp with our time
+				end
+
+			end
+
+		end
+	
+	end
+
+end
+
+local function check_vid_info(game,info)
+
+
+print("INFO",info.id,info.duration,info.title)
+
+	if not info then return end
+	if not info.user then return end
+	if not info.id then return end
+	if not info.duration then return end
+	if not info.title then return end
+
+print("INFO",info.id,info.duration,info.title)
+
+-- convert what we know to a unique string that can be reveresed
+	local infostring_encode=function(duration,title) return duration..":"..title end
+	
+	if gtab.vid_infos then
+
+		local userid=user_idstring(info.user)
+		local stamp=os.time()
+
+		local vid=gtab.vid_infos[ info.id ]
+		if not vid then -- create info
+			vid={title=info.title,duration=info.duration,userid=userid,stamp=stamp}
+			gtab.vid_infos[ info.id ]=vid
+		end
+		
+		if vid then
+	
+--			vid.stamp=os.time()+(24*60*60) -- one day
+			
+			if ( vid.title ~= info.title ) or ( vid.duration ~= info.duration ) then -- conflict (possible bug, or video has changed)
+			
+				local conflict=vid.conflict
+				if not conflict then -- setup initial conflict data for this video
+					vid.conflict={}					
+--					local s=infostring_encode(vid.duration,vid.title) -- put the last person to report into conflict table
+--					vid.conflict[s]={}
+--					vid.conflict[s][vid.userid]=vid.stamp
+				end
+				
+				local s=infostring_encode(info.duration,info.title)
+				if not conflict[s] then conflict[s]={} end -- a vote for this
+				conflict[s][userid]=stamp -- who is voting
+				
+				check_vid_conflict(game,info.id) -- update title and time depending on the votes we now have
+			
+			else -- no conflict so just update userid and time stamp to last person who sent in this info
+			
+				vid.userid=userid
+				vid.stamp=stamp
+				
+			end
+	
+		end
 	end
 
 end
@@ -1152,6 +1254,8 @@ local function check_vid(game,vid_len)
 local vi=game.vidinfo
 
 	if gtab.vid_infos and gtab.vid_infos[ vi.vid_id ] then -- we got good cached info from youtube
+	
+		check_vid_conflict(game,vi.vid_id) -- make sure we are not in conflict
 	
 		vi.vid_len=gtab.vid_infos[ vi.vid_id ].duration
 			
@@ -2237,10 +2341,15 @@ local ret={cmd="game",gcmd="ret",gid=msg.gid,gret="Command failed."}
 	elseif msg.wetv=="info" then
 
 		local vid_id=check_vid_id(msg.video)
-		local vid_len=tonumber(msg.length) -- signal error with a length of 0
-		
-		if vid_id == game.vidinfo.vid_id then -- getting info back about current video
-					
+		local vid_duration=math.floor(tonumber(msg.duration) or 0) -- signal error with a length of 0
+		local vid_title=tostring(msg.title)
+
+		if vid_id == game.vidinfo.vid_id then -- getting info back about current video (users can only provide info about this one)
+
+-- remember name and len
+			check_vid_info(game,{user=user,id=vid_id,duration=vid_duration,title=vid_title})
+
+-- next video?
 			check_vid(game,vid_len)
 		
 		end
@@ -2641,13 +2750,19 @@ dbg("movie loading\n")
 
 -- lets try and pull down a html url and scrape the fuck out of it
 
-dbg("fetching playlist "..i.."\n")
+dbg("fetching playlist (notworking) "..i.."\n")
 
 		-- if we use any video id, with a playlist then we get the full? playlist list of videos
 		local url="https://www.youtube.com/watch?v=fdO4ea3oP8Q&list="..v.id
-		local ret=lanes_url(url) -- pull in video info source
+--		local ret=lanes_url(url) -- pull in video info source
 
-
+--[[
+dbg(url,"\n")
+dbg(ret,"\n")
+dbg(ret.code,"\n")
+dbg(ret.body,"\n")
+os.exit(0)
+]]
 
 -- this old way no longer works
 --[[
@@ -2839,10 +2954,13 @@ gtab.update_co = function()
 
 	local utvid=table.remove(gtab.vid_reqs,1)
 	
+-- nothing we can do here works anymore so just give up
+	do return end
+
 	if ( gtab.vid_infos[utvid] and gtab.vid_infos[utvid].stamp ) then
 		if gtab.vid_infos[utvid].stamp >= os.time() then return end -- we have valid info already
 	end
-	
+		
 	if utvid then
 
 --dbg("reading data from youtube "..utvid.."\n")
