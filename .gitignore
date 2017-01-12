@@ -1,4 +1,3 @@
-syntax: glob
 
 config.lua
 config.data.lua
