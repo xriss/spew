@@ -8,20 +8,20 @@
 cfg={}
 
 cfg.mysql_database="forum"
-cfg.mysql_username="poop"
-cfg.mysql_password="xxx"
+cfg.mysql_username="root"
+cfg.mysql_password="123"
 cfg.mysql_prefix="wet_"
 
 
 cfg.fud_prefix="fud26_"
 
-cfg.temp_chat_file="C:/wet/www/wetgenes/swf/wetdike.chat.txt"
+cfg.temp_chat_file="/devcake/wwwgenes/ngx/php/swf/wetdike.chat.txt"
 
 cfg.mux_server="127.0.0.1"
 cfg.mux_port=2860
 
 
-cfg.data_dir="C:/wet/www/wetgenes/subs/data"
+cfg.data_dir="/devcake/wwwgenes/ngx/php/data"
 
 
 
