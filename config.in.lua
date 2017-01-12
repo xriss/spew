@@ -7,6 +7,8 @@
 
 cfg={}
 
+cfg.sql="mysql" 
+
 cfg.mysql_database="forum"
 cfg.mysql_username="root"
 cfg.mysql_password="123"
