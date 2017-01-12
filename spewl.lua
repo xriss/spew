@@ -154,7 +154,7 @@ local fday=fname:gsub(".csv","")
 			
 			end
 			
-			table.insert(cmds,string.format('gzip %s', logdir..fday..".csv" ))
+			table.insert(cmds,string.format('gzip -f %s', logdir..fday..".csv" ))
 			
 			for i,v in ipairs(cmds) do
 				dbg( v ,"\n")
