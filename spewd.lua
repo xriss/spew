@@ -22,7 +22,7 @@ dofile("spew_dbg.lua")
 
 
 
-require("posix")
+posix=require("posix")
 
 --require("socket")
 --require("socket.smtp")
