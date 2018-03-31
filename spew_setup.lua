@@ -562,7 +562,7 @@ dbg("reading data from twitter\n")
 		
 		local r=get_room("public.news")
 		
-		local twit=Json.Decode(ret.body)
+		local twit=dkjson.decode(ret.body)
 		
 	--		dbg(serialize(twit))
 

@@ -11,7 +11,7 @@ local ltn12 = require("ltn12")
 --require("ssl")
 
 
-require("luasql.mysql")
+luasql=require("luasql.mysql")
 
 
 require("md5")

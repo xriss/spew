@@ -2776,7 +2776,7 @@ dbg("fetching playlist "..i.." page "..p.."\n")
 			
 			if ret and ret.body and type(ret.body)=="string" and ret.body~="" then -- got some movies
 			
-				local j=Json.Decode(ret.body)
+				local j=dkjson.decode(ret.body)
 				if j and j.data and j.data.items then else break end
 				
 --dbg("got some data "..#ret.body.." #"..(#j.data.items).."\n")
@@ -2991,7 +2991,7 @@ dbg(#gtab.vid_reqs.." : ".."bad video id "..utvid.." NOEMBED","\n")
 
 			else
 	
-			local info=Json.Decode(ret.body)
+			local info=dkson.decode(ret.body)
 			
 			local tab={}
 			

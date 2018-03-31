@@ -2403,13 +2403,13 @@ function game_shadow_update(names)
 		if ret[1] then -- got an active game
 --dbg("checking shadow games ret 1\n")
 			local t=sql_named_tab(ret,1)
-			data.shadow.active=Json.Decode(t.data)
+			data.shadow.active=dkjson.decode(t.data)
 			data.shadow.active.game=tonumber(t.game)
 		end
 		if ret[2] then -- got an active game
 --dbg("checking shadow games ret 2\n")
 			local t=sql_named_tab(ret,2)
-			data.shadow.result=Json.Decode(t.data)
+			data.shadow.result=dkjson.decode(t.data)
 			data.shadow.result.game=tonumber(t.game)
 		end
 	end
@@ -2608,7 +2608,7 @@ local endlen=string.len(ending)
 	local ret=lanes_url("http://hoe.4lfa.com/hoe/api/tops")
 	if ret.body then
 		
-		local dat=Json.Decode(ret.body)
+		local dat=dkjson.decode(ret.body)
 		
 		if dat and dat.result=="OK" then
 		
@@ -2677,7 +2677,7 @@ local m={}
 		m.swf_url=cfg.base_data_url.."/swf/WetVille."..m.swf_version..".swf"
 		m.swf_dat=cfg.base_data_url.."/swf/WetVille."..m.swf_version..".dat"
 		
-		m.swf_json=Json.Encode({})
+		m.swf_json=dkjson.encode({})
 	
 		usercast(user,m) -- tell the client to check the version of the swf
 	
@@ -2686,7 +2686,7 @@ local m={}
 		m.swf_class="only1"
 		m.swf_version="0" -- minimum version we require
 		
-		m.swf_json=Json.Encode({vid="FuX5_OWObA0"})
+		m.swf_json=dkson.encode({vid="FuX5_OWObA0"})
 		
 		usercast(user,m) -- tell the client to check the version of the swf
 		

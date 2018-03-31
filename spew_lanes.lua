@@ -564,7 +564,7 @@ require("socket")
 require("socket.http")
 
 
-pcall( function() require("luasql.mysql") end )
+pcall( function() luasql=require("luasql.mysql") end )
 if luasql then
 sql=luasql.mysql()
 end

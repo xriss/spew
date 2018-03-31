@@ -391,7 +391,7 @@ local count=0
 
 	if ret.body then
 	
-		local digg=Json.Decode(ret.body)
+		local digg=dkjson.decode(ret.body)
 		
 		if digg.stories then
 

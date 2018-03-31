@@ -35,7 +35,6 @@ Routines such as those designed for report writing permit faster translation of 
 
 require ("config")
 require("coxpcall")
-require("lash")
 
 -- always reload these files
 dofile("global.lua")
@@ -64,20 +63,24 @@ dofile("spew_log.lua")
 
 
 --package.preload.ffi=nil
-lanes=require("lanes").configure(1)
-lanes.now_secs=require("lua51-lanes").now_secs -- not exported anymore?
+lanes=require("lanes")
+if lanes.configure then lanes=lanes.configure() end
+--lanes.now_secs=lanes.now_secs or require("lua51-lanes").now_secs -- not exported anymore?
 
-require("lanes")
+--require("lanes")
 require("socket")
 require("socket.smtp")
 require("socket.http")
 
 if cfg.sql=="mysql" then
-require("luasql.mysql")
+luasql = require("luasql.mysql")
 end
 
-require("lash")
-require("Json")
+--require("lash")
+require("md5")
+require("sha1")
+
+require("dkjson")
 require("bit")
 
 
@@ -480,7 +483,7 @@ dbg("Client atempting to irc connect\n")
 	local key_base=trim(websock_key)
 	local key_add="258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 	local key=key_base..key_add
-	local key_sha1_hex=lash.SHA1.string2hex(key)
+	local key_sha1_hex=sha1(key)
 	
 	local aa={}
 	for i=1,#key_sha1_hex,2 do
@@ -564,7 +567,7 @@ end
 	for i=-8,-1 do
 		kk[#kk+1]=part:sub(i,i)
 	end
-	local key_md5_sum_hex=lash.MD5.string2hex(table.concat(kk))
+	local key_md5_sum_hex=md5.sumhexa(table.concat(kk))
 
 
 

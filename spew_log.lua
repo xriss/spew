@@ -3,7 +3,7 @@ local log_dirname=( cfg and cfg.log_filename ) or "./save/logs/"
 
 local tlog_filename=( cfg and cfg.tlog_filename ) or "./save/tlog.json"
 
-local json=require("Json")
+local dkjson=require("dkjson")
 -- replace with my json encoder decoder
 --local wjson=require("wjson")
 --local json={}
@@ -168,7 +168,7 @@ end
 	
 -- serv these tlogs from a file
 
-	local j=json.Encode(cache)
+	local j=dkjson.encode(cache)
 
 	local fp=io.open(tlog_filename,"w")
 	if fp then

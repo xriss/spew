@@ -2978,7 +2978,7 @@ local msg
 	
 	-- default details
 	
-	local seed=tonumber(string.sub(lash.MD5.string2hex(name),-4,-1),16)
+	local seed=tonumber(string.sub(md5.sumhexa(name),-4,-1),16)
 	
 	msg.stat="-" -- this means user is not logged in and we know nothing	
 	msg.avatar="http://swf.wetgenes.com/wavys/random.php/"..seed.."/t.png" -- "http://swf.wetgenes.com/forum/images/custom_avatars/12.png"
@@ -3515,11 +3515,11 @@ local ip=user_ipnum(user)
 
 		if tab.salt then -- new SHA1 password with salt
 		
-		 	passOK = ( tab.passwd == lash.SHA1.string2hex( tab.salt .. lash.SHA1.string2hex(pass) ) )
+		 	passOK = ( tab.passwd == sha1( tab.salt .. sha1(pass) ) )
 			
 		else
 		
-			passOK = ( tab.passwd == lash.MD5.string2hex(pass) )
+			passOK = ( tab.passwd == md5.sumhexa(pass) )
 			
 		end
 		
