@@ -1,2 +1,2 @@
-ssh web "tail -f -n $1 hg/spew/spew.log"
+ssh peepee "tail -f -n $1 /devcake/spew/spew.log"
 

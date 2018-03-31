@@ -89,7 +89,8 @@ os.execute([[echo "***" >spew.log]])
 os.execute([[chmod 777 spew.log]])
 
 	
-os.execute([[nix/bin/lua -e "package.cpath='./nix/lib/?.so;'..package.cpath;package.path='./nix/share/?.lua;'..package.path;" spew.lua >spew.log 2>spew.err]])
+--os.execute([[nix/bin/lua -e "package.cpath='./nix/lib/?.so;'..package.cpath;package.path='./nix/share/?.lua;'..package.path;" spew.lua >spew.log 2>spew.err]])
+os.execute([[lua spew.lua >spew.log 2>spew.err]])
 
 os.execute([[mail -s"SPEW BOOT ]]..tim..[[" krissd@gmail.com </dev/null]])
 
