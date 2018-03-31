@@ -77,18 +77,18 @@ luasql = require("luasql.mysql")
 end
 
 --require("lash")
-require("md5")
-require("sha1")
+md5=require("md5")
+sha1=require("sha1")
 
-require("dkjson")
-require("bit")
+dkjson=require("dkjson")
+bit=require("bit")
 
 
 
 if cfg.os=="nix" then
 
 dbg("setting up POSIX\n")
-require("posix")
+posix=require("posix")
 
 end
 
