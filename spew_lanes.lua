@@ -173,7 +173,7 @@ function lanes_update()
 
 --dbg("searching for msg\n")
 	if data.lanes.state=="working" then
-		local msg
+		local _,msg
 		
 		if not spew_lanes_disable then
 
@@ -181,7 +181,7 @@ function lanes_update()
 			
 				repeat
 --dbg(i)
-					msg=data.lanes.threads[i].linda:receive( 0 , 0 ) -- check for returned msgs, but do not block
+					_,msg=data.lanes.threads[i].linda:receive( 0 , 0 ) -- check for returned msgs, but do not block
 					
 					if msg then
 						data.lanes.rets[msg.id]=msg -- store msg in rets table, there are polling waits on these
@@ -405,9 +405,7 @@ end
 -----------------------------------------------------------------------------
 function lanes_url_worker(linda,msg)
 
-
 local body, headers, code = socket.http.request(msg.url)
-
 
 local ret={}
 
@@ -557,11 +555,11 @@ package.cpath=master_cpath or package.cpath
 package.path=master_path or package.path
 
 dofile("spew_dbg.lua")
-require("coxpcall")
+coxpcall=require("coxpcall")
 
 
-require("socket")
-require("socket.http")
+socket=require("socket")
+socket.http=require("socket.http")
 
 
 pcall( function() luasql=require("luasql.mysql") end )
@@ -570,7 +568,7 @@ sql=luasql.mysql()
 end
 
 
-require("md5")
+md5=require("md5")
 
 --require("spew_lanes")
 --require("spew_lanes_mysql")
@@ -584,8 +582,7 @@ local loop=true
 
 	while loop do
 
-	local msg= linda:receive( nil, idx )
-
+	local _,msg= linda:receive( nil, idx )
 	
 		if msg then
 --dbg(idx," : ",msg.cmd," : ",msg.url or "?","\n")
