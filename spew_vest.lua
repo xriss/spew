@@ -189,7 +189,7 @@ dbg( "Check vest.\n")
 	
 	end
 
-	ret=lanes_url("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml") -- pull in feed
+	ret=lanes_url("https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xmls") -- pull in feed
 	
 	if ret.body then
 	
@@ -197,6 +197,7 @@ dbg( "Check vest.\n")
 
 		local dat=xml_parse(ret.body)
 		
+		if dat then 
 		for n,v in ipairs(dat[1]) do
 		
 			if v and string.lower(v[0])=="cube" then
@@ -243,6 +244,7 @@ dbg( currency , "\t" , rate , "\t", tld_names[currency] , "\n")
 
 			end
 		
+		end
 		end
 		
 		if loss and gain and loss~=gain then
