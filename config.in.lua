@@ -10,8 +10,8 @@ cfg={}
 cfg.sql="mysql" 
 
 cfg.mysql_database="forum"
-cfg.mysql_username="root"
-cfg.mysql_password="123"
+cfg.mysql_username="kriss"
+cfg.mysql_password=""
 cfg.mysql_prefix="wet_"
 
 
