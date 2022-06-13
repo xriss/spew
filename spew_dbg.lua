@@ -9,9 +9,10 @@ local dbg_stdio=not ( cfg and cfg.dbg_stdio_off )
 -----------------------------------------------------------------------------
 function dbg(...)
 
+
 local t={}
 
-	for i,v in ipairs(arg) do -- force to strings
+	for i,v in ipairs({...}) do -- force to strings
 	
 		t[i]=tostring(v or "")
 	

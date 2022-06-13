@@ -198,7 +198,8 @@ local user=data.clients[client]
 		
 			for i,line in ipairs(ctab.spew_send_cache) do
 				if line~="" then	
-					client:send(wrap(ctab,line))			
+print("sent",line)
+					client:send(wrap(ctab,line))
 				end
 			end
 			
@@ -207,6 +208,7 @@ local user=data.clients[client]
 		end
 		
 		if line~="" then	
+print("sent",line)
 			client:send(wrap(ctab,line))			
 		end
 			
@@ -341,7 +343,7 @@ end
 function client_received(client,line)
 	local ctab=data.clients_tab[client]
 
---dbg("received ",line," ",dbg_client(client),"\n")
+dbg("received ",line," ",dbg_client(client),"\n")
 
 	if ctab.websocket then return client_received_websocket(client,line) end
 
@@ -396,7 +398,7 @@ local line_term="\0"
 			linepart=string.sub(user.lineparts,1,zero-1) -- command
 			user.lineparts=string.sub(user.lineparts,zero+1) -- remainder
 
---dbg("handling: ",linepart,"\n")		
+dbg("handling: ",linepart,"\n")		
 			table.insert(user.linein,linepart) -- do this line in the users coroutine
 		else
 			user.lineparts=string.sub(user.lineparts,zero+1) -- remainder

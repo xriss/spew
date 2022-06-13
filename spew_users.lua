@@ -1466,7 +1466,7 @@ function user_update_co(user)
 	
 		if user.linein[1] then 
 		
---dbg("LINE ",user.name,"\n")
+dbg("LINE ",user.name,"\n")
 
 			user_update_line(user, table.remove(user.linein,1) )
 			

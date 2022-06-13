@@ -3,7 +3,7 @@ local log_dirname=( cfg and cfg.log_filename ) or "./save/logs/"
 
 local tlog_filename=( cfg and cfg.tlog_filename ) or "./save/tlog.json"
 
-local dkjson=require("dkjson")
+local dkjson=require("wetgenes.json")
 -- replace with my json encoder decoder
 --local wjson=require("wjson")
 --local json={}
@@ -18,6 +18,7 @@ local dkjson=require("dkjson")
 --
 -----------------------------------------------------------------------------
 function log(...)
+local arg={...}
 
 local t={}
 
@@ -87,6 +88,7 @@ end
 --
 -----------------------------------------------------------------------------
 function loglast(...)
+local arg={...}
 
 local t={}
 

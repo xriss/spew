@@ -68,7 +68,7 @@ if lanes.configure then lanes=lanes.configure() end
 --lanes.now_secs=lanes.now_secs or require("lua51-lanes").now_secs -- not exported anymore?
 
 --require("lanes")
-require("socket")
+socket=require("socket")
 require("socket.smtp")
 require("socket.http")
 
@@ -80,7 +80,7 @@ end
 md5=require("md5")
 sha1=require("sha1")
 
-dkjson=require("dkjson")
+dkjson=require("wetgenes.json")
 bit=require("bit")
 
 
@@ -193,11 +193,11 @@ end
 -----------------------------------------------------------------------------
 function safecall( func , ... )
 
-local	ret,_ret=copcall(func,unpack(arg))
+local	ret,_ret=coxpcall(func,function(...) return table.concat({...},"\n") end,unpack(arg))
 
 	if ret~=true then
 
-		dbg("\n",( _ret or "" ),"\n")
+		dbg("\n",( _ret or "" ),"\n",debug.traceback(),"\n")
 
 	end
 	

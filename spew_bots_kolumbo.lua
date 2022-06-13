@@ -40,6 +40,7 @@ local function brain_update(brain)
 end
 
 local function brain_msg(brain,msg,user)
+	if not msg then return end -- idk h4x tbh
 
 local newmsg
 	
