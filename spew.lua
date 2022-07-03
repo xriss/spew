@@ -464,6 +464,9 @@ dbg("Client atempting to irc connect\n")
 						client_handshake_set(input,"policy")
 
 					elseif websock_path then
+
+print("WEBSOCKET START")
+print(part)
 					
 						local websock_version=string.match(part, 'Sec%-WebSocket%-Version:%s*([^\r]*)') or ""
 						
@@ -522,6 +525,10 @@ end
 	input:send(shake)
 	ignore_handshake=true
 	client_handshake_set(input,"websocket")
+
+print("WEBSOCKET UPGRADE")
+print(shake)
+print("WEBSOCKET DONE")
 
 						else -- old junks
 
