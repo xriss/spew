@@ -577,6 +577,7 @@ print("WEBSOCKDBG",websock_ip,websock_client)
 			
 			end
 			
+			end
 			
 		else -- unknown client
 		
