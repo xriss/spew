@@ -540,7 +540,7 @@ if websock_user and websock_ip and websock_client then
 		websock_user.ip=websock_ip
 	end
 end
-print("WEBSOCKDBG",websock_ip,websock_client)
+print("WEBSOCKDBG",websock_ip,websock_client,websock_user)
 
 						end
 					end
