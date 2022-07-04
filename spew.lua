@@ -524,6 +524,7 @@ end
 	ignore_handshake=true
 	client_handshake_set(input,"websocket")
 
+--[[
 -- remember real ip if forwarded from server
 local r=input:getpeername()
 if r then
@@ -540,7 +541,7 @@ if websock_user and websock_ip and websock_client then
 	end
 end
 print("WEBSOCKDBG",websock_ip,websock_client)
-
+]]
 					end
 				end
 			
