@@ -473,6 +473,7 @@ dbg("Client atempting to irc connect\n")
 						if websock_version >= 8 then -- the all new codes
 						
 
+
 	local websock_key=string.match(part, 'Sec%-WebSocket%-Key:%s*([^\r]*)') or ""
 	local websock_host=string.match(part, 'Host:%s*([^%s]*)') or ""
 	local websock_origin=string.match(part, 'Origin:%s*([^%s]*)') or ""
@@ -523,89 +524,23 @@ end
 	ignore_handshake=true
 	client_handshake_set(input,"websocket")
 
-						else -- old junks
+-- remember real ip if forwarded from server
+local r=client:getpeername()
+if r then
+	r=str_split(":",r)
+	if r[1] then r=r[1] end
+end
+local websock_client=r
+local websock_ip=string.match(part, 'X%-Real%-IP:%s*([^\r]*)')
+local websock_user=data.client[client]
 
---[[part="GET / HTTP/1.1" .. "\r\n"..
-"Connection: Upgrade" .. "\r\n"..
-"Host: example.com" .. "\r\n"..
-"Upgrade: WebSocket" .. "\r\n"..
-"Sec-WebSocket-Key1: 3e6b263  4 17 80" .. "\r\n"..
-"Origin: http://example.com" .. "\r\n"..
-"Sec-WebSocket-Key2: 17  9 G`ZD9   2 2b 7X 3 /r90" .. "\r\n"..
-"" .. "\r\n"..
-"WjN}|M(6"]]
-              
-	local websock_host=string.match(part, 'Host:%s*([^%s]*)') or ""
-	local websock_origin=string.match(part, 'Origin:%s*([^%s]*)') or ""
-	local websock_key1=string.match(part, 'Sec%-WebSocket%-Key1:%s*([^\r]*)') or ""
-	local websock_key2=string.match(part, 'Sec%-WebSocket%-Key2:%s*([^\r]*)') or ""
-
-	local keys={}
-	local kk={}
-	for i,v in ipairs{websock_key1,websock_key2} do
-		local spaces=0
-		local digits={}
-		for ci=1,#v do
-			local c=v:sub(ci,ci)
-			if c==" " then spaces=spaces+1 else
-				if c:match("(%d)") then -- it is a didgit
-					digits[#digits+1]=c
-				end
-			end
-		end
-		local num=tonumber( table.concat(digits) or "" )
-		
-		if num and spaces>0 then 
-			keys[i]=num/spaces
-			kk[#kk+1]=string.char(math.floor(keys[i]/(256*256*256))%256 )
-			kk[#kk+1]=string.char(math.floor(keys[i]/(256*256))    %256 )
-			kk[#kk+1]=string.char(math.floor(keys[i]/(256))        %256 )
-			kk[#kk+1]=string.char(math.floor(keys[i])              %256 )
-		end
-		
+if websock_user and websock_ip and websock_client then
+	if websock_client=="127.0.0.1" then -- only our server
+		websock_user.ip=websock_ip
 	end
-	for i=-8,-1 do
-		kk[#kk+1]=part:sub(i,i)
-	end
-	local key_md5_sum_hex=md5.sumhexa(table.concat(kk))
+end
+print("WEBSOCKDBG",websock_ip,websock_client)
 
-
-
-	local aa={}
-	for i=1,#key_md5_sum_hex,2 do
-		local t=key_md5_sum_hex:sub(i,i+1)
-		aa[#aa+1]=string.char(tonumber(t,16))
-	end
-	local key_md5=table.concat(aa)
-	
-
-	
-	local websock_location = 'ws://' .. websock_host .. websock_path
---[[
-print("PART:",part)
-print("HOST:",websock_host)
-print("ORIG:",websock_origin)
-print("KEY1:",websock_key1)
-print("KEY2:",websock_key2)
-print("#KK:",#kk)
-print("KK:",table.concat(kk))
-print("MD5:",key_md5_sum_hex)
-]]					
-	ignore_handshake=true
-	
-	local shake=("HTTP/1.1 101 WebSocket Protocol Handshake" .. "\r\n"
-	.. "Upgrade: WebSocket" .. "\r\n"
-	.. "Connection: Upgrade" .. "\r\n"
-	.. "Sec-WebSocket-Origin: " .. websock_origin .. "\r\n"
-	.. "Sec-WebSocket-Location: " .. websock_location .. "\r\n"
---						.. "Sec-WebSocket-Protocol: sample" .. "\r\n"
-	.. "\r\n"..key_md5.."\0")
---print(shake)
-	input:send(shake)
-
-	client_handshake_set(input,"websocket_old")
-	
-						end -- websocket_old end
 					end
 				end
 			
