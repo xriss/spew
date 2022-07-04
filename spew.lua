@@ -525,14 +525,14 @@ end
 	client_handshake_set(input,"websocket")
 
 -- remember real ip if forwarded from server
-local r=client_received:getpeername()
+local r=input:getpeername()
 if r then
 	r=str_split(":",r)
 	if r[1] then r=r[1] end
 end
 local websock_client=r
 local websock_ip=string.match(part, 'X%-Real%-IP:%s*([^\r]*)')
-local websock_user=data.client[client_received]
+local websock_user=data.client[input]
 
 if websock_user and websock_ip and websock_client then
 	if websock_client=="127.0.0.1" then -- only our server
