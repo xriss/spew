@@ -536,7 +536,7 @@ local websock_ip=string.match(part, 'X%-Real%-IP:%s*([^\r]*)')
 local websock_user=data.clients[input]
 
 if websock_user and websock_ip and websock_client then
-	if websock_client=="127.0.0.1" then -- only our server
+	if websock_client=="188.210.213.7" then -- only our server
 		websock_user.ip=websock_ip
 	end
 end
