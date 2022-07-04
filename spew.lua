@@ -541,6 +541,7 @@ if websock_user and websock_ip and websock_client then
 	end
 end
 print("WEBSOCKDBG",websock_ip,websock_client,websock_user)
+print(data.clients[input])
 
 						end
 					end
