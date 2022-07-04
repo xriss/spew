@@ -518,8 +518,8 @@ end
 	.. "Sec-WebSocket-Accept: " .. key_sha1_b64 .. "\r\n\r\n"
 	)
 
-print(part)
-print(shake)
+--print(part)
+--print(shake)
 
 	input:send(shake)
 	ignore_handshake=true
@@ -540,8 +540,8 @@ if websock_user and websock_ip and websock_client then
 		websock_user.ip=websock_ip
 	end
 end
-print("WEBSOCKDBG",websock_ip,websock_client,websock_user)
-print(data.clients[input])
+--print("WEBSOCKDBG",websock_ip,websock_client,websock_user)
+--print(data.clients[input])
 
 						end
 					end
