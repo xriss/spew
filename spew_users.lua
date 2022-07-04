@@ -2605,6 +2605,8 @@ end
 --
 -----------------------------------------------------------------------------
 function user_ip(user)
+
+	if user.ip then return user.ip end
 	
 	if user.client then	
 			local r=user.client:getpeername()

@@ -530,6 +530,23 @@ print("WEBSOCKET UPGRADE")
 print(shake)
 print("WEBSOCKET DONE")
 
+-- remember real ip if forwarded from server
+local r=input:getpeername()
+if r then
+	r=str_split(":",r)
+	if r[1] then r=r[1] end
+end
+local websock_client=r
+local websock_ip=string.match(part, 'X%-Real%-IP:%s*([^\r]*)')
+local websock_user=data.clients[input]
+
+if websock_user and websock_ip and websock_client then
+	if websock_client=="127.0.0.1" then -- only our server
+		websock_user.ip=websock_ip
+	end
+end
+
+
 						else -- old junks
 
 --[[part="GET / HTTP/1.1" .. "\r\n"..
