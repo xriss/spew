@@ -518,7 +518,7 @@ end
 	.. "Sec-WebSocket-Accept: " .. key_sha1_b64 .. "\r\n\r\n"
 	)
 
---print(shake)
+print(shake)
 
 	input:send(shake)
 	ignore_handshake=true
@@ -542,6 +542,7 @@ if websock_user and websock_ip and websock_client then
 end
 print("WEBSOCKDBG",websock_ip,websock_client)
 ]]
+						end
 					end
 				end
 			
@@ -577,9 +578,7 @@ print("WEBSOCKDBG",websock_ip,websock_client)
 				end
 			
 			end
-			
-			end
-			
+						
 		else -- unknown client
 		
 			input:settimeout(0.00001) -- this is a hack fix?
