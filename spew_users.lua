@@ -3508,9 +3508,8 @@ local ip=user_ipnum(user)
 	
 	if tab then -- user exists, verify pass
 
-		usercast(user,{cmd="note",note="error",arg1="password login from chat is disabled, please use /session instead"})
+--		usercast(user,{cmd="note",note="error",arg1="password login from chat is disabled, please use /session instead"})
 	
---[=[
 		local passOK=false
 		
 --dbg("SALT : ",tab.salt or "NONE","\n")
@@ -3551,7 +3550,7 @@ dbg("login failed password ",name," : ",ip,"\n")
 			
 --			data.last_login_time[ip]=os.time() -- can only force check one password per sec
 		end
-]=]
+
 		
 	else -- user does not exist, logon as guest
 	
@@ -3614,12 +3613,13 @@ local ip=user_ipnum(user)
 			
 --dbg( user_ip(user) , " : " , tab.ip_addr , "\n")
 
-		if user_ip(user)==tab.ip_addr then -- mild security fix, session is locked to ip
+--		if user_ip(user)==tab.ip_addr then -- mild security fix, session is locked to ip
 		
 			login_newname(user,tab.login,tab)
 
 			usercast(user,{cmd="note",note="error",arg1="You may login again from this IP by typing /session "..sess.." as password logins are now disabled in chat."})
 			
+--[[
 		else
 		
 			usercast(user,{cmd="note",note="error",arg1="Your session does not match your IP, please refresh the page to login or use /login name pass"})
@@ -3627,7 +3627,7 @@ local ip=user_ipnum(user)
 dbg("login failed session/ip ",tab.login," : ",ip,"\n")
 			
 		end
-		
+]]
 		
 	else -- user does not exist, logon as guest
 	
