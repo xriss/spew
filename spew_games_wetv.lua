@@ -561,7 +561,7 @@ local vi=game.vidinfo
 					if r.brain and r.brain.user and ( not r.hush_time or r.hush_time<os.time() ) then
 						roomqueue(r,{cmd="lnk",frm=r.brain.user.name,
 							txt=vi.vid_title.." is now starting in room "..game.room.name,
-							lnk="http://play.4lfa.com/tv/"..game.room.name})
+							lnk="https://tv.wetgenes.com/#"..game.room.name})
 					end
 				end
 			
