@@ -68,7 +68,7 @@ if lanes.configure then lanes=lanes.configure() end
 --lanes.now_secs=lanes.now_secs or require("lua51-lanes").now_secs -- not exported anymore?
 
 --require("lanes")
-require("socket")
+socket = require("socket")
 require("socket.smtp")
 require("socket.http")
 
